@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZJnRdYYkaj8sw7ZX2TlwlrADRtCFlIJOD5XXs9sDmoiyBrfOlRrU+rk11beuLdQdqws7SgSReSIv8MzK2jyEHg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Server_e.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
+  "logs": []
+}
