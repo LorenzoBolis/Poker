@@ -11,7 +11,7 @@ namespace Client_form
             InitializeComponent();
             
         }
-        private void ricezione()
+        private void ricezione() // in attesa dell'altro client e poi riceve carte
         {
             string response = Program.Ricevi();
             if (response == "game_started")
@@ -20,7 +20,26 @@ namespace Client_form
                 button2.Visible = false;
                 label1.Visible = false;
                 this.BackColor = Color.DarkGreen;
+
+                ricezione_gioco();
             }
+        }
+        private void ricezione_gioco()  // riceve carte 
+        {
+            string card1 = Program.Ricevi();
+            label2.Visible = true;
+            label3.Visible = true;
+            pictureBox1.Visible = true;
+            pictureBox2.Visible = true;
+
+            string card2 = Program.Ricevi();
+            label2.Text = card1;
+            label3.Text = card2;
+
+            pictureBox1.Image = Image.FromFile("../../../mazzo/" + card1.ToLower() + ".jpg");
+            pictureBox2.Image = Image.FromFile("../../../mazzo/" + card2.ToLower() + ".jpg");
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -49,12 +68,12 @@ namespace Client_form
                 button2.Visible = false;
                 label1.Visible = false;
                 this.BackColor = Color.DarkGreen;
+                ricezione_gioco();
             }
             else if (response == "one_client")
             {
                 label1.Text = "In attesa dell'altro giocatore";
-                Thread attendi = new Thread(ricezione);
-                attendi.Start();
+                ricezione();
             }
         }
     }

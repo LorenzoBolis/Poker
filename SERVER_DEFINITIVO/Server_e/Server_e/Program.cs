@@ -22,7 +22,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("10.1.0.146"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -119,8 +119,9 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             {
                 handlers[1].Send(ackBytes);
                 handlers[0].Send(ackBytes);
-                Gioco();
-                return;
+                Thread giocooo = new Thread(Gioco);
+                giocooo.Start();
+                //return;
             }
             catch (Exception ex)
             {
@@ -139,7 +140,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
 
     }
-    static void Invia(Socket source) // metodo "di base" non utilizzato
+    /*static void Invia(Socket source) // metodo "di base" non utilizzato
     {
         string ackMessage = "INVIA";
         byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
@@ -159,21 +160,19 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             Console.WriteLine("Client non connesso o irraggiungibile");
         }
         
-    }
+    }*/
 
-    static void Gioco()  // mescola non funziona
+    static void Gioco()
     {
         Mazzo mazzo = new Mazzo();
         mazzo.Mescola();
-        
-        int i = 52;
-        while (i > 10)
-        {
-            i--;
-            Carta carta = mazzo.DistribuisciCarta();
-            Console.WriteLine($"Carta distribuita: {carta}");
-        }
-
-
+        Carta c1 = mazzo.DistribuisciCarta();
+        Carta c2 = mazzo.DistribuisciCarta();
+        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()));
+        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()));
+        c1 = mazzo.DistribuisciCarta();
+        c2 = mazzo.DistribuisciCarta();
+        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()));
+        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()));
     }
 }

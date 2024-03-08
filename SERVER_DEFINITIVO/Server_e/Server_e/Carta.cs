@@ -8,6 +8,8 @@ namespace Server_e
 {
     public class Carta
     {
+        private Seme seme;
+        private Valore valore;
         public enum Seme
         {
             Cuori,
@@ -32,8 +34,16 @@ namespace Server_e
             Re,
             Asso
         }
-        public Seme _Seme { get; set; }
-        public Valore _Valore { get; set; }
+        public Seme _Seme
+        {
+            get { return seme; }
+            set {  seme = value; }
+        }
+        public Valore _Valore
+        {
+            get { return valore;}
+            set { valore = value; }
+        }
 
         public Carta(Seme seme, Valore valore)
         {
@@ -43,7 +53,7 @@ namespace Server_e
 
         public override string ToString()
         {
-            return $"{_Valore} di {_Seme}";
+            return $"{_Valore}_di_{_Seme}";
         }
     }
 }
