@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server_e;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -21,7 +22,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("10.1.0.146"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -97,7 +98,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                         client2_gioco_a = true;
                     }
                     
-                    Invia_Start(handler);
+                    Invia_Start();
                 }
                 Console.WriteLine($"Dati ricevuti da {name}: {message}");
             }
@@ -108,7 +109,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             Console.WriteLine("Errore nella gestione del client: " + ex.Message);
         }
     }
-    static void Invia_Start(Socket source)
+    static void Invia_Start()
     {
         string ackMessage = "game_started";
         byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
@@ -118,6 +119,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             {
                 handlers[1].Send(ackBytes);
                 handlers[0].Send(ackBytes);
+                Gioco();
                 return;
             }
             catch (Exception ex)
@@ -157,5 +159,21 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             Console.WriteLine("Client non connesso o irraggiungibile");
         }
         
+    }
+
+    static void Gioco()  // mescola non funziona
+    {
+        Mazzo mazzo = new Mazzo();
+        mazzo.Mescola();
+        
+        int i = 52;
+        while (i > 10)
+        {
+            i--;
+            Carta carta = mazzo.DistribuisciCarta();
+            Console.WriteLine($"Carta distribuita: {carta}");
+        }
+
+
     }
 }

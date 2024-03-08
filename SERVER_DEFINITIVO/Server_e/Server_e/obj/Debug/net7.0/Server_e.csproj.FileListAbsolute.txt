@@ -55,3 +55,18 @@ C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\SERVER
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.pdb
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.genruntimeconfig.cache
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\ref\Server_e.dll
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.exe
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.deps.json
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.runtimeconfig.json
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.dll
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.pdb
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.GeneratedMSBuildEditorConfig.editorconfig
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.AssemblyInfoInputs.cache
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.AssemblyInfo.cs
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.csproj.CoreCompileInputs.cache
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.sourcelink.json
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.dll
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\refint\Server_e.dll
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.pdb
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.genruntimeconfig.cache
+C:\server\NIKO\progetto\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\ref\Server_e.dll
