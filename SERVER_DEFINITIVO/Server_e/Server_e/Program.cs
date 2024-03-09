@@ -119,8 +119,10 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             {
                 handlers[1].Send(ackBytes);
                 handlers[0].Send(ackBytes);
-                Thread giocooo = new Thread(Gioco);
-                giocooo.Start();
+                
+                //Thread giocooo = new Thread(Gioco);
+                //giocooo.Start();
+                Gioco();
                 //return;
             }
             catch (Exception ex)
@@ -168,11 +170,9 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         mazzo.Mescola();
         Carta c1 = mazzo.DistribuisciCarta();
         Carta c2 = mazzo.DistribuisciCarta();
-        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()));
-        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()));
-        c1 = mazzo.DistribuisciCarta();
-        c2 = mazzo.DistribuisciCarta();
-        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()));
-        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()));
+        Carta c3 = mazzo.DistribuisciCarta();
+        Carta c4 = mazzo.DistribuisciCarta();
+        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()+"|"+c3.ToString()));
+        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()+"|"+c4.ToString()));
     }
 }

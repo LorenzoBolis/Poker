@@ -20,19 +20,21 @@ namespace Client_form
                 button2.Visible = false;
                 label1.Visible = false;
                 this.BackColor = Color.DarkGreen;
-
+                
                 ricezione_gioco();
             }
         }
         private void ricezione_gioco()  // riceve carte 
         {
-            string card1 = Program.Ricevi();
+            string cards = Program.Ricevi();
+            string[] parti = cards.Split("|");
+            string card1 = parti[0];
+            string card2 = parti[1];
             label2.Visible = true;
             label3.Visible = true;
             pictureBox1.Visible = true;
             pictureBox2.Visible = true;
 
-            string card2 = Program.Ricevi();
             label2.Text = card1;
             label3.Text = card2;
 
@@ -73,6 +75,8 @@ namespace Client_form
             else if (response == "one_client")
             {
                 label1.Text = "In attesa dell'altro giocatore";
+                //Thread t1 = new Thread(ricezione);
+                //t1.Start();
                 ricezione();
             }
         }
