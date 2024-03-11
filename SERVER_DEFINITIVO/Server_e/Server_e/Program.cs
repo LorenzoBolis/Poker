@@ -8,15 +8,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 class Program  // SERVER - 192.168.1.139  (184 mik)
 {
-    // ipclient - nomeclient
-    private static Dictionary<string, string> dizionario = new Dictionary<string, string>();
-    private static List<Socket> handlers = new List<Socket>();
-    static bool client1_gioco_a = false, client2_gioco_a = false; // determinano se hanno avviato il gioco
+    
+    private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
 
     [STAThread]
     static void Main()
     {
-
         int contatore = 0;
         
 
@@ -33,70 +30,63 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         while (contatore <= 1)
         {
             // Accetta connessioni in arrivo
-            Socket handler = listener.Accept();
+            Socket client = listener.Accept();
 
-            // Send message
+            // Invia messaggio di connessione
             string message = "CONNECTED";
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            handler.Send(messageBytes);
+            client.Send(messageBytes);
 
             byte[] buffer = new byte[1024];
-            int received = handler.Receive(buffer);
+            int received = client.Receive(buffer);
             string response = Encoding.UTF8.GetString(buffer, 0, received);
+
             if (response == "ACK")
             {
                 contatore++;
-                handlers.Add(handler);
-                dizionario.Add(handler.RemoteEndPoint.ToString(), "Client" + contatore.ToString());
-                Console.WriteLine($"Nuova connessione da {handler.RemoteEndPoint} - {dizionario[handler.RemoteEndPoint.ToString()]}");
+                Giocatore g = new Giocatore("Client"+contatore.ToString(), client);
+                giocatori.Add(g);
+                Console.WriteLine($"Nuova connessione da {g.Sk.RemoteEndPoint} - {g.Nome}");
 
                 // Crea un thread separato per gestire la connessione
                 Thread clientThread = new Thread(() =>
                 {
-                    HandleClient(handler);
+                    HandleClient(g);
                 });
                 clientThread.Start();
             }
-
-            
         }
         while (true)
         {
             Socket nooo = listener.Accept();
-            nooo.Send(Encoding.UTF8.GetBytes("NOT_CONN"));
+            nooo.Send(Encoding.UTF8.GetBytes("NOT_CONN")); // invia messaggio di NON connessione
             nooo.Close();
         }
     }
 
-    static void HandleClient(Socket handler)
+    static void HandleClient(Giocatore g)
     {
-        string name = dizionario[handler.RemoteEndPoint.ToString()];
+        string name = g.Nome;
+        Socket client = g.Sk;
         try
         {
             string message = "";
-            // Gestisci il flusso di dati con il client
+            // Gestisci il flusso di dati con il singolo client
             do
             {
                 byte[] received = new byte[1024];
-                int receivedBytes = handler.Receive(received);
+                int receivedBytes = client.Receive(received);
                 message = Encoding.UTF8.GetString(received, 0, receivedBytes);
                 if (message == "exit")
                 {
                     Console.WriteLine($"Chiusura connessione con {name}");
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
+                    client.Shutdown(SocketShutdown.Both);
+                    client.Close();
                     break;
                 }
                 else if (message == "GAME")
                 {
-                    if (name == "Client1")
-                    {
-                        client1_gioco_a = true;
-                    }
-                    else if (name == "Client2")
-                    {
-                        client2_gioco_a = true;
-                    }
+                    g.Gioco_avviato = true;
                     
                     Invia_Start();
                 }
@@ -113,31 +103,39 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     {
         string ackMessage = "game_started";
         byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
-        if (client1_gioco_a && client2_gioco_a)
+        if (giocatori.Count < 2)
         {
-            try
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
+        }
+        else
+        {
+            if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato)
             {
-                handlers[1].Send(ackBytes);
-                handlers[0].Send(ackBytes);
+                try
+                {
+                    giocatori[1].Sk.Send(ackBytes);
+                    giocatori[0].Sk.Send(ackBytes);
                 
-                //Thread giocooo = new Thread(Gioco);
-                //giocooo.Start();
-                Gioco();
-                //return;
+                    //Thread giocooo = new Thread(Gioco);
+                    //giocooo.Start();
+                    Gioco();
+                    //return;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
             }
-            catch (Exception ex)
+            else if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato == false)
             {
-                Console.WriteLine("Client non connesso o irraggiungibile");
+                giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
+            }
+            else if (giocatori[0].Gioco_avviato ==false && giocatori[1].Gioco_avviato)
+            {
+                giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
             }
         }
-        else if(client1_gioco_a && client2_gioco_a == false)
-        {
-            handlers[0].Send(Encoding.UTF8.GetBytes("one_client"));
-        }
-        else if (client1_gioco_a==false && client2_gioco_a)
-        {
-            handlers[1].Send(Encoding.UTF8.GetBytes("one_client"));
-        }
+        
 
 
 
@@ -172,7 +170,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         Carta c2 = mazzo.DistribuisciCarta();
         Carta c3 = mazzo.DistribuisciCarta();
         Carta c4 = mazzo.DistribuisciCarta();
-        handlers[0].Send(Encoding.UTF8.GetBytes(c1.ToString()+"|"+c3.ToString()));
-        handlers[1].Send(Encoding.UTF8.GetBytes(c2.ToString()+"|"+c4.ToString()));
+        giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString()+"|"+c3.ToString()));
+        giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString()+"|"+c4.ToString()));
     }
 }
