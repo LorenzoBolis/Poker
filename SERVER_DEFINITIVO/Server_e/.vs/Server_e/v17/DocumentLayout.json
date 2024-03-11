@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2368B31E-BA7A-4FD5-B24C-E831CAFB68A6}|Server_e\\Server_e.csproj|c:\\users\\utente\\desktop\\lorenzo\\itis marconi\\4\\informatica\\progetto_poker\\poker\\server_definitivo\\server_e\\server_e\\giocatore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2368B31E-BA7A-4FD5-B24C-E831CAFB68A6}|Server_e\\Server_e.csproj|solutionrelative:server_e\\giocatore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2368B31E-BA7A-4FD5-B24C-E831CAFB68A6}|Server_e\\Server_e.csproj|c:\\users\\utente\\desktop\\lorenzo\\itis marconi\\4\\informatica\\progetto_poker\\poker\\server_definitivo\\server_e\\server_e\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2368B31E-BA7A-4FD5-B24C-E831CAFB68A6}|Server_e\\Server_e.csproj|solutionrelative:server_e\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "Giocatore.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Giocatore.cs",
+              "RelativeDocumentMoniker": "Server_e\\Giocatore.cs",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Giocatore.cs",
+              "RelativeToolTip": "Server_e\\Giocatore.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACYAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-11T20:08:56.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Mazzo.cs",
               "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Mazzo.cs",
               "RelativeDocumentMoniker": "Server_e\\Mazzo.cs",
@@ -38,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Carta.cs",
               "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Carta.cs",
               "RelativeDocumentMoniker": "Server_e\\Carta.cs",
@@ -50,7 +67,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Server_e\\Server_e\\Program.cs",
               "RelativeDocumentMoniker": "Server_e\\Program.cs",
