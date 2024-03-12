@@ -10,6 +10,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 {
     
     private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
+    private static List<Carta> carte_tavolo = new List<Carta>();
 
     [STAThread]
     static void Main()
@@ -166,11 +167,22 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     {
         Mazzo mazzo = new Mazzo();
         mazzo.Mescola();
-        Carta c1 = mazzo.DistribuisciCarta();
-        Carta c2 = mazzo.DistribuisciCarta();
-        Carta c3 = mazzo.DistribuisciCarta();
-        Carta c4 = mazzo.DistribuisciCarta();
-        giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString()+"|"+c3.ToString()));
-        giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString()+"|"+c4.ToString()));
+        Carta c1 = mazzo.DistribuisciCarta();  // giocatore1
+        Carta c2 = mazzo.DistribuisciCarta();  // giocatore1
+        Carta c3 = mazzo.DistribuisciCarta();  // giocatore2
+        Carta c4 = mazzo.DistribuisciCarta();  // giocatore2
+        Carta t1 = mazzo.DistribuisciCarta();  //tavolo
+        Carta t2 = mazzo.DistribuisciCarta();  //tavolo
+        Carta t3 = mazzo.DistribuisciCarta();  //tavolo
+        Carta t4 = mazzo.DistribuisciCarta();  //tavolo
+        Carta t5 = mazzo.DistribuisciCarta();  //tavolo
+        carte_tavolo.Add(t1);
+        carte_tavolo.Add(t2);
+        carte_tavolo.Add(t3);
+        carte_tavolo.Add(t4);
+        carte_tavolo.Add(t5);
+
+        giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c3.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
+        giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString() + "|" + c4.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
     }
 }

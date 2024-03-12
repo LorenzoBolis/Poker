@@ -27,21 +27,32 @@ namespace Client_form
         private void ricezione_gioco()  // riceve carte 
         {
             string cards = Program.Ricevi();
-            string[] parti = cards.Split("|");
-            string card1 = parti[0];
-            string card2 = parti[1];
+            string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
+
             label2.Visible = true;
             label3.Visible = true;
+            label2.Text = parti[0];
+            label3.Text = parti[1];
+
             pictureBox1.Visible = true;
             pictureBox2.Visible = true;
+            pictureBox3.Visible = true;
+            pictureBox4.Visible = true;
+            pictureBox5.Visible = true;   // TODO  -  cambiare disposizione carte in base a se è giocatore1 (destra) o giocatore2 (sinistra)
+            pictureBox6.Visible = true;
+            pictureBox7.Visible = true;
+            pictureBox8.Visible = true;
+            pictureBox9.Visible = true;
 
-            label2.Text = card1;
-            label3.Text = card2;
-
-            pictureBox1.Image = Image.FromFile("../../../mazzo/" + card1.ToLower() + ".jpg");
-            pictureBox2.Image = Image.FromFile("../../../mazzo/" + card2.ToLower() + ".jpg");
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg");
+            pictureBox2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+            pictureBox3.Image = Image.FromFile("../../../mazzo/dorso.jpg");
+            pictureBox4.Image = Image.FromFile("../../../mazzo/dorso.jpg");
+            pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
+            pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
+            pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[4].ToLower() + ".jpg");
+            pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[5].ToLower() + ".jpg");
+            pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[6].ToLower() + ".jpg");
         }
         private void Form1_Load(object sender, EventArgs e)
         {
