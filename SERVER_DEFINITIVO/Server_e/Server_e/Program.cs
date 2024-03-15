@@ -20,7 +20,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.36.83"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -141,6 +141,118 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
 
     }
+    
+    static int ValutaCombinazioneCarte(List<Carta> mano)
+    {
+        // Ordina le carte per valore
+        // Unisci le carte della mano e del banco in una singola lista
+        List<Carta> carteTotali = new List<Carta>();
+        carteTotali.AddRange(mano);
+        carteTotali.AddRange(carte_tavolo);
+
+        // Ordina le carte per valore
+        carteTotali = carteTotali.OrderBy(carta => carta._Valore).ToList();
+
+        // Verifica se ci sono combinazioni di carte
+        bool coppia = false;
+        bool tris = false;
+        bool colore = false;
+        bool scala = false;
+
+
+        // Conta le carte di ciascun seme
+        Dictionary<string, int> conteggioSemi = new Dictionary<string, int>();
+        foreach (var carta in mano)
+        {
+            if (!conteggioSemi.ContainsKey(carta._Seme.ToString()))
+            {
+                conteggioSemi[carta._Seme.ToString()] = 0;
+            }
+            conteggioSemi[carta._Seme.ToString()]++;
+        }
+
+        // Conta le carte di ciascun valore
+        Dictionary<string, int> conteggioValori = new Dictionary<string, int>();
+        foreach (var carta in mano)
+        {
+            if (!conteggioValori.ContainsKey(carta._Valore.ToString()))
+            {
+                conteggioValori[carta._Valore.ToString()] = 0;
+            }
+            conteggioValori[carta._Valore.ToString()]++;
+        }
+
+        // Verifica la presenza di combinazioni di carte
+        foreach (var coppiaValore in conteggioValori)
+        {
+            if (coppiaValore.Value == 2)
+            {
+                coppia = true;
+            }
+            else if (coppiaValore.Value == 3)
+            {
+                tris = true;
+            }
+        }
+
+        // Verifica se ci sono cinque carte dello stesso seme (colore)
+        foreach (var seme in conteggioSemi)
+        {
+            if (seme.Value >= 5)
+            {
+                colore = true;
+            }
+        }
+
+        // Verifica se ci sono cinque carte consecutive (scala)
+        for (int i = 0; i < mano.Count - 4; i++)
+        {
+            if (mano[i + 4]._Valore == mano[i]._Valore + 4)
+            {
+                scala = true;
+                break;
+            }
+        }
+
+        // Assegna il punteggio in base alla combinazione di carte
+        if (scala && colore)
+        {
+            return 9; // Scala Reale
+        }
+        else if (tris)
+        {
+            return 8; // Poker
+        }
+        else if (coppia && conteggioValori.Count == 3)
+        {
+            return 7; // Full
+        }
+        else if (colore)
+        {
+            return 6; // Colore
+        }
+        else if (scala)
+        {
+            return 5; // Scala
+        }
+        else if (tris)
+        {
+            return 4; // Tris
+        }
+        else if (conteggioValori.Count == 4)
+        {
+            return 3; // Doppia Coppia
+        }
+        else if (coppia)
+        {
+            return 2; // Coppia
+        }
+        else
+        {
+            return 1; // Carta Alta
+        }
+    }
+
     /*static void Invia(Socket source) // metodo "di base" non utilizzato
     {
         string ackMessage = "INVIA";
@@ -169,8 +281,12 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         mazzo.Mescola();
         Carta c1 = mazzo.DistribuisciCarta();  // giocatore1
         Carta c2 = mazzo.DistribuisciCarta();  // giocatore1
+        giocatori[0].Aggiungicarta(c1);
+        giocatori[0].Aggiungicarta(c2);
         Carta c3 = mazzo.DistribuisciCarta();  // giocatore2
         Carta c4 = mazzo.DistribuisciCarta();  // giocatore2
+        giocatori[1].Aggiungicarta(c3);
+        giocatori[1].Aggiungicarta(c4);
         Carta t1 = mazzo.DistribuisciCarta();  //tavolo
         Carta t2 = mazzo.DistribuisciCarta();  //tavolo
         Carta t3 = mazzo.DistribuisciCarta();  //tavolo
@@ -184,5 +300,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c3.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
         giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString() + "|" + c4.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
+
+        //Console.WriteLine(ValutaCombinazioneCarte(giocatori[0].Mano));
     }
 }

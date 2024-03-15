@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj": {}
+    "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj": {}
   },
   "projects": {
-    "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj": {
+    "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
+        "projectUniqueName": "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
         "projectName": "Client_form",
-        "projectPath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
-        "packagesPath": "C:\\Users\\utente\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\obj\\",
+        "projectPath": "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
+        "packagesPath": "C:\\Users\\Utente\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\utente\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Utente\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -55,24 +50,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[7.0.15, 7.0.15]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[7.0.15, 7.0.15]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -81,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

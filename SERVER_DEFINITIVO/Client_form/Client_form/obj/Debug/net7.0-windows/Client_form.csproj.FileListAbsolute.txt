@@ -81,3 +81,20 @@ C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\Poker\
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\Poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.pdb
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\Poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.genruntimeconfig.cache
 C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\Poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\ref\Client_form.dll
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\bin\Debug\net7.0-windows\Client_form.exe
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\bin\Debug\net7.0-windows\Client_form.deps.json
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\bin\Debug\net7.0-windows\Client_form.runtimeconfig.json
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\bin\Debug\net7.0-windows\Client_form.dll
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\bin\Debug\net7.0-windows\Client_form.pdb
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.Form1.resources
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.csproj.GenerateResource.cache
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.AssemblyInfoInputs.cache
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.AssemblyInfo.cs
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.csproj.CoreCompileInputs.cache
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.sourcelink.json
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.dll
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\refint\Client_form.dll
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.pdb
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.genruntimeconfig.cache
+C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\ref\Client_form.dll

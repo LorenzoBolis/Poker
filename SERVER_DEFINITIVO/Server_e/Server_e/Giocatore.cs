@@ -12,7 +12,7 @@ namespace Server_e
     public class Giocatore
     {
         private string nome;
-        private List<Carta> mano;
+        private List<Carta> mano = new List<Carta>();
         private Socket sk;
         private bool gioco_avviato;
 
@@ -45,6 +45,10 @@ namespace Server_e
             Nome = n;
             Sk = sk;
             Gioco_avviato = false;
+        }
+        public void Aggiungicarta(Carta carta)
+        {
+            mano.Add(carta);
         }
     }
 }
