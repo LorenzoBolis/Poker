@@ -13,13 +13,14 @@ namespace Client_form
             Application.Run(new Form1());
         }
         static Socket client;
+        
         public static string Connetti()
         {
             try
             {
                 // Initialize socket
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPAddress ip = IPAddress.Parse("192.168.36.83");
+                IPAddress ip = IPAddress.Parse("192.168.1.139");
                 IPEndPoint ipEnd = new IPEndPoint(ip, 9000);
 
                 // Connect to server

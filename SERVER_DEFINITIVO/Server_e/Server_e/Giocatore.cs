@@ -15,7 +15,13 @@ namespace Server_e
         private List<Carta> mano = new List<Carta>();
         private Socket sk;
         private bool gioco_avviato;
+        private bool check;
 
+        public bool Check
+        {
+            get { return check; }
+            set { check = value; }
+        }
         public string Nome
         {
             get { return nome; }

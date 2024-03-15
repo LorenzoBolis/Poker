@@ -11,6 +11,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     
     private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
     private static List<Carta> carte_tavolo = new List<Carta>();
+    private static string stato_di_gioco = ""; // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
 
     [STAThread]
     static void Main()
@@ -20,7 +21,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.36.83"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -91,6 +92,11 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                     
                     Invia_Start();
                 }
+                else if (message == "CHECK") 
+                {
+                    g.Check = true;
+                    Gioco();
+                }
                 Console.WriteLine($"Dati ricevuti da {name}: {message}");
             }
             while (message != "exit");
@@ -119,7 +125,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 
                     //Thread giocooo = new Thread(Gioco);
                     //giocooo.Start();
-                    Gioco();
+                    Carte_Gioco();
                     //return;
                 }
                 catch (Exception ex)
@@ -136,10 +142,6 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
             }
         }
-        
-
-
-
     }
     
     static int ValutaCombinazioneCarte(List<Carta> mano)
@@ -274,8 +276,72 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         }
         
     }*/
-
     static void Gioco()
+    {
+        if (stato_di_gioco == "PREFLOP")
+        {
+            string ackMessage = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
+            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+            if (giocatori[0].Check && giocatori[1].Check)
+            {
+                try
+                {
+                    giocatori[1].Sk.Send(ackBytes);
+                    giocatori[0].Sk.Send(ackBytes);
+                    stato_di_gioco = "FLOP";
+                    giocatori[0].Check = false;
+                    giocatori[1].Check = false;
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
+            }
+        }
+        else if (stato_di_gioco == "FLOP")
+        {
+            string ackMessage = "CHECKED" + "|" + carte_tavolo[3].ToString();
+            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+            if (giocatori[0].Check && giocatori[1].Check)
+            {
+                try
+                {
+                    giocatori[1].Sk.Send(ackBytes);
+                    giocatori[0].Sk.Send(ackBytes);
+                    stato_di_gioco = "TURN";
+                    giocatori[0].Check = false;
+                    giocatori[1].Check = false;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
+            }
+        }
+        else if (stato_di_gioco == "TURN")
+        {
+            string ackMessage = "CHECKED" + "|" + carte_tavolo[4].ToString();
+            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+            if (giocatori[0].Check && giocatori[1].Check)
+            {
+                try
+                {
+                    giocatori[1].Sk.Send(ackBytes);
+                    giocatori[0].Sk.Send(ackBytes);
+                    stato_di_gioco = "RIVER";
+                    giocatori[0].Check = false;
+                    giocatori[1].Check = false;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
+            }
+        }
+
+    }
+    static void Carte_Gioco()
     {
         Mazzo mazzo = new Mazzo();
         mazzo.Mescola();
@@ -298,9 +364,9 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         carte_tavolo.Add(t4);
         carte_tavolo.Add(t5);
 
-        giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c3.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
-        giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString() + "|" + c4.ToString() + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()));
-
+        giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c3.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
+        giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString() + "|" + c4.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
+        stato_di_gioco = "PREFLOP";
         //Console.WriteLine(ValutaCombinazioneCarte(giocatori[0].Mano));
     }
 }

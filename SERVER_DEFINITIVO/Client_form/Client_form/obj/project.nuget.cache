@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "orA5sSaeo/2B9VIiEwuWfpOOxnCfNGUYb37K91Bu7M7NAzqX35nouY0vKSXDGFF9Va6ZRb4X6rlwUUOYgLxe1Q==",
+  "dgSpecHash": "xxWtxTLFW/WCg+eD6tUeU0oTN045JAhrcQH3SGosVGDLeFzqAY2voybjyavQz/3JXLJophP4p8byjscwIDIilQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Utente\\Desktop\\poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Client_form.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.15\\microsoft.netcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.15\\microsoft.aspnetcore.app.ref.7.0.15.nupkg.sha512",
+    "C:\\Users\\utente\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.15\\microsoft.netcore.app.host.win-x64.7.0.15.nupkg.sha512"
+  ],
   "logs": []
 }

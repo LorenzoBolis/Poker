@@ -11,6 +11,8 @@ namespace Client_form
             InitializeComponent();
             
         }
+        private string stato_di_gioco = "";
+
         private void ricezione() // in attesa dell'altro client e poi riceve carte
         {
             string response = Program.Ricevi();
@@ -20,12 +22,13 @@ namespace Client_form
                 button2.Visible = false;
                 label1.Visible = false;
                 this.BackColor = Color.DarkGreen;
-                
+
                 ricezione_gioco();
             }
         }
         private void ricezione_gioco()  // riceve carte 
         {
+            stato_di_gioco = "PREFLOP";
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
 
@@ -48,11 +51,11 @@ namespace Client_form
             pictureBox2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
             pictureBox3.Image = Image.FromFile("../../../mazzo/dorso.jpg");
             pictureBox4.Image = Image.FromFile("../../../mazzo/dorso.jpg");
-            pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
+            /*pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
             pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
             pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[4].ToLower() + ".jpg");
             pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[5].ToLower() + ".jpg");
-            pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[6].ToLower() + ".jpg");
+            pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[6].ToLower() + ".jpg");*/
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -69,7 +72,7 @@ namespace Client_form
                 button2.Enabled = true;
             }
         }
-        
+
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
@@ -90,6 +93,46 @@ namespace Client_form
                 //t1.Start();
                 ricezione();
             }
+        }
+        private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
+        {
+            Program.Invia("CHECK");
+            string messaggio = Program.Ricevi();
+            string[] parti = messaggio.Split("|");
+            if (stato_di_gioco == "PREFLOP")
+            {
+                if (parti[0] == "CHECKED")
+                {
+                    pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+                    pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
+                    pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
+                    stato_di_gioco = "FLOP";
+                }
+            }
+            else if (stato_di_gioco == "FLOP")
+            {
+                if (parti[0] == "CHECKED")
+                {
+                    pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+                    stato_di_gioco = "TURN";
+                }
+            }
+            else if (stato_di_gioco == "TURN")
+            {
+                if (parti[0] == "CHECKED")
+                {
+                    pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+                    stato_di_gioco = "RIVER";
+                }
+            }
+
+
+
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Thread th = new Thread(Gioco);
+            th.Start();
         }
     }
 }
