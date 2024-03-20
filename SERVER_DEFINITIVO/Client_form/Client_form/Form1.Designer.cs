@@ -44,6 +44,9 @@
             pictureBox9 = new PictureBox();
             button3 = new Button();
             label4 = new Label();
+            button4 = new Button();
+            button5 = new Button();
+            button6 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -197,28 +200,63 @@
             // 
             // button3
             // 
-            button3.Location = new Point(505, 639);
+            button3.Location = new Point(607, 645);
             button3.Name = "button3";
             button3.Size = new Size(135, 33);
             button3.TabIndex = 14;
             button3.Text = "Check";
             button3.UseVisualStyleBackColor = true;
+            button3.Visible = false;
             button3.Click += button3_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(723, 649);
+            label4.Location = new Point(566, 555);
             label4.Name = "label4";
             label4.Size = new Size(50, 20);
             label4.TabIndex = 15;
             label4.Text = "label4";
+            // 
+            // button4
+            // 
+            button4.Location = new Point(429, 645);
+            button4.Name = "button4";
+            button4.Size = new Size(135, 33);
+            button4.TabIndex = 16;
+            button4.Text = "Fold (VUOTO)";
+            button4.UseVisualStyleBackColor = true;
+            button4.Visible = false;
+            button4.Click += button4_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(785, 645);
+            button5.Name = "button5";
+            button5.Size = new Size(135, 33);
+            button5.TabIndex = 17;
+            button5.Text = "Call (VUOTO)";
+            button5.UseVisualStyleBackColor = true;
+            button5.Visible = false;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(952, 645);
+            button6.Name = "button6";
+            button6.Size = new Size(135, 33);
+            button6.TabIndex = 18;
+            button6.Text = "Raise (VUOTO)";
+            button6.UseVisualStyleBackColor = true;
+            button6.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
+            Controls.Add(button6);
+            Controls.Add(button5);
+            Controls.Add(button4);
             Controls.Add(label4);
             Controls.Add(button3);
             Controls.Add(pictureBox9);
@@ -269,5 +307,8 @@
         private PictureBox pictureBox9;
         private Button button3;
         private Label label4;
+        private Button button4;
+        private Button button5;
+        private Button button6;
     }
 }

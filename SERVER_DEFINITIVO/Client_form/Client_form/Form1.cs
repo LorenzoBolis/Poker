@@ -9,7 +9,7 @@ namespace Client_form
         public Form1()
         {
             InitializeComponent();
-            
+
         }
         private string stato_di_gioco = "";
 
@@ -31,6 +31,11 @@ namespace Client_form
             stato_di_gioco = "PREFLOP";
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
+
+            button3.Visible = true;
+            button4.Visible = true;
+            button5.Visible = true;
+            button6.Visible = true;
 
             label2.Visible = true;
             label3.Visible = true;
@@ -56,10 +61,26 @@ namespace Client_form
             pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[4].ToLower() + ".jpg");
             pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[5].ToLower() + ".jpg");
             pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[6].ToLower() + ".jpg");*/
+
+        }
+        private void ripristina()
+        {
+            stato_di_gioco = "";
+            pictureBox1.Image = null;
+            pictureBox2.Image = null;
+            pictureBox3.Image = null;
+            pictureBox4.Image = null;
+            pictureBox5.Image = null;
+            pictureBox6.Image = null;
+            pictureBox7.Image = null;
+            pictureBox8.Image = null;
+            pictureBox9.Image = null;
+            label2.Text = "";
+            label3.Text = "";
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -98,6 +119,12 @@ namespace Client_form
         {
             Program.Invia("CHECK");
             string messaggio = Program.Ricevi();
+            if (messaggio == "OTHER_FOLDED")
+            {   
+                ripristina();
+                MessageBox.Show("HAI VINTO (L'ALTRO GIOCATORE HA LASCIATO)");
+                return;
+            }
             string[] parti = messaggio.Split("|");
             if (stato_di_gioco == "PREFLOP")
             {
@@ -129,10 +156,16 @@ namespace Client_form
 
 
         }
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // check
         {
             Thread th = new Thread(Gioco);
             th.Start();
+        }
+
+        private void button4_Click(object sender, EventArgs e)  // fold
+        {
+            Program.Invia("FOLD");
+            ripristina();
         }
     }
 }
