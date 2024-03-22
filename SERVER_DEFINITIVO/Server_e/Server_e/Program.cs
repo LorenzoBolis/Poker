@@ -251,7 +251,27 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c3.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c2.ToString() + "|" + c4.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         stato_di_gioco = "PREFLOP";
-        //Console.WriteLine(ValutaCombinazioneCarte(giocatori[0].Mano));
+
+
+        //valutazione carte
+        List<Carta> giocatore1 = new List<Carta>();
+        List<Carta> giocatore2 = new List<Carta>();
+        foreach (Carta c in giocatori[0].Mano)
+        {
+            giocatore1.Add(c);
+        }
+        foreach (Carta c in giocatori[1].Mano)
+        {
+            giocatore2.Add(c);
+        }
+        foreach (Carta c in carte_tavolo)
+        {
+            giocatore1.Add(c);
+            giocatore2.Add(c);
+        }
+
+        Console.WriteLine("Giocatore 1  :  " + Combinazioni.EvaluateHand(giocatore1));
+        Console.WriteLine("Giocatore 2  :  " + Combinazioni.EvaluateHand(giocatore2));
     }
 
     static int ValutaCombinazioneCarte(List<Carta> mano)
