@@ -21,7 +21,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("10.1.0.231"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -90,7 +90,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 {
                     g.Gioco_avviato = true;
                     
-                    Invia_Start();
+                    Invia_Start(name);
                 }
                 else if (message == "CHECK") 
                 {
@@ -110,13 +110,13 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             Console.WriteLine("Errore nella gestione del client: " + ex.Message);
         }
     }
-    static void Invia_Start()
+    static void Invia_Start(string nome_client)
     {
-        string ackMessage = "game_started";
+        string ackMessage = "game_started"+"|"+nome_client;
         byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
         if (giocatori.Count < 2)
         {
-            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
         }
         else
         {
@@ -139,11 +139,11 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             }
             else if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato == false)
             {
-                giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
+                giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
             }
             else if (giocatori[0].Gioco_avviato ==false && giocatori[1].Gioco_avviato)
             {
-                giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("one_client"));
+                giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
             }
         }
     }

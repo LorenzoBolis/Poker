@@ -33,10 +33,10 @@
             button2 = new Button();
             label2 = new Label();
             label3 = new Label();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
+            c1_g1 = new PictureBox();
+            c2_g1 = new PictureBox();
+            c1_g2 = new PictureBox();
+            c2_g2 = new PictureBox();
             pictureBox5 = new PictureBox();
             pictureBox6 = new PictureBox();
             pictureBox7 = new PictureBox();
@@ -47,10 +47,10 @@
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)c2_g2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
@@ -108,45 +108,45 @@
             label3.Text = "label3";
             label3.Visible = false;
             // 
-            // pictureBox1
+            // c1_g1
             // 
-            pictureBox1.Location = new Point(674, 327);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(200, 300);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
-            pictureBox1.Visible = false;
+            c1_g1.Location = new Point(674, 327);
+            c1_g1.Name = "c1_g1";
+            c1_g1.Size = new Size(200, 300);
+            c1_g1.SizeMode = PictureBoxSizeMode.Zoom;
+            c1_g1.TabIndex = 5;
+            c1_g1.TabStop = false;
+            c1_g1.Visible = false;
             // 
-            // pictureBox2
+            // c2_g1
             // 
-            pictureBox2.Location = new Point(903, 327);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(200, 300);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.TabIndex = 6;
-            pictureBox2.TabStop = false;
-            pictureBox2.Visible = false;
+            c2_g1.Location = new Point(903, 327);
+            c2_g1.Name = "c2_g1";
+            c2_g1.Size = new Size(200, 300);
+            c2_g1.SizeMode = PictureBoxSizeMode.Zoom;
+            c2_g1.TabIndex = 6;
+            c2_g1.TabStop = false;
+            c2_g1.Visible = false;
             // 
-            // pictureBox3
+            // c1_g2
             // 
-            pictureBox3.Location = new Point(29, 327);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(200, 300);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 7;
-            pictureBox3.TabStop = false;
-            pictureBox3.Visible = false;
+            c1_g2.Location = new Point(29, 327);
+            c1_g2.Name = "c1_g2";
+            c1_g2.Size = new Size(200, 300);
+            c1_g2.SizeMode = PictureBoxSizeMode.Zoom;
+            c1_g2.TabIndex = 7;
+            c1_g2.TabStop = false;
+            c1_g2.Visible = false;
             // 
-            // pictureBox4
+            // c2_g2
             // 
-            pictureBox4.Location = new Point(274, 327);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(200, 300);
-            pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox4.TabIndex = 8;
-            pictureBox4.TabStop = false;
-            pictureBox4.Visible = false;
+            c2_g2.Location = new Point(274, 327);
+            c2_g2.Name = "c2_g2";
+            c2_g2.Size = new Size(200, 300);
+            c2_g2.SizeMode = PictureBoxSizeMode.Zoom;
+            c2_g2.TabIndex = 8;
+            c2_g2.TabStop = false;
+            c2_g2.Visible = false;
             // 
             // pictureBox5
             // 
@@ -200,7 +200,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(607, 645);
+            button3.Location = new Point(530, 648);
             button3.Name = "button3";
             button3.Size = new Size(135, 33);
             button3.TabIndex = 14;
@@ -220,18 +220,18 @@
             // 
             // button4
             // 
-            button4.Location = new Point(429, 645);
+            button4.Location = new Point(352, 648);
             button4.Name = "button4";
             button4.Size = new Size(135, 33);
             button4.TabIndex = 16;
-            button4.Text = "Fold (VUOTO)";
+            button4.Text = "Fold";
             button4.UseVisualStyleBackColor = true;
             button4.Visible = false;
             button4.Click += button4_Click;
             // 
             // button5
             // 
-            button5.Location = new Point(785, 645);
+            button5.Location = new Point(708, 648);
             button5.Name = "button5";
             button5.Size = new Size(135, 33);
             button5.TabIndex = 17;
@@ -241,7 +241,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(952, 645);
+            button6.Location = new Point(875, 648);
             button6.Name = "button6";
             button6.Size = new Size(135, 33);
             button6.TabIndex = 18;
@@ -264,10 +264,10 @@
             Controls.Add(pictureBox7);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox5);
-            Controls.Add(pictureBox4);
-            Controls.Add(pictureBox3);
-            Controls.Add(pictureBox2);
-            Controls.Add(pictureBox1);
+            Controls.Add(c2_g2);
+            Controls.Add(c1_g2);
+            Controls.Add(c2_g1);
+            Controls.Add(c1_g1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(button2);
@@ -276,10 +276,10 @@
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)c1_g1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)c2_g1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)c1_g2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)c2_g2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
@@ -296,10 +296,10 @@
         private Button button2;
         private Label label2;
         private Label label3;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
+        private PictureBox c1_g1;
+        private PictureBox c2_g1;
+        private PictureBox c1_g2;
+        private PictureBox c2_g2;
         private PictureBox pictureBox5;
         private PictureBox pictureBox6;
         private PictureBox pictureBox7;

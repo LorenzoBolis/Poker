@@ -12,11 +12,13 @@ namespace Client_form
 
         }
         private string stato_di_gioco = "";
+        private string mio_nome = "";
 
         private void ricezione() // in attesa dell'altro client e poi riceve carte
         {
             string response = Program.Ricevi();
-            if (response == "game_started")
+            string[] parti = response.Split("|");
+            if (parti[0] == "game_started")
             {
                 button1.Visible = false;
                 button2.Visible = false;
@@ -32,6 +34,8 @@ namespace Client_form
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
 
+            
+
             button3.Visible = true;
             button4.Visible = true;
             button5.Visible = true;
@@ -42,20 +46,30 @@ namespace Client_form
             label2.Text = parti[0];
             label3.Text = parti[1];
 
-            pictureBox1.Visible = true;
-            pictureBox2.Visible = true;
-            pictureBox3.Visible = true;
-            pictureBox4.Visible = true;
-            pictureBox5.Visible = true;   // TODO  -  cambiare disposizione carte in base a se è giocatore1 (destra) o giocatore2 (sinistra)
+            c1_g1.Visible = true;
+            c2_g1.Visible = true;
+            c1_g2.Visible = true;
+            c2_g2.Visible = true;
+            pictureBox5.Visible = true;
             pictureBox6.Visible = true;
             pictureBox7.Visible = true;
             pictureBox8.Visible = true;
             pictureBox9.Visible = true;
-
-            pictureBox1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg");
-            pictureBox2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
-            pictureBox3.Image = Image.FromFile("../../../mazzo/dorso.jpg");
-            pictureBox4.Image = Image.FromFile("../../../mazzo/dorso.jpg");
+            label4.Text = mio_nome;
+            if (mio_nome == "Client1")
+            {
+                c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
+                c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
+                c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
+                c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+            }
+            else if (mio_nome == "Client2")
+            {
+                c1_g2.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
+                c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
+                c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
+                c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+            }
             /*pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
             pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
             pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[4].ToLower() + ".jpg");
@@ -66,10 +80,10 @@ namespace Client_form
         private void ripristina()
         {
             stato_di_gioco = "";
-            pictureBox1.Image = null;
-            pictureBox2.Image = null;
-            pictureBox3.Image = null;
-            pictureBox4.Image = null;
+            c1_g1.Image = null;
+            c2_g1.Image = null;
+            c1_g2.Image = null;
+            c2_g2.Image = null;
             pictureBox5.Image = null;
             pictureBox6.Image = null;
             pictureBox7.Image = null;
@@ -99,7 +113,9 @@ namespace Client_form
             button2.Enabled = false;
             Program.Invia("GAME");
             string response = Program.Ricevi();
-            if (response == "game_started")
+            string[] parti = response.Split('|');
+            mio_nome = parti[1];
+            if (parti[0] == "game_started")
             {
                 button1.Visible = false;
                 button2.Visible = false;
@@ -107,13 +123,14 @@ namespace Client_form
                 this.BackColor = Color.DarkGreen;
                 ricezione_gioco();
             }
-            else if (response == "one_client")
+            else if (parti[0] == "one_client")
             {
                 label1.Text = "In attesa dell'altro giocatore";
                 //Thread t1 = new Thread(ricezione);
                 //t1.Start();
                 ricezione();
             }
+            
         }
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
