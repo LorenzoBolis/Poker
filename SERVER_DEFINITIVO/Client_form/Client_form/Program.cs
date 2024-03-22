@@ -20,7 +20,7 @@ namespace Client_form
             {
                 // Initialize socket
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPAddress ip = IPAddress.Parse("10.1.0.231");
+                IPAddress ip = IPAddress.Parse("192.168.1.139");
                 IPEndPoint ipEnd = new IPEndPoint(ip, 9000);
 
                 // Connect to server
