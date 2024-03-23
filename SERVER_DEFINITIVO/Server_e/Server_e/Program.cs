@@ -12,6 +12,8 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
     private static List<Carta> carte_tavolo = new List<Carta>();
     private static string stato_di_gioco = ""; // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
+    private static int pot;
+    private static Giocatore vincitore;
 
     [STAThread]
     static void Main()
@@ -99,7 +101,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 }
                 else if (message == "FOLD")
                 {
-                    Fine_Partita(g);
+                    Fold_Partita(g);
                 }
                 Console.WriteLine($"Dati ricevuti da {name}: {message}");
             }
@@ -149,6 +151,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     }
     static void Gioco()
     {
+        pot = 200; // TODO somma delle puntate giocatori
         if (stato_di_gioco == "PREFLOP")
         {
             string ackMessage = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
@@ -203,6 +206,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                     stato_di_gioco = "RIVER";
                     giocatori[0].Check = false;
                     giocatori[1].Check = false;
+                    Fine_Partita();
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +216,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         }
 
     }
-    static void Fine_Partita(Giocatore g)
+    private static void Fold_Partita(Giocatore g) // passa il giocatore che ha lasciato
     {
         string message = "OTHER_FOLDED";
         byte[] bytes = Encoding.UTF8.GetBytes(message);
@@ -225,7 +229,35 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             giocatori[0].Sk.Send(bytes);
         }
     }
-    static void Carte_Gioco()
+
+    private static void Fine_Partita()
+    {
+        //valutazione carte
+        var combinazione1 = Combinazioni.ValutaMano(giocatori[0].Mano, carte_tavolo);
+        var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo);
+        Console.WriteLine("Giocatore 1  :  " + combinazione1);
+        Console.WriteLine("Giocatore 2  :  " + combinazione2);
+        
+        if ((int)combinazione1 > (int)combinazione2)
+        {
+            Console.WriteLine("Vince G1");
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"VINTO|{pot}"));
+            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"PERSO|{pot}"));
+        }
+        else if ((int)combinazione1 < (int)combinazione2)
+        {
+            Console.WriteLine("Vince G2");
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"PERSO|{pot}"));
+            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"VINTO|{pot}"));
+        }
+        else
+        {
+            Console.WriteLine("Pareggio");
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"PAREGGIO|{pot}"));
+            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"PAREGGIO|{pot}"));
+        }
+    }
+private static void Carte_Gioco()
     {
         Mazzo mazzo = new Mazzo();
         mazzo.Mescola();
@@ -252,136 +284,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c3.ToString() + "|" + c4.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         stato_di_gioco = "PREFLOP";
 
-
-        //valutazione carte
-        List<Carta> mano_giocatore1 = new List<Carta>();
-        List<Carta> mano_giocatore2 = new List<Carta>();
-        foreach (Carta c in carte_tavolo) // aggiunge ad entrambi le carte del tavolo
-        {
-            mano_giocatore1.Add(c);
-            mano_giocatore2.Add(c);
-        }
-        foreach (Carta c in giocatori[0].Mano)
-        {
-            mano_giocatore1.Add(c);
-        }
-        foreach (Carta c in giocatori[1].Mano)
-        {
-            mano_giocatore2.Add(c);
-        }
-
-        Console.WriteLine("Giocatore 1  :  " + Combinazioni.ValutaMano(mano_giocatore1));
-        Console.WriteLine("Giocatore 2  :  " + Combinazioni.ValutaMano(mano_giocatore2));
     }
 
-    static int ValutaCombinazioneCarte(List<Carta> mano)
-    {
-        // Ordina le carte per valore
-        // Unisci le carte della mano e del banco in una singola lista
-        List<Carta> carteTotali = new List<Carta>();
-        carteTotali.AddRange(mano);
-        carteTotali.AddRange(carte_tavolo);
-
-        // Ordina le carte per valore
-        carteTotali = carteTotali.OrderBy(carta => carta._Valore).ToList();
-
-        // Verifica se ci sono combinazioni di carte
-        bool coppia = false;
-        bool tris = false;
-        bool colore = false;
-        bool scala = false;
-
-
-        // Conta le carte di ciascun seme
-        Dictionary<string, int> conteggioSemi = new Dictionary<string, int>();
-        foreach (var carta in mano)
-        {
-            if (!conteggioSemi.ContainsKey(carta._Seme.ToString()))
-            {
-                conteggioSemi[carta._Seme.ToString()] = 0;
-            }
-            conteggioSemi[carta._Seme.ToString()]++;
-        }
-
-        // Conta le carte di ciascun valore
-        Dictionary<string, int> conteggioValori = new Dictionary<string, int>();
-        foreach (var carta in mano)
-        {
-            if (!conteggioValori.ContainsKey(carta._Valore.ToString()))
-            {
-                conteggioValori[carta._Valore.ToString()] = 0;
-            }
-            conteggioValori[carta._Valore.ToString()]++;
-        }
-
-        // Verifica la presenza di combinazioni di carte
-        foreach (var coppiaValore in conteggioValori)
-        {
-            if (coppiaValore.Value == 2)
-            {
-                coppia = true;
-            }
-            else if (coppiaValore.Value == 3)
-            {
-                tris = true;
-            }
-        }
-
-        // Verifica se ci sono cinque carte dello stesso seme (colore)
-        foreach (var seme in conteggioSemi)
-        {
-            if (seme.Value >= 5)
-            {
-                colore = true;
-            }
-        }
-
-        // Verifica se ci sono cinque carte consecutive (scala)
-        for (int i = 0; i < mano.Count - 4; i++)
-        {
-            if (mano[i + 4]._Valore == mano[i]._Valore + 4)
-            {
-                scala = true;
-                break;
-            }
-        }
-
-        // Assegna il punteggio in base alla combinazione di carte
-        if (scala && colore)
-        {
-            return 9; // Scala Reale
-        }
-        else if (tris)
-        {
-            return 8; // Poker
-        }
-        else if (coppia && conteggioValori.Count == 3)
-        {
-            return 7; // Full
-        }
-        else if (colore)
-        {
-            return 6; // Colore
-        }
-        else if (scala)
-        {
-            return 5; // Scala
-        }
-        else if (tris)
-        {
-            return 4; // Tris
-        }
-        else if (conteggioValori.Count == 4)
-        {
-            return 3; // Doppia Coppia
-        }
-        else if (coppia)
-        {
-            return 2; // Coppia
-        }
-        else
-        {
-            return 1; // Carta Alta
-        }
-    }
+    
 }

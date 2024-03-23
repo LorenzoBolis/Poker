@@ -10,7 +10,7 @@ namespace Server_e
     {
         public enum Combinazione
         {
-            CartaAlta,
+            CartaAlta = 1,
             Coppia,
             DoppiaCoppia,
             Tris,
@@ -22,8 +22,13 @@ namespace Server_e
             ScalaReale
         }
 
-        public static Combinazione ValutaMano(List<Carta> hand)
+        public static Combinazione ValutaMano(List<Carta> hand, List<Carta> tavolo) // giocatore, tavolo
         {
+            foreach (Carta c in tavolo) // le carte del tavolo
+            {
+                hand.Add(c);
+            }
+
             if (IsScalaReale(hand)) return Combinazione.ScalaReale;
             if (IsScalaColore(hand)) return Combinazione.ScalaColore;
             if (IsPoker(hand)) return Combinazione.Poker;

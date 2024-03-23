@@ -167,6 +167,29 @@ namespace Client_form
                 {
                     pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     stato_di_gioco = "RIVER";
+
+                    string response = Program.Ricevi();
+                    string[] parts = response.Split('|');
+                    string risultato = parts[0];
+                    int pot = int.Parse(parts[1]);
+                    if (risultato == "VINTO")
+                    {
+                        MessageBox.Show($"HAI VINTO {pot}");
+                    }
+                    else if (risultato == "PERSO")
+                    {
+                        MessageBox.Show($"HAI PERSO {pot}");
+                    }
+                    else if (risultato == "PAREGGIO")
+                    {
+                        MessageBox.Show($"PAREGGIO  {pot}");
+                    }
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                    button5.Enabled = false;
+                    button6.Enabled = false;
+                    Thread.Sleep(5000);
+                    ripristina();
                 }
             }
 

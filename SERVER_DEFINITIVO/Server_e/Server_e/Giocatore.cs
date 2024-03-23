@@ -14,6 +14,7 @@ namespace Server_e
         private string nome;
         private List<Carta> mano = new List<Carta>();
         private Socket sk;
+        private int fiches;
         private bool gioco_avviato;
         private bool check;
 
@@ -40,6 +41,12 @@ namespace Server_e
             set { sk = value; }
         }
 
+        public int Fiches
+        {
+            get { return fiches; }
+            set { fiches = value; }
+        }
+
         public bool Gioco_avviato
         {
             get { return gioco_avviato; }
@@ -50,6 +57,7 @@ namespace Server_e
         {
             Nome = n;
             Sk = sk;
+            Fiches = 1000;
             Gioco_avviato = false;
         }
         public void Aggiungicarta(Carta carta)
