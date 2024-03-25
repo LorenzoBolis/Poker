@@ -34,7 +34,7 @@ namespace Client_form
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
 
-            
+
 
             button3.Visible = true;
             button4.Visible = true;
@@ -69,6 +69,12 @@ namespace Client_form
                 c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+                button3.Enabled = false;
+                button4.Enabled = false;
+                button5.Enabled = false;
+                button6.Enabled = false;
+                Thread th = new Thread(Gioco);
+                th.Start();
             }
             /*pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
             pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
@@ -94,7 +100,7 @@ namespace Client_form
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -130,16 +136,28 @@ namespace Client_form
                 //t1.Start();
                 ricezione();
             }
-            
+
         }
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
-            Program.Invia("CHECK");
             string messaggio = Program.Ricevi();
             if (messaggio == "OTHER_FOLDED")
-            {   
+            {
                 ripristina();
                 MessageBox.Show("HAI VINTO (L'ALTRO GIOCATORE HA LASCIATO)");
+                return;
+            }
+            if (messaggio == "OTHER_CHECK") // se l'altro ha checkato puoi farlo anche tu
+            {
+                button3.Enabled = true;
+                button4.Enabled = true;
+                button5.Enabled = true;
+                button6.Enabled = true;
+                messaggio = Program.Ricevi();
+            }
+            if (messaggio.Contains("VINTO") || messaggio.Contains("PERSO") || messaggio.Contains("PAREGGIO"))
+            {
+                MessaggioBox(messaggio);
                 return;
             }
             string[] parti = messaggio.Split("|");
@@ -169,35 +187,43 @@ namespace Client_form
                     stato_di_gioco = "RIVER";
 
                     string response = Program.Ricevi();
-                    string[] parts = response.Split('|');
-                    string risultato = parts[0];
-                    int pot = int.Parse(parts[1]);
-                    if (risultato == "VINTO")
-                    {
-                        MessageBox.Show($"HAI VINTO {pot}");
-                    }
-                    else if (risultato == "PERSO")
-                    {
-                        MessageBox.Show($"HAI PERSO {pot}");
-                    }
-                    else if (risultato == "PAREGGIO")
-                    {
-                        MessageBox.Show($"PAREGGIO  {pot}");
-                    }
-                    button3.Enabled = false;
-                    button4.Enabled = false;
-                    button5.Enabled = false;
-                    button6.Enabled = false;
-                    Thread.Sleep(5000);
-                    ripristina();
+                    MessaggioBox(response);
+                    
                 }
             }
+        }
 
-
-
+        private void MessaggioBox(string response)
+        {
+            string[] parts = response.Split('|');
+            string risultato = parts[0];
+            int pot = int.Parse(parts[1]);
+            if (risultato == "VINTO")
+            {
+                MessageBox.Show($"HAI VINTO {pot}");
+            }
+            else if (risultato == "PERSO")
+            {
+                MessageBox.Show($"HAI PERSO {pot}");
+            }
+            else if (risultato == "PAREGGIO")
+            {
+                MessageBox.Show($"PAREGGIO  {pot}");
+            }
+            button3.Enabled = false;
+            button4.Enabled = false;
+            button5.Enabled = false;
+            button6.Enabled = false;
+            Thread.Sleep(5000);
+            ripristina();
         }
         private void button3_Click(object sender, EventArgs e) // check
         {
+            button3.Enabled = false;
+            button4.Enabled = false;
+            button5.Enabled = false;
+            button6.Enabled = false;
+            Program.Invia("CHECK");
             Thread th = new Thread(Gioco);
             th.Start();
         }
@@ -206,6 +232,33 @@ namespace Client_form
         {
             Program.Invia("FOLD");
             ripristina();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (trackBar1.Visible == false)
+            {
+                // Mostra la TrackBar
+                trackBar1.Visible = true;
+                trackBar1.Visible = true;
+                button6.Text = "Scegli l'importo";
+            }
+            else
+            {
+                // Ottieni l'importo della puntata dal valore della TrackBar
+                int betAmount = trackBar1.Value;
+
+                // Qui gestisci la puntata e fai le azioni necessarie
+                // Ad esempio, puoi passare la puntata al tuo motore di gioco
+
+                // Ripristina la TrackBar per un'altra puntata
+                trackBar1.Visible = false;
+                trackBar1.Visible = false;
+                button6.Text = "RAISE (VUOTO)";
+                int rilancio = trackBar1.Value / 100 * 100;
+                Program.Invia($"RAISE|{rilancio}");
+            }
+            
         }
     }
 }

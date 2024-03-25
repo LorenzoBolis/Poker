@@ -47,7 +47,7 @@
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
-            label5 = new Label();
+            trackBar1 = new TrackBar();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -57,6 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -242,6 +243,7 @@
             // 
             // button6
             // 
+            button6.Enabled = false;
             button6.Location = new Point(875, 648);
             button6.Name = "button6";
             button6.Size = new Size(135, 33);
@@ -249,24 +251,28 @@
             button6.Text = "Raise (VUOTO)";
             button6.UseVisualStyleBackColor = true;
             button6.Visible = false;
+            button6.Click += button6_Click;
             // 
-            // label5
+            // trackBar1
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(491, 290);
-            label5.Name = "label5";
-            label5.Size = new Size(63, 25);
-            label5.TabIndex = 19;
-            label5.Text = "label5";
-            label5.Visible = false;
+            trackBar1.LargeChange = 100;
+            trackBar1.Location = new Point(914, 471);
+            trackBar1.Maximum = 1000;
+            trackBar1.Minimum = 100;
+            trackBar1.Name = "trackBar1";
+            trackBar1.Orientation = Orientation.Vertical;
+            trackBar1.Size = new Size(56, 156);
+            trackBar1.SmallChange = 100;
+            trackBar1.TabIndex = 20;
+            trackBar1.Value = 100;
+            trackBar1.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
-            Controls.Add(label5);
+            Controls.Add(trackBar1);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button4);
@@ -298,6 +304,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -323,6 +330,6 @@
         private Button button4;
         private Button button5;
         private Button button6;
-        private Label label5;
+        private TrackBar trackBar1;
     }
 }

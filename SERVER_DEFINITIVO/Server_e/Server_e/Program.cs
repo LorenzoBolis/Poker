@@ -97,11 +97,33 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 else if (message == "CHECK") 
                 {
                     g.Check = true;
-                    Gioco();
+                    Giocatore altro = giocatori[0];
+                    if (giocatori[0] == g) // determina chi è l'altro giocatore
+                    {
+                        altro = giocatori[1];
+                    }
+                    else if (giocatori[1] == g)
+                    {
+                        altro = giocatori[0];
+                    }
+                    /*if (altro.Check == false)  // se l'altro non ha ancora fatto la giocata, viene aggiornato
+                    {
+                        
+                    }*/
+                    Invia_Giocata_altro(g, "CHECK");
+
+                    Gioco_Check();
+                }
+                else if (message.Contains("RAISE"))
+                {
+                    int rilancio = int.Parse(message.Split("|")[1]);
+                    g.Check = true;
+                    Gioco_Raise(rilancio);
                 }
                 else if (message == "FOLD")
                 {
-                    Fold_Partita(g);
+                    Invia_Giocata_altro(g, "FOLDED");
+                    
                 }
                 Console.WriteLine($"Dati ricevuti da {name}: {message}");
             }
@@ -149,84 +171,37 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             }
         }
     }
-    static void Gioco()
+    static void Gioco_Check()
     {
         pot = 200; // TODO somma delle puntate giocatori
         if (stato_di_gioco == "PREFLOP")
         {
-            string ackMessage = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
-            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
-            if (giocatori[0].Check && giocatori[1].Check)
-            {
-                try
-                {
-                    giocatori[1].Sk.Send(ackBytes);
-                    giocatori[0].Sk.Send(ackBytes);
-                    stato_di_gioco = "FLOP";
-                    giocatori[0].Check = false;
-                    giocatori[1].Check = false;
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Client non connesso o irraggiungibile");
-                }
-            }
+            Invia_Flop();
         }
         else if (stato_di_gioco == "FLOP")
         {
-            string ackMessage = "CHECKED" + "|" + carte_tavolo[3].ToString();
-            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
-            if (giocatori[0].Check && giocatori[1].Check)
-            {
-                try
-                {
-                    giocatori[1].Sk.Send(ackBytes);
-                    giocatori[0].Sk.Send(ackBytes);
-                    stato_di_gioco = "TURN";
-                    giocatori[0].Check = false;
-                    giocatori[1].Check = false;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Client non connesso o irraggiungibile");
-                }
-            }
+            Invia_Turn();
         }
         else if (stato_di_gioco == "TURN")
         {
-            string ackMessage = "CHECKED" + "|" + carte_tavolo[4].ToString();
-            byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
-            if (giocatori[0].Check && giocatori[1].Check)
-            {
-                try
-                {
-                    giocatori[1].Sk.Send(ackBytes);
-                    giocatori[0].Sk.Send(ackBytes);
-                    stato_di_gioco = "RIVER";
-                    giocatori[0].Check = false;
-                    giocatori[1].Check = false;
-                    Fine_Partita();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Client non connesso o irraggiungibile");
-                }
-            }
+            Invia_River();
         }
-
     }
-    private static void Fold_Partita(Giocatore g) // passa il giocatore che ha lasciato
+
+    private static void Gioco_Raise(int raise)
     {
-        string message = "OTHER_FOLDED";
-        byte[] bytes = Encoding.UTF8.GetBytes(message);
-        if (giocatori[0] == g)
+        pot += raise;
+        if (stato_di_gioco == "PREFLOP")
         {
-            giocatori[1].Sk.Send(bytes);
+            Invia_Flop();
         }
-        else
+        else if (stato_di_gioco == "FLOP")
         {
-            giocatori[0].Sk.Send(bytes);
+            Invia_Turn();
+        }
+        else if (stato_di_gioco == "TURN")
+        {
+            Invia_River();
         }
     }
 
@@ -283,7 +258,83 @@ private static void Carte_Gioco()
         giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c2.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c3.ToString() + "|" + c4.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         stato_di_gioco = "PREFLOP";
+    }
 
+    private static void Invia_Giocata_altro(Giocatore g, string giocata) // giocatore che ha fatto la giocata
+    {
+        if (giocatori[0] == g)
+        {
+            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("OTHER_"+giocata));
+        }
+        else if (giocatori[1] == g)
+        {
+            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("OTHER_" + giocata));
+        }
+    }
+
+    private static void Invia_Flop()
+    {
+        string ackMessage = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
+        byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+        if (giocatori[0].Check && giocatori[1].Check)
+        {
+            try
+            {
+                giocatori[1].Sk.Send(ackBytes);
+                giocatori[0].Sk.Send(ackBytes);
+                stato_di_gioco = "FLOP";
+                giocatori[0].Check = false;
+                giocatori[1].Check = false;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Client non connesso o irraggiungibile");
+            }
+        }
+    }
+
+    private static void Invia_Turn()
+    {
+        string ackMessage = "CHECKED" + "|" + carte_tavolo[3].ToString();
+        byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+        if (giocatori[0].Check && giocatori[1].Check)
+        {
+            try
+            {
+                giocatori[1].Sk.Send(ackBytes);
+                giocatori[0].Sk.Send(ackBytes);
+                stato_di_gioco = "TURN";
+                giocatori[0].Check = false;
+                giocatori[1].Check = false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Client non connesso o irraggiungibile");
+            }
+        }
+    }
+
+    private static void Invia_River()
+    {
+        string ackMessage = "CHECKED" + "|" + carte_tavolo[4].ToString();
+        byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
+        if (giocatori[0].Check && giocatori[1].Check)
+        {
+            try
+            {
+                giocatori[1].Sk.Send(ackBytes);
+                giocatori[0].Sk.Send(ackBytes);
+                stato_di_gioco = "RIVER";
+                giocatori[0].Check = false;
+                giocatori[1].Check = false;
+                Fine_Partita();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Client non connesso o irraggiungibile");
+            }
+        }
     }
 
     
