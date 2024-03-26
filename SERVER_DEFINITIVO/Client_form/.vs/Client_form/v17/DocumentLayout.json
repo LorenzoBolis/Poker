@@ -1,17 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\",
+  "WorkspaceRootPath": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|c:\\users\\utente\\desktop\\lorenzo\\itis marconi\\4\\informatica\\progetto_poker\\poker\\server_definitivo\\client_form\\client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|c:\\server\\niko\\poker_progetto\\poker\\server_definitivo\\client_form\\client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -22,15 +22,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
+              "DocumentMoniker": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
               "RelativeDocumentMoniker": "Client_form\\Program.cs",
-              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
+              "ToolTip": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
               "RelativeToolTip": "Client_form\\Program.cs",
               "ViewState": "AQIAAD4AAAAAAAAAAAAQwBYAAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -38,24 +38,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
+              "DocumentMoniker": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeDocumentMoniker": "Client_form\\Form1.cs",
-              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
+              "ToolTip": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeToolTip": "Client_form\\Form1.cs",
-              "ViewState": "AQIAAEoAAAAAAAAAAAAAAKEAAAANAAAA",
+              "ViewState": "AQIAAGgAAABAmZmZmZkhwKIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-06T15:40:49.23Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs [Progettazione]",
-              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
+              "DocumentMoniker": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeDocumentMoniker": "Client_form\\Form1.cs",
-              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs [Progettazione]",
+              "ToolTip": "C:\\server\\NIKO\\poker_progetto\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs [Progettazione]",
               "RelativeToolTip": "Client_form\\Form1.cs [Progettazione]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-09T13:58:59.657Z",

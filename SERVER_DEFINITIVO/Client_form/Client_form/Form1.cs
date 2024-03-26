@@ -55,6 +55,7 @@ namespace Client_form
             pictureBox7.Visible = true;
             pictureBox8.Visible = true;
             pictureBox9.Visible = true;
+            pictureBox1.Visible = false;
             label4.Text = mio_nome;
             if (mio_nome == "Client1")
             {
@@ -62,6 +63,7 @@ namespace Client_form
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+                label5.Text = "sei il giocaore n°1";
             }
             else if (mio_nome == "Client2")
             {
@@ -69,6 +71,7 @@ namespace Client_form
                 c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+                label5.Text = "sei il giocaore n°2";
                 button3.Enabled = false;
                 button4.Enabled = false;
                 button5.Enabled = false;
@@ -95,6 +98,7 @@ namespace Client_form
             pictureBox7.Image = null;
             pictureBox8.Image = null;
             pictureBox9.Image = null;
+            pictureBox1.Visible = false;
             label2.Text = "";
             label3.Text = "";
         }
@@ -141,6 +145,7 @@ namespace Client_form
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
             string messaggio = Program.Ricevi();
+            pictureBox1.Visible = false;
             if (messaggio == "OTHER_FOLDED")
             {
                 ripristina();
@@ -188,7 +193,7 @@ namespace Client_form
 
                     string response = Program.Ricevi();
                     MessaggioBox(response);
-                    
+
                 }
             }
         }
@@ -258,7 +263,15 @@ namespace Client_form
                 int rilancio = trackBar1.Value / 100 * 100;
                 Program.Invia($"RAISE|{rilancio}");
             }
-            
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string testo = textBox1.Text;
+
+            textBox1.Text = ""; // Pulisci la TextBox dopo l'invio
+            label6.Text = testo;
         }
     }
 }

@@ -48,6 +48,12 @@
             button5 = new Button();
             button6 = new Button();
             trackBar1 = new TrackBar();
+            pictureBox1 = new PictureBox();
+            label5 = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            textBox1 = new TextBox();
+            button7 = new Button();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -58,6 +64,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -172,7 +179,7 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Location = new Point(505, 27);
+            pictureBox7.Location = new Point(503, 27);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(175, 250);
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
@@ -214,7 +221,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(566, 555);
+            label4.Location = new Point(38, 593);
             label4.Name = "label4";
             label4.Size = new Size(50, 20);
             label4.TabIndex = 15;
@@ -267,16 +274,71 @@
             trackBar1.Value = 100;
             trackBar1.Visible = false;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.pokerimage;
+            pictureBox1.Location = new Point(834, 27);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(317, 275);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 21;
+            pictureBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(38, 661);
+            label5.Name = "label5";
+            label5.Size = new Size(50, 20);
+            label5.TabIndex = 22;
+            label5.Text = "label5";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(152, 661);
+            label6.Name = "label6";
+            label6.Size = new Size(50, 20);
+            label6.TabIndex = 23;
+            label6.Text = "label6";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(514, 78);
+            label7.Name = "label7";
+            label7.Size = new Size(131, 20);
+            label7.TabIndex = 24;
+            label7.Text = "Inserisci Nickname";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(514, 114);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 27);
+            textBox1.TabIndex = 25;
+            // 
+            // button7
+            // 
+            button7.Location = new Point(514, 163);
+            button7.Name = "button7";
+            button7.Size = new Size(132, 53);
+            button7.TabIndex = 26;
+            button7.Text = "Aggiungi Nickname";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
+            Controls.Add(label6);
+            Controls.Add(label5);
             Controls.Add(trackBar1);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button4);
-            Controls.Add(label4);
             Controls.Add(button3);
             Controls.Add(pictureBox9);
             Controls.Add(pictureBox8);
@@ -292,6 +354,11 @@
             Controls.Add(button2);
             Controls.Add(label1);
             Controls.Add(button1);
+            Controls.Add(button7);
+            Controls.Add(textBox1);
+            Controls.Add(label7);
+            Controls.Add(label4);
+            Controls.Add(pictureBox1);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -305,6 +372,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -331,5 +399,11 @@
         private Button button5;
         private Button button6;
         private TrackBar trackBar1;
+        private PictureBox pictureBox1;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+        private TextBox textBox1;
+        private Button button7;
     }
 }

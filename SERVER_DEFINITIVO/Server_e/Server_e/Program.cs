@@ -23,7 +23,7 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.1.139"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.36.83"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
