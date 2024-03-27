@@ -131,3 +131,6 @@ C:\Users\utente\Downloads\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\ne
 C:\Users\utente\Downloads\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.genruntimeconfig.cache
 C:\Users\utente\Downloads\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\ref\Client_form.dll
 C:\Users\Utente\Desktop\poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.Properties.Resources.resources
+C:\server\NIKO\poker_progetto\Poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.Properties.Resources.resources
+C:\Users\utente\Downloads\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.Properties.Resources.resources
+C:\Users\utente\Desktop\LORENZO\ITIS Marconi\4\Informatica\Progetto_Poker\Poker\SERVER_DEFINITIVO\Client_form\Client_form\obj\Debug\net7.0-windows\Client_form.Properties.Resources.resources

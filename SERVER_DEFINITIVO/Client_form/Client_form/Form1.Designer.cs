@@ -50,10 +50,8 @@
             trackBar1 = new TrackBar();
             pictureBox1 = new PictureBox();
             label5 = new Label();
-            label6 = new Label();
             label7 = new Label();
             textBox1 = new TextBox();
-            button7 = new Button();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -179,7 +177,7 @@
             // 
             // pictureBox7
             // 
-            pictureBox7.Location = new Point(503, 27);
+            pictureBox7.Location = new Point(504, 27);
             pictureBox7.Name = "pictureBox7";
             pictureBox7.Size = new Size(175, 250);
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
@@ -292,15 +290,7 @@
             label5.Size = new Size(50, 20);
             label5.TabIndex = 22;
             label5.Text = "label5";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(152, 661);
-            label6.Name = "label6";
-            label6.Size = new Size(50, 20);
-            label6.TabIndex = 23;
-            label6.Text = "label6";
+            label5.Visible = false;
             // 
             // label7
             // 
@@ -318,22 +308,11 @@
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 25;
             // 
-            // button7
-            // 
-            button7.Location = new Point(514, 163);
-            button7.Name = "button7";
-            button7.Size = new Size(132, 53);
-            button7.TabIndex = 26;
-            button7.Text = "Aggiungi Nickname";
-            button7.UseVisualStyleBackColor = true;
-            button7.Click += button7_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
-            Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(trackBar1);
             Controls.Add(button6);
@@ -354,7 +333,6 @@
             Controls.Add(button2);
             Controls.Add(label1);
             Controls.Add(button1);
-            Controls.Add(button7);
             Controls.Add(textBox1);
             Controls.Add(label7);
             Controls.Add(label4);
@@ -401,9 +379,7 @@
         private TrackBar trackBar1;
         private PictureBox pictureBox1;
         private Label label5;
-        private Label label6;
         private Label label7;
         private TextBox textBox1;
-        private Button button7;
     }
 }

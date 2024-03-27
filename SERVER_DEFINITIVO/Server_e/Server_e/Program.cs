@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
-class Program  // SERVER - 192.168.1.139  (184 mik)
+class Program  // SERVER - 192.168.0.5
 {
     
     private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
@@ -14,16 +14,17 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
     private static string stato_di_gioco = ""; // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
     private static int pot;
     private static Giocatore vincitore;
+    private static Mazzo mazzo;
 
     [STAThread]
     static void Main()
     {
         int contatore = 0;
-        
+        Crea_Mazzo();
 
         // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.36.83"), 9000);
+        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.0.5"), 9000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -91,27 +92,12 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 else if (message == "GAME")
                 {
                     g.Gioco_avviato = true;
-                    
-                    Invia_Start(name);
+                    Invia_Start();
                 }
                 else if (message == "CHECK") 
                 {
                     g.Check = true;
-                    Giocatore altro = giocatori[0];
-                    if (giocatori[0] == g) // determina chi è l'altro giocatore
-                    {
-                        altro = giocatori[1];
-                    }
-                    else if (giocatori[1] == g)
-                    {
-                        altro = giocatori[0];
-                    }
-                    /*if (altro.Check == false)  // se l'altro non ha ancora fatto la giocata, viene aggiornato
-                    {
-                        
-                    }*/
                     Invia_Giocata_altro(g, "CHECK");
-
                     Gioco_Check();
                 }
                 else if (message.Contains("RAISE"))
@@ -123,8 +109,13 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
                 else if (message == "FOLD")
                 {
                     Invia_Giocata_altro(g, "FOLDED");
-                    
+                    giocatori[0].Mano.Clear();
+                    giocatori[1].Mano.Clear();
+                    carte_tavolo.Clear();
+                    giocatori[0].Gioco_avviato = false;
+                    giocatori[1].Gioco_avviato = false;
                 }
+                
                 Console.WriteLine($"Dati ricevuti da {name}: {message}");
             }
             while (message != "exit");
@@ -134,40 +125,20 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
             Console.WriteLine("Errore nella gestione del client: " + ex.Message);
         }
     }
-    static void Invia_Start(string nome_client)
+    static void Invia_Start()
     {
-        string ackMessage = "game_started"+"|"+nome_client;
-        byte[] ackBytes = Encoding.UTF8.GetBytes(ackMessage);
-        if (giocatori.Count < 2)
+        if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato)
         {
-            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
-        }
-        else
-        {
-            if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato)
+            try
             {
-                try
-                {
-                    giocatori[1].Sk.Send(ackBytes);
-                    giocatori[0].Sk.Send(ackBytes);
-                
-                    //Thread giocooo = new Thread(Gioco);
-                    //giocooo.Start();
-                    Carte_Gioco();
-                    //return;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Client non connesso o irraggiungibile");
-                }
+                giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("game_started|Client1"));
+                giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("game_started|Client2"));
+                Carte_Gioco();
+                //return;
             }
-            else if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato == false)
+            catch (Exception ex)
             {
-                giocatori[0].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
-            }
-            else if (giocatori[0].Gioco_avviato ==false && giocatori[1].Gioco_avviato)
-            {
-                giocatori[1].Sk.Send(Encoding.UTF8.GetBytes("one_client" + "|" + nome_client));
+                Console.WriteLine("Client non connesso o irraggiungibile");
             }
         }
     }
@@ -185,6 +156,10 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         else if (stato_di_gioco == "TURN")
         {
             Invia_River();
+        }
+        else if (stato_di_gioco == "RIVER")
+        {
+            Fine_Partita();
         }
     }
 
@@ -212,30 +187,55 @@ class Program  // SERVER - 192.168.1.139  (184 mik)
         var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo);
         Console.WriteLine("Giocatore 1  :  " + combinazione1);
         Console.WriteLine("Giocatore 2  :  " + combinazione2);
-        
+        string testo0, testo1;
         if ((int)combinazione1 > (int)combinazione2)
         {
             Console.WriteLine("Vince G1");
-            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"VINTO|{pot}"));
-            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"PERSO|{pot}"));
+            testo0 = "VINTO|{pot}";
+            testo1 = "PERSO|{pot}";
         }
         else if ((int)combinazione1 < (int)combinazione2)
         {
             Console.WriteLine("Vince G2");
-            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"PERSO|{pot}"));
-            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"VINTO|{pot}"));
+            testo0 = "PERSO|{pot}";
+            testo1 = "VINTO|{pot}";
         }
         else
         {
             Console.WriteLine("Pareggio");
-            giocatori[0].Sk.Send(Encoding.UTF8.GetBytes($"PAREGGIO|{pot}"));
-            giocatori[1].Sk.Send(Encoding.UTF8.GetBytes($"PAREGGIO|{pot}"));
+            testo0 = "PAREGGIO|{pot}";
+            testo1 = "PAREGGIO|{pot}";
+        }
+        byte[] bytes0 = Encoding.UTF8.GetBytes("FINE_MANO|"+testo0);
+        byte[] bytes1 = Encoding.UTF8.GetBytes("FINE_MANO|"+testo1);
+        if (giocatori[0].Check && giocatori[1].Check)
+        {
+            try
+            {
+                giocatori[0].Sk.Send(bytes0);
+                giocatori[1].Sk.Send(bytes1);
+                stato_di_gioco = "";
+                giocatori[0].Check = false;
+                giocatori[1].Check = false;
+                giocatori[0].Mano.Clear();
+                giocatori[1].Mano.Clear();
+                carte_tavolo.Clear();
+                giocatori[0].Gioco_avviato = false;
+                giocatori[1].Gioco_avviato = false;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Client non connesso o irraggiungibile");
+            }
         }
     }
-private static void Carte_Gioco()
+    private static void Carte_Gioco()
     {
-        Mazzo mazzo = new Mazzo();
-        mazzo.Mescola();
+        if (mazzo.Carte.Count < 9)
+        {
+            Crea_Mazzo();
+        }
         Carta c1 = mazzo.DistribuisciCarta();  // giocatore1
         Carta c2 = mazzo.DistribuisciCarta();  // giocatore1
         giocatori[0].Aggiungicarta(c1);
@@ -258,6 +258,11 @@ private static void Carte_Gioco()
         giocatori[0].Sk.Send(Encoding.UTF8.GetBytes(c1.ToString() + "|" + c2.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         giocatori[1].Sk.Send(Encoding.UTF8.GetBytes(c3.ToString() + "|" + c4.ToString()));  //  + "|" + t1.ToString() + "|" + t2.ToString() + "|" + t3.ToString() + "|" + t4.ToString() + "|" + t5.ToString()
         stato_di_gioco = "PREFLOP";
+    }
+    private static void Crea_Mazzo()
+    {
+        mazzo = new Mazzo();
+        mazzo.Mescola();
     }
 
     private static void Invia_Giocata_altro(Giocatore g, string giocata) // giocatore che ha fatto la giocata
@@ -328,7 +333,7 @@ private static void Carte_Gioco()
                 stato_di_gioco = "RIVER";
                 giocatori[0].Check = false;
                 giocatori[1].Check = false;
-                Fine_Partita();
+                //Fine_Partita();
             }
             catch (Exception ex)
             {

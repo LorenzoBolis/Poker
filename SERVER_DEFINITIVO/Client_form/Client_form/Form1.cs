@@ -13,28 +13,13 @@ namespace Client_form
         }
         private string stato_di_gioco = "";
         private string mio_nome = "";
-
-        private void ricezione() // in attesa dell'altro client e poi riceve carte
-        {
-            string response = Program.Ricevi();
-            string[] parti = response.Split("|");
-            if (parti[0] == "game_started")
-            {
-                button1.Visible = false;
-                button2.Visible = false;
-                label1.Visible = false;
-                this.BackColor = Color.DarkGreen;
-
-                ricezione_gioco();
-            }
-        }
         private void ricezione_gioco()  // riceve carte 
         {
             stato_di_gioco = "PREFLOP";
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
 
-
+            pictureBox1.Image = null;
 
             button3.Visible = true;
             button4.Visible = true;
@@ -57,13 +42,13 @@ namespace Client_form
             pictureBox9.Visible = true;
             pictureBox1.Visible = false;
             label4.Text = mio_nome;
+            label5.Visible = true;
             if (mio_nome == "Client1")
             {
                 c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
-                label5.Text = "sei il giocaore n°1";
             }
             else if (mio_nome == "Client2")
             {
@@ -71,7 +56,6 @@ namespace Client_form
                 c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
-                label5.Text = "sei il giocaore n°2";
                 button3.Enabled = false;
                 button4.Enabled = false;
                 button5.Enabled = false;
@@ -112,6 +96,7 @@ namespace Client_form
             string res = Program.Connetti();
             label1.Text = res;
             button1.Enabled = false;
+            label5.Text = textBox1.Text;
             if (res == "Connesso al server")
             {
                 button2.Enabled = true;
@@ -121,6 +106,11 @@ namespace Client_form
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
+            New_mano();
+        }
+
+        private void New_mano()
+        {
             Program.Invia("GAME");
             string response = Program.Ricevi();
             string[] parti = response.Split('|');
@@ -133,38 +123,27 @@ namespace Client_form
                 this.BackColor = Color.DarkGreen;
                 ricezione_gioco();
             }
-            else if (parti[0] == "one_client")
-            {
-                label1.Text = "In attesa dell'altro giocatore";
-                //Thread t1 = new Thread(ricezione);
-                //t1.Start();
-                ricezione();
-            }
-
         }
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
             string messaggio = Program.Ricevi();
-            pictureBox1.Visible = false;
-            if (messaggio == "OTHER_FOLDED")
-            {
-                ripristina();
-                MessageBox.Show("HAI VINTO (L'ALTRO GIOCATORE HA LASCIATO)");
-                return;
-            }
-            if (messaggio == "OTHER_CHECK") // se l'altro ha checkato puoi farlo anche tu
+
+            if (messaggio == "OTHER_CHECK")
             {
                 button3.Enabled = true;
                 button4.Enabled = true;
                 button5.Enabled = true;
                 button6.Enabled = true;
-                messaggio = Program.Ricevi();
+                if (stato_di_gioco == "RIVER" && mio_nome == "Client2")
+                {
+                    
+                }
+                else
+                {
+                    messaggio = Program.Ricevi();
+                }
             }
-            if (messaggio.Contains("VINTO") || messaggio.Contains("PERSO") || messaggio.Contains("PAREGGIO"))
-            {
-                MessaggioBox(messaggio);
-                return;
-            }
+            
             string[] parti = messaggio.Split("|");
             if (stato_di_gioco == "PREFLOP")
             {
@@ -190,10 +169,15 @@ namespace Client_form
                 {
                     pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     stato_di_gioco = "RIVER";
-
-                    string response = Program.Ricevi();
-                    MessaggioBox(response);
-
+                }
+            }
+            else if (stato_di_gioco == "RIVER")
+            {
+                if (parti[0] == "FINE_MANO")
+                {
+                    MessageBox.Show(parti[1] + parti[2]); // TODO gestione fiches giocatori
+                    ripristina();
+                    New_mano();
                 }
             }
         }
@@ -219,7 +203,7 @@ namespace Client_form
             button4.Enabled = false;
             button5.Enabled = false;
             button6.Enabled = false;
-            Thread.Sleep(5000);
+            
             ripristina();
         }
         private void button3_Click(object sender, EventArgs e) // check
@@ -239,7 +223,7 @@ namespace Client_form
             ripristina();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)  // raise
         {
             if (trackBar1.Visible == false)
             {
@@ -264,14 +248,6 @@ namespace Client_form
                 Program.Invia($"RAISE|{rilancio}");
             }
 
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            string testo = textBox1.Text;
-
-            textBox1.Text = ""; // Pulisci la TextBox dopo l'invio
-            label6.Text = testo;
         }
     }
 }
