@@ -108,7 +108,15 @@ class Program  // SERVER - 192.168.0.5
                 }
                 else if (message == "FOLD")
                 {
-                    Invia_Giocata_altro(g, "FOLDED");
+                    if (g.Nome == "Client1")
+                    {
+                        Invia_Giocata_altro(g, "FOLD");
+                    }
+                    else
+                    {
+                        Invia_Giocata_altro(giocatori[0], "FOLD");
+                        Invia_Giocata_altro(giocatori[1], "FOLD");
+                    }
                     giocatori[0].Mano.Clear();
                     giocatori[1].Mano.Clear();
                     carte_tavolo.Clear();
@@ -183,33 +191,48 @@ class Program  // SERVER - 192.168.0.5
     private static void Fine_Partita()
     {
         //valutazione carte
-        var combinazione1 = Combinazioni.ValutaMano(giocatori[0].Mano, carte_tavolo);
-        var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo);
-        Console.WriteLine("Giocatore 1  :  " + combinazione1);
-        Console.WriteLine("Giocatore 2  :  " + combinazione2);
-        string testo0, testo1;
-        if ((int)combinazione1 > (int)combinazione2)
-        {
-            Console.WriteLine("Vince G1");
-            testo0 = "VINTO|{pot}";
-            testo1 = "PERSO|{pot}";
-        }
-        else if ((int)combinazione1 < (int)combinazione2)
-        {
-            Console.WriteLine("Vince G2");
-            testo0 = "PERSO|{pot}";
-            testo1 = "VINTO|{pot}";
-        }
-        else
-        {
-            Console.WriteLine("Pareggio");
-            testo0 = "PAREGGIO|{pot}";
-            testo1 = "PAREGGIO|{pot}";
-        }
-        byte[] bytes0 = Encoding.UTF8.GetBytes("FINE_MANO|"+testo0);
-        byte[] bytes1 = Encoding.UTF8.GetBytes("FINE_MANO|"+testo1);
         if (giocatori[0].Check && giocatori[1].Check)
         {
+            var combinazione1 = Combinazioni.ValutaMano(giocatori[0].Mano, carte_tavolo);
+            var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo);
+            Console.WriteLine("Giocatore 1  :  " + combinazione1);
+            Console.WriteLine("Giocatore 2  :  " + combinazione2);
+            string testo0, testo1;
+            if ((int)combinazione1 > (int)combinazione2)
+            {
+                Console.WriteLine("Vince G1");
+                testo0 = "VINTO|{pot}";
+                testo1 = "PERSO|{pot}";
+            }
+            else if ((int)combinazione1 < (int)combinazione2)
+            {
+                Console.WriteLine("Vince G2");
+                testo0 = "PERSO|{pot}";
+                testo1 = "VINTO|{pot}";
+            }
+            else
+            {
+                List<int> list0 = new List<int>() { (int)giocatori[0].Mano[0]._Valore, (int)giocatori[0].Mano[1]._Valore };
+                List<int> list1 = new List<int>() { (int)giocatori[1].Mano[0]._Valore, (int)giocatori[1].Mano[1]._Valore };
+                if (list0.Max() > list1.Max()) // in caso di pareggio valuta chi ha carta alta
+                {
+                    Console.WriteLine("Vince G1");
+                    testo0 = "VINTO|{pot}";
+                    testo1 = "PERSO|{pot}";
+                }
+                else if (list0.Max() < list1.Max())
+                {
+                    testo0 = "PERSO|{pot}";
+                    testo1 = "VINTO|{pot}";
+                }
+                else
+                {
+                    testo0 = "PAREGGIO|{pot}";
+                    testo1 = "PAREGGIO|{pot}";
+                }
+            }
+            byte[] bytes0 = Encoding.UTF8.GetBytes("FINE_MANO|" + testo0);
+            byte[] bytes1 = Encoding.UTF8.GetBytes("FINE_MANO|" + testo1);
             try
             {
                 giocatori[0].Sk.Send(bytes0);

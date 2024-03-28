@@ -49,6 +49,10 @@ namespace Client_form
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+                button3.Enabled = true;
+                button4.Enabled = true;
+                button5.Enabled = true;
+                button6.Enabled = true;
             }
             else if (mio_nome == "Client2")
             {
@@ -128,6 +132,11 @@ namespace Client_form
         {
             string messaggio = Program.Ricevi();
 
+            if (messaggio == "OTHER_FOLD")
+            {
+                ripristina();
+                New_mano();
+            }
             if (messaggio == "OTHER_CHECK")
             {
                 button3.Enabled = true;
@@ -182,30 +191,6 @@ namespace Client_form
             }
         }
 
-        private void MessaggioBox(string response)
-        {
-            string[] parts = response.Split('|');
-            string risultato = parts[0];
-            int pot = int.Parse(parts[1]);
-            if (risultato == "VINTO")
-            {
-                MessageBox.Show($"HAI VINTO {pot}");
-            }
-            else if (risultato == "PERSO")
-            {
-                MessageBox.Show($"HAI PERSO {pot}");
-            }
-            else if (risultato == "PAREGGIO")
-            {
-                MessageBox.Show($"PAREGGIO  {pot}");
-            }
-            button3.Enabled = false;
-            button4.Enabled = false;
-            button5.Enabled = false;
-            button6.Enabled = false;
-            
-            ripristina();
-        }
         private void button3_Click(object sender, EventArgs e) // check
         {
             button3.Enabled = false;
@@ -221,6 +206,7 @@ namespace Client_form
         {
             Program.Invia("FOLD");
             ripristina();
+            New_mano();
         }
 
         private void button6_Click(object sender, EventArgs e)  // raise
