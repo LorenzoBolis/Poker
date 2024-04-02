@@ -117,6 +117,10 @@ namespace Client_form
         {
             Program.Invia("GAME");
             string response = Program.Ricevi();
+            if (response == "OTHER_FOLD") // soluzione a un problema nella fold (quando il client2 fa la fold al turn river)
+            {
+                response = Program.Ricevi();
+            }
             string[] parti = response.Split('|');
             mio_nome = parti[1];
             if (parti[0] == "game_started")
@@ -143,16 +147,15 @@ namespace Client_form
                 button4.Enabled = true;
                 button5.Enabled = true;
                 button6.Enabled = true;
-                if (stato_di_gioco == "RIVER" && mio_nome == "Client2")
+                if (mio_nome == "Client2" && stato_di_gioco == "RIVER")
                 {
-                    
+
                 }
                 else
                 {
                     messaggio = Program.Ricevi();
                 }
             }
-            
             string[] parti = messaggio.Split("|");
             if (stato_di_gioco == "PREFLOP")
             {
