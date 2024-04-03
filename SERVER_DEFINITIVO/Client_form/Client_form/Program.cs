@@ -21,7 +21,7 @@ namespace Client_form
                 // Initialize socket
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPAddress ip = IPAddress.Parse("192.168.0.5");
-                IPEndPoint ipEnd = new IPEndPoint(ip, 9000);
+                IPEndPoint ipEnd = new IPEndPoint(ip, 51000);
 
                 // Connect to server
                 client.Connect(ipEnd);

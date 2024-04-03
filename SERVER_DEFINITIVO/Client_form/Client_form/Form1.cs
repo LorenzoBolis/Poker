@@ -11,11 +11,18 @@ namespace Client_form
             InitializeComponent();
 
         }
-        private string stato_di_gioco = "";
+        private static Stati stato_di_gioco;
         private string mio_nome = "";
+        private enum Stati  // possibili stati di gioco
+        {
+            Preflop,
+            Flop,
+            Turn,
+            River
+        }
         private void ricezione_gioco()  // riceve carte 
         {
-            stato_di_gioco = "PREFLOP";
+            stato_di_gioco = Stati.Preflop;
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
 
@@ -76,7 +83,7 @@ namespace Client_form
         }
         private void ripristina()
         {
-            stato_di_gioco = "";
+            stato_di_gioco = Stati.Preflop;
             c1_g1.Image = null;
             c2_g1.Image = null;
             c1_g2.Image = null;
@@ -147,7 +154,7 @@ namespace Client_form
                 button4.Enabled = true;
                 button5.Enabled = true;
                 button6.Enabled = true;
-                if (mio_nome == "Client2" && stato_di_gioco == "RIVER")
+                if (mio_nome == "Client2" && stato_di_gioco == Stati.River)
                 {
 
                 }
@@ -157,33 +164,33 @@ namespace Client_form
                 }
             }
             string[] parti = messaggio.Split("|");
-            if (stato_di_gioco == "PREFLOP")
+            if (stato_di_gioco == Stati.Preflop)
             {
                 if (parti[0] == "CHECKED")
                 {
                     pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
                     pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
-                    stato_di_gioco = "FLOP";
+                    stato_di_gioco = Stati.Flop;
                 }
             }
-            else if (stato_di_gioco == "FLOP")
+            else if (stato_di_gioco == Stati.Flop)
             {
                 if (parti[0] == "CHECKED")
                 {
                     pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
-                    stato_di_gioco = "TURN";
+                    stato_di_gioco = Stati.Turn;
                 }
             }
-            else if (stato_di_gioco == "TURN")
+            else if (stato_di_gioco == Stati.Turn)
             {
                 if (parti[0] == "CHECKED")
                 {
                     pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
-                    stato_di_gioco = "RIVER";
+                    stato_di_gioco = Stati.River;
                 }
             }
-            else if (stato_di_gioco == "RIVER")
+            else if (stato_di_gioco == Stati.River)
             {
                 if (parti[0] == "FINE_MANO")
                 {

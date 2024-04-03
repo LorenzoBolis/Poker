@@ -64,5 +64,17 @@ namespace Server_e
         {
             mano.Add(carta);
         }
+
+        public void Send(string messaggio)
+        {
+            Sk.Send(Encoding.UTF8.GetBytes(messaggio));
+        }
+
+        public string Receive()
+        {
+            byte[] received = new byte[1024];
+            int receivedBytes = Sk.Receive(received);
+            return Encoding.UTF8.GetString(received, 0, receivedBytes);
+        }
     }
 }
