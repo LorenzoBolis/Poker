@@ -13,6 +13,7 @@ namespace Client_form
         }
         private static Stati stato_di_gioco;
         private string mio_nome = "";
+        private int mie_fiches;
         private enum Stati  // possibili stati di gioco
         {
             Preflop,
@@ -28,10 +29,10 @@ namespace Client_form
 
             pictureBox1.Image = null;
 
-            button3.Visible = true;
-            button4.Visible = true;
-            button5.Visible = true;
-            button6.Visible = true;
+            check_button.Visible = true;
+            fold_button.Visible = true;
+            call_button.Visible = true;
+            raise_button.Visible = true;
 
             label2.Visible = true;
             label3.Visible = true;
@@ -49,6 +50,7 @@ namespace Client_form
             pictureBox9.Visible = true;
             pictureBox1.Visible = false;
             label4.Text = mio_nome;
+            label_fiches.Text = mie_fiches.ToString();
             label5.Visible = true;
             if (mio_nome == "Client1")
             {
@@ -56,10 +58,9 @@ namespace Client_form
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
-                button3.Enabled = true;
-                button4.Enabled = true;
-                button5.Enabled = true;
-                button6.Enabled = true;
+                check_button.Enabled = true;
+                fold_button.Enabled = true;
+                raise_button.Enabled = true;
             }
             else if (mio_nome == "Client2")
             {
@@ -67,10 +68,9 @@ namespace Client_form
                 c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
-                button3.Enabled = false;
-                button4.Enabled = false;
-                button5.Enabled = false;
-                button6.Enabled = false;
+                check_button.Enabled = false;
+                fold_button.Enabled = false;
+                raise_button.Enabled = false;
                 Thread th = new Thread(Gioco);
                 th.Start();
             }
@@ -122,7 +122,7 @@ namespace Client_form
 
         private void New_mano()
         {
-            Program.Invia("GAME");
+            Program.Invia("GAME|100");
             string response = Program.Ricevi();
             if (response == "OTHER_FOLD") // soluzione a un problema nella fold (quando il client2 fa la fold al turn river)
             {
@@ -130,6 +130,7 @@ namespace Client_form
             }
             string[] parti = response.Split('|');
             mio_nome = parti[1];
+            mie_fiches = int.Parse(parti[2]);
             if (parti[0] == "game_started")
             {
                 button1.Visible = false;
@@ -150,10 +151,9 @@ namespace Client_form
             }
             if (messaggio == "OTHER_CHECK")
             {
-                button3.Enabled = true;
-                button4.Enabled = true;
-                button5.Enabled = true;
-                button6.Enabled = true;
+                check_button.Enabled = true;
+                fold_button.Enabled = true;
+                raise_button.Enabled = true;
                 if (mio_nome == "Client2" && stato_di_gioco == Stati.River)
                 {
 
@@ -203,10 +203,10 @@ namespace Client_form
 
         private void button3_Click(object sender, EventArgs e) // check
         {
-            button3.Enabled = false;
-            button4.Enabled = false;
-            button5.Enabled = false;
-            button6.Enabled = false;
+            check_button.Enabled = false;
+            fold_button.Enabled = false;
+            call_button.Enabled = false;
+            raise_button.Enabled = false;
             Program.Invia("CHECK");
             Thread th = new Thread(Gioco);
             th.Start();
@@ -225,25 +225,29 @@ namespace Client_form
             {
                 // Mostra la TrackBar
                 trackBar1.Visible = true;
-                trackBar1.Visible = true;
-                button6.Text = "Scegli l'importo";
+                label6.Visible = true;
+                trackBar1.BringToFront();
+                raise_button.Text = "Scegli l'importo";
             }
             else
             {
                 // Ottieni l'importo della puntata dal valore della TrackBar
                 int betAmount = trackBar1.Value;
 
-                // Qui gestisci la puntata e fai le azioni necessarie
-                // Ad esempio, puoi passare la puntata al tuo motore di gioco
-
                 // Ripristina la TrackBar per un'altra puntata
                 trackBar1.Visible = false;
-                trackBar1.Visible = false;
-                button6.Text = "RAISE (VUOTO)";
+                trackBar1.Value = 100;
+                label6.Visible = false;
+                raise_button.Text = "RAISE (VUOTO)";
                 int rilancio = trackBar1.Value / 100 * 100;
                 Program.Invia($"RAISE|{rilancio}");
             }
 
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            label6.Text = (trackBar1.Value / 100 * 100).ToString();
         }
     }
 }

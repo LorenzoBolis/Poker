@@ -42,16 +42,18 @@
             pictureBox7 = new PictureBox();
             pictureBox8 = new PictureBox();
             pictureBox9 = new PictureBox();
-            button3 = new Button();
+            check_button = new Button();
             label4 = new Label();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            trackBar1 = new TrackBar();
+            fold_button = new Button();
+            call_button = new Button();
+            raise_button = new Button();
             pictureBox1 = new PictureBox();
             label5 = new Label();
             label7 = new Label();
             textBox1 = new TextBox();
+            trackBar1 = new TrackBar();
+            label6 = new Label();
+            label_fiches = new Label();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -61,8 +63,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -205,16 +207,17 @@
             pictureBox9.TabStop = false;
             pictureBox9.Visible = false;
             // 
-            // button3
+            // check_button
             // 
-            button3.Location = new Point(530, 648);
-            button3.Name = "button3";
-            button3.Size = new Size(135, 33);
-            button3.TabIndex = 14;
-            button3.Text = "Check";
-            button3.UseVisualStyleBackColor = true;
-            button3.Visible = false;
-            button3.Click += button3_Click;
+            check_button.Enabled = false;
+            check_button.Location = new Point(530, 648);
+            check_button.Name = "check_button";
+            check_button.Size = new Size(135, 33);
+            check_button.TabIndex = 14;
+            check_button.Text = "Check";
+            check_button.UseVisualStyleBackColor = true;
+            check_button.Visible = false;
+            check_button.Click += button3_Click;
             // 
             // label4
             // 
@@ -225,52 +228,40 @@
             label4.TabIndex = 15;
             label4.Text = "label4";
             // 
-            // button4
+            // fold_button
             // 
-            button4.Location = new Point(352, 648);
-            button4.Name = "button4";
-            button4.Size = new Size(135, 33);
-            button4.TabIndex = 16;
-            button4.Text = "Fold";
-            button4.UseVisualStyleBackColor = true;
-            button4.Visible = false;
-            button4.Click += button4_Click;
+            fold_button.Enabled = false;
+            fold_button.Location = new Point(352, 648);
+            fold_button.Name = "fold_button";
+            fold_button.Size = new Size(135, 33);
+            fold_button.TabIndex = 16;
+            fold_button.Text = "Fold";
+            fold_button.UseVisualStyleBackColor = true;
+            fold_button.Visible = false;
+            fold_button.Click += button4_Click;
             // 
-            // button5
+            // call_button
             // 
-            button5.Location = new Point(708, 648);
-            button5.Name = "button5";
-            button5.Size = new Size(135, 33);
-            button5.TabIndex = 17;
-            button5.Text = "Call (VUOTO)";
-            button5.UseVisualStyleBackColor = true;
-            button5.Visible = false;
+            call_button.Enabled = false;
+            call_button.Location = new Point(708, 648);
+            call_button.Name = "call_button";
+            call_button.Size = new Size(135, 33);
+            call_button.TabIndex = 17;
+            call_button.Text = "Call (VUOTO)";
+            call_button.UseVisualStyleBackColor = true;
+            call_button.Visible = false;
             // 
-            // button6
+            // raise_button
             // 
-            button6.Enabled = false;
-            button6.Location = new Point(875, 648);
-            button6.Name = "button6";
-            button6.Size = new Size(135, 33);
-            button6.TabIndex = 18;
-            button6.Text = "Raise (VUOTO)";
-            button6.UseVisualStyleBackColor = true;
-            button6.Visible = false;
-            button6.Click += button6_Click;
-            // 
-            // trackBar1
-            // 
-            trackBar1.LargeChange = 100;
-            trackBar1.Location = new Point(914, 471);
-            trackBar1.Maximum = 1000;
-            trackBar1.Minimum = 100;
-            trackBar1.Name = "trackBar1";
-            trackBar1.Orientation = Orientation.Vertical;
-            trackBar1.Size = new Size(56, 156);
-            trackBar1.SmallChange = 100;
-            trackBar1.TabIndex = 20;
-            trackBar1.Value = 100;
-            trackBar1.Visible = false;
+            raise_button.Enabled = false;
+            raise_button.Location = new Point(875, 648);
+            raise_button.Name = "raise_button";
+            raise_button.Size = new Size(135, 33);
+            raise_button.TabIndex = 18;
+            raise_button.Text = "Raise (VUOTO)";
+            raise_button.UseVisualStyleBackColor = true;
+            raise_button.Visible = false;
+            raise_button.Click += button6_Click;
             // 
             // pictureBox1
             // 
@@ -308,17 +299,51 @@
             textBox1.Size = new Size(125, 27);
             textBox1.TabIndex = 25;
             // 
+            // trackBar1
+            // 
+            trackBar1.LargeChange = 100;
+            trackBar1.Location = new Point(914, 512);
+            trackBar1.Maximum = 1000;
+            trackBar1.Minimum = 100;
+            trackBar1.Name = "trackBar1";
+            trackBar1.Orientation = Orientation.Vertical;
+            trackBar1.Size = new Size(56, 130);
+            trackBar1.SmallChange = 100;
+            trackBar1.TabIndex = 26;
+            trackBar1.Value = 100;
+            trackBar1.Visible = false;
+            trackBar1.Scroll += trackBar1_Scroll;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(987, 570);
+            label6.Name = "label6";
+            label6.Size = new Size(0, 20);
+            label6.TabIndex = 27;
+            // 
+            // label_fiches
+            // 
+            label_fiches.AutoSize = true;
+            label_fiches.Location = new Point(245, 654);
+            label_fiches.Name = "label_fiches";
+            label_fiches.Size = new Size(13, 20);
+            label_fiches.TabIndex = 28;
+            label_fiches.Text = " ";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
-            Controls.Add(label5);
+            Controls.Add(label_fiches);
+            Controls.Add(label6);
             Controls.Add(trackBar1);
-            Controls.Add(button6);
-            Controls.Add(button5);
-            Controls.Add(button4);
-            Controls.Add(button3);
+            Controls.Add(label5);
+            Controls.Add(raise_button);
+            Controls.Add(call_button);
+            Controls.Add(fold_button);
+            Controls.Add(check_button);
             Controls.Add(pictureBox9);
             Controls.Add(pictureBox8);
             Controls.Add(pictureBox7);
@@ -349,8 +374,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -371,15 +396,17 @@
         private PictureBox pictureBox7;
         private PictureBox pictureBox8;
         private PictureBox pictureBox9;
-        private Button button3;
+        private Button check_button;
         private Label label4;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private TrackBar trackBar1;
+        private Button fold_button;
+        private Button call_button;
+        private Button raise_button;
         private PictureBox pictureBox1;
         private Label label5;
         private Label label7;
         private TextBox textBox1;
+        private TrackBar trackBar1;
+        private Label label6;
+        private Label label_fiches;
     }
 }

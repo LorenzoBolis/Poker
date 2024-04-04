@@ -88,6 +88,7 @@ class Program  // SERVER - 192.168.0.5
             do
             {
                 messaggio = g.Receive();
+                string[] parti = messaggio.Split("|");
                 if (messaggio == "exit")
                 {
                     Console.WriteLine($"Chiusura connessione con {name}");
@@ -95,9 +96,10 @@ class Program  // SERVER - 192.168.0.5
                     g.Sk.Close();
                     break;
                 }
-                else if (messaggio == "GAME")
+                else if (parti[0] == "GAME")
                 {
                     g.Gioco_avviato = true;
+                    g.Fiches -= int.Parse(parti[1]);
                     Invia_Start();
                 }
                 else if (messaggio == "CHECK") 
@@ -141,12 +143,17 @@ class Program  // SERVER - 192.168.0.5
     }
     static void Invia_Start()
     {
+        if (giocatori.Count != 2)
+        {
+            Console.WriteLine("Giocatori connessi insufficienti");
+            return;
+        }
         if (giocatori[0].Gioco_avviato && giocatori[1].Gioco_avviato)
         {
             try
             {
-                giocatori[0].Send("game_started|Client1");
-                giocatori[1].Send("game_started|Client2");
+                giocatori[0].Send($"game_started|Client1|{giocatori[0].Fiches}");
+                giocatori[1].Send($"game_started|Client2|{giocatori[1].Fiches}");
                 Carte_Gioco();
                 //return;
             }
