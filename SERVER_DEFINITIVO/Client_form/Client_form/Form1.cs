@@ -194,6 +194,7 @@ namespace Client_form
             {
                 if (parti[0] == "FINE_MANO")
                 {
+                    if (parti[1] == "VINTO") mie_fiches += int.Parse(parti[2]);
                     MessageBox.Show(parti[1] + parti[2]); // TODO gestione fiches giocatori
                     ripristina();
                     New_mano();

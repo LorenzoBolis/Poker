@@ -80,7 +80,6 @@ class Program  // SERVER - 192.168.0.5
     static void HandleClient(Giocatore g)
     {
         string name = g.Nome;
-        //Socket client = g.Sk;
         try
         {
             string messaggio = "";
@@ -100,6 +99,7 @@ class Program  // SERVER - 192.168.0.5
                 {
                     g.Gioco_avviato = true;
                     g.Fiches -= int.Parse(parti[1]);
+                    pot += int.Parse(parti[1]);
                     Invia_Start();
                 }
                 else if (messaggio == "CHECK") 
@@ -119,17 +119,20 @@ class Program  // SERVER - 192.168.0.5
                     if (g.Nome == "Client1")
                     {
                         Invia_Giocata_altro(g, "FOLD");
+                        giocatori[1].Fiches += pot;
                     }
                     else
                     {
                         Invia_Giocata_altro(giocatori[0], "FOLD");
                         Invia_Giocata_altro(giocatori[1], "FOLD");
+                        giocatori[0].Fiches += pot;
                     }
                     giocatori[0].Mano.Clear();
                     giocatori[1].Mano.Clear();
                     carte_tavolo.Clear();
                     giocatori[0].Gioco_avviato = false;
                     giocatori[1].Gioco_avviato = false;
+                    pot = 0;
                 }
                 
                 Console.WriteLine($"Dati ricevuti da {name}: {messaggio}");
@@ -165,7 +168,7 @@ class Program  // SERVER - 192.168.0.5
     }
     static void Gioco_Check()
     {
-        pot = 200; // TODO somma delle puntate giocatori
+            // TODO somma delle puntate giocatori
         if (stato_di_gioco == Stati.Preflop)
         {
             Invia_Flop();
@@ -214,14 +217,16 @@ class Program  // SERVER - 192.168.0.5
             if ((int)combinazione1 > (int)combinazione2)
             {
                 Console.WriteLine("Vince G1");
-                testo0 = "VINTO|{pot}";
-                testo1 = "PERSO|{pot}";
+                testo0 = $"VINTO|{pot}";
+                testo1 = $"PERSO|{pot}";
+                giocatori[0].Fiches += pot;
             }
             else if ((int)combinazione1 < (int)combinazione2)
             {
                 Console.WriteLine("Vince G2");
-                testo0 = "PERSO|{pot}";
-                testo1 = "VINTO|{pot}";
+                testo0 = $"PERSO|{pot}";
+                testo1 = $"VINTO|{pot}";
+                giocatori[1].Fiches += pot;
             }
             else
             {
@@ -230,18 +235,22 @@ class Program  // SERVER - 192.168.0.5
                 if (list0.Max() > list1.Max()) // in caso di pareggio valuta chi ha carta alta
                 {
                     Console.WriteLine("Vince G1");
-                    testo0 = "VINTO|{pot}";
-                    testo1 = "PERSO|{pot}";
+                    testo0 = $"VINTO|{pot}";
+                    testo1 = $"PERSO|{pot}";
+                    giocatori[0].Fiches += pot;
                 }
                 else if (list0.Max() < list1.Max())
                 {
-                    testo0 = "PERSO|{pot}";
-                    testo1 = "VINTO|{pot}";
+                    testo0 = $"PERSO|{pot}";
+                    testo1 = $"VINTO|{pot}";
+                    giocatori[1].Fiches += pot;
                 }
                 else
                 {
-                    testo0 = "PAREGGIO|{pot}";
-                    testo1 = "PAREGGIO|{pot}";
+                    testo0 = $"PAREGGIO|{pot}";
+                    testo1 = $"PAREGGIO|{pot}";
+                    giocatori[0].Fiches += pot/2;
+                    giocatori[1].Fiches += pot/2;
                 }
             }
             string mess0 = "FINE_MANO|" + testo0;
@@ -258,6 +267,7 @@ class Program  // SERVER - 192.168.0.5
                 carte_tavolo.Clear();
                 giocatori[0].Gioco_avviato = false;
                 giocatori[1].Gioco_avviato = false;
+                pot = 0;
 
             }
             catch (Exception ex)
@@ -366,7 +376,6 @@ class Program  // SERVER - 192.168.0.5
                 stato_di_gioco = Stati.River;
                 giocatori[0].Check = false;
                 giocatori[1].Check = false;
-                //Fine_Partita();
             }
             catch (Exception ex)
             {
