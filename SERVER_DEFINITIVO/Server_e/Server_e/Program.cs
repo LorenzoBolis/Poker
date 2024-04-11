@@ -95,43 +95,55 @@ class Program  // SERVER - 192.168.0.5
                     g.Sk.Close();
                     break;
                 }
-                else if (parti[0] == "GAME")
+                else if (parti[0] == "GAME")  // inizio gioco
                 {
                     g.Gioco_avviato = true;
                     g.Fiches -= int.Parse(parti[1]);
                     pot += int.Parse(parti[1]);
                     Invia_Start();
                 }
-                else if (messaggio == "CHECK") 
+                else if (messaggio == "CHECK")   // CHECK
                 {
                     g.Check = true;
                     Invia_Giocata_altro(g, "CHECK");
                     Gioco_Check();
                 }
-                else if (messaggio.Contains("RAISE"))
+                else if (messaggio.Contains("RAISE"))   // RAISE
                 {
                     int rilancio = int.Parse(messaggio.Split("|")[1]);
                     g.Check = true;
+                    if (giocatori[0] == g)
+                    {
+                        giocatori[1].Check = false;
+                    }
+                    else if (giocatori[1] == g)
+                    {
+                        giocatori[0].Check = false;
+                    }
+                    pot += rilancio;
+                    g.Fiches -= rilancio;
+                    Invia_Giocata_altro(g, "RAISE|" + rilancio.ToString());
                     Gioco_Raise(rilancio);
                 }
-                else if (messaggio == "FOLD")
+                else if (messaggio == "FOLD")  // FOLD
                 {
                     if (g.Nome == "Client1")
                     {
-                        Invia_Giocata_altro(g, "FOLD");
                         giocatori[1].Fiches += pot;
                     }
                     else
                     {
-                        Invia_Giocata_altro(giocatori[0], "FOLD");
-                        Invia_Giocata_altro(giocatori[1], "FOLD");
                         giocatori[0].Fiches += pot;
                     }
+                    Invia_Giocata_altro(giocatori[0], "FOLD");
+                    Invia_Giocata_altro(giocatori[1], "FOLD");
                     giocatori[0].Mano.Clear();
                     giocatori[1].Mano.Clear();
                     carte_tavolo.Clear();
                     giocatori[0].Gioco_avviato = false;
                     giocatori[1].Gioco_avviato = false;
+                    giocatori[0].Check = false;
+                    giocatori[1].Check = false;
                     pot = 0;
                 }
                 
@@ -189,19 +201,7 @@ class Program  // SERVER - 192.168.0.5
 
     private static void Gioco_Raise(int raise)
     {
-        pot += raise;
-        if (stato_di_gioco == Stati.Preflop)
-        {
-            Invia_Flop();
-        }
-        else if (stato_di_gioco == Stati.Flop)
-        {
-            Invia_Turn();
-        }
-        else if (stato_di_gioco == Stati.Turn)
-        {
-            Invia_River();
-        }
+        
     }
 
     private static void Fine_Partita()

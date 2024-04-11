@@ -14,6 +14,7 @@ namespace Client_form
         private static Stati stato_di_gioco;
         private string mio_nome = "";
         private int mie_fiches;
+        private bool in_attesa;
         private enum Stati  // possibili stati di gioco
         {
             Preflop,
@@ -143,12 +144,6 @@ namespace Client_form
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
             string messaggio = Program.Ricevi();
-
-            if (messaggio == "OTHER_FOLD")
-            {
-                ripristina();
-                New_mano();
-            }
             if (messaggio == "OTHER_CHECK")
             {
                 check_button.Enabled = true;
@@ -160,8 +155,21 @@ namespace Client_form
                 }
                 else
                 {
+                    in_attesa = true;
                     messaggio = Program.Ricevi();
+                    in_attesa = false;
                 }
+            }
+            if (messaggio == "OTHER_FOLD")
+            {
+                ripristina();
+                New_mano();
+            }
+            
+            if (messaggio.Contains("OTHER_RAISE"))
+            {
+                call_button.Enabled = true;
+                fold_button.Enabled = true;
             }
             string[] parti = messaggio.Split("|");
             if (stato_di_gioco == Stati.Preflop)
@@ -216,8 +224,12 @@ namespace Client_form
         private void button4_Click(object sender, EventArgs e)  // fold
         {
             Program.Invia("FOLD");
-            ripristina();
-            New_mano();
+            if (in_attesa == false)
+            {
+                ripristina();
+                New_mano();
+            }
+            
         }
 
         private void button6_Click(object sender, EventArgs e)  // raise
@@ -226,6 +238,7 @@ namespace Client_form
             {
                 // Mostra la TrackBar
                 trackBar1.Visible = true;
+                trackBar1.Value = 100;
                 label6.Visible = true;
                 trackBar1.BringToFront();
                 raise_button.Text = "Scegli l'importo";
@@ -233,15 +246,27 @@ namespace Client_form
             else
             {
                 // Ottieni l'importo della puntata dal valore della TrackBar
-                int betAmount = trackBar1.Value;
+                int rilancio = trackBar1.Value / 100 * 100;
+                mie_fiches -= rilancio;
+                label_fiches.Text = mie_fiches.ToString();
 
                 // Ripristina la TrackBar per un'altra puntata
                 trackBar1.Visible = false;
                 trackBar1.Value = 100;
                 label6.Visible = false;
                 raise_button.Text = "RAISE (VUOTO)";
-                int rilancio = trackBar1.Value / 100 * 100;
+
                 Program.Invia($"RAISE|{rilancio}");
+                check_button.Enabled = false;
+                fold_button.Enabled = false;
+                call_button.Enabled = false;
+                raise_button.Enabled = false;
+                if (in_attesa == false)
+                {
+                    Thread th = new Thread(Gioco);
+                    th.Start();
+                }
+                
             }
 
         }
