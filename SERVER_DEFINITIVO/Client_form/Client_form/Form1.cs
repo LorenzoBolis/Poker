@@ -15,6 +15,7 @@ namespace Client_form
         private string mio_nome = "";
         private int mie_fiches;
         private bool in_attesa;
+        private int to_call;
         private enum Stati  // possibili stati di gioco
         {
             Preflop,
@@ -117,6 +118,8 @@ namespace Client_form
 
         private void button2_Click(object sender, EventArgs e)
         {
+            textBox1.Visible = false;
+            label7.Visible = false;
             button2.Enabled = false;
             New_mano();
         }
@@ -144,19 +147,26 @@ namespace Client_form
         private void Gioco()  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
         {
             string messaggio = Program.Ricevi();
+            label5.Text = messaggio;
             if (messaggio == "OTHER_CHECK")
             {
-                check_button.Enabled = true;
-                fold_button.Enabled = true;
-                raise_button.Enabled = true;
+                if (stato_di_gioco != Stati.River)
+                {
+                    check_button.Enabled = true;
+                    fold_button.Enabled = true;
+                    raise_button.Enabled = true;
+                }
                 if (mio_nome == "Client2" && stato_di_gioco == Stati.River)
                 {
-
+                    check_button.Enabled = true;
+                    fold_button.Enabled = true;
+                    raise_button.Enabled = true;
                 }
                 else
                 {
                     in_attesa = true;
                     messaggio = Program.Ricevi();
+                    label5.Text = messaggio;
                     in_attesa = false;
                 }
             }
@@ -165,11 +175,32 @@ namespace Client_form
                 ripristina();
                 New_mano();
             }
-            
+
             if (messaggio.Contains("OTHER_RAISE"))
             {
+                to_call = int.Parse(messaggio.Split("|")[1]);
                 call_button.Enabled = true;
                 fold_button.Enabled = true;
+                call_button.Text = "Call  $ " + to_call.ToString();
+            }
+            if (messaggio == "OTHER_CALL")
+            {
+                if (mio_nome == "Client2")
+                {
+                    check_button.Enabled = false;
+                    fold_button.Enabled = false;
+                    call_button.Enabled = false;
+                    raise_button.Enabled = false;
+                }
+                else
+                {
+                    check_button.Enabled = true;
+                    fold_button.Enabled = true;
+                    raise_button.Enabled = true;
+                    call_button.Enabled = false;
+                    messaggio = Program.Ricevi();
+                }
+                
             }
             string[] parti = messaggio.Split("|");
             if (stato_di_gioco == Stati.Preflop)
@@ -229,7 +260,7 @@ namespace Client_form
                 ripristina();
                 New_mano();
             }
-            
+
         }
 
         private void button6_Click(object sender, EventArgs e)  // raise
@@ -241,7 +272,7 @@ namespace Client_form
                 trackBar1.Value = 100;
                 label6.Visible = true;
                 trackBar1.BringToFront();
-                raise_button.Text = "Scegli l'importo";
+                raise_button.Text = "Select amount $";
             }
             else
             {
@@ -254,7 +285,7 @@ namespace Client_form
                 trackBar1.Visible = false;
                 trackBar1.Value = 100;
                 label6.Visible = false;
-                raise_button.Text = "RAISE (VUOTO)";
+                raise_button.Text = "Raise";
 
                 Program.Invia($"RAISE|{rilancio}");
                 check_button.Enabled = false;
@@ -266,14 +297,45 @@ namespace Client_form
                     Thread th = new Thread(Gioco);
                     th.Start();
                 }
-                
+                if (mio_nome == "Client2")
+                {
+                    Thread aa = new Thread(Gioco);
+                    aa.Start();
+                    Thread altro = new Thread(Gioco);
+                    altro.Start();
+                }
             }
-
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label6.Text = (trackBar1.Value / 100 * 100).ToString();
+            raise_button.Text = "Raise  $ " + (trackBar1.Value / 100 * 100).ToString();
+        }
+
+        private void call_button_Click(object sender, EventArgs e) // call
+        {
+            call_button.Text = "Call";
+            Program.Invia("CALL|" + to_call);
+            mie_fiches -= to_call;
+            label_fiches.Text = mie_fiches.ToString();
+            if (mio_nome == "Client1")
+            {
+                check_button.Enabled = true;
+                fold_button.Enabled = true;
+                raise_button.Enabled = true;
+                call_button.Enabled = false;
+            }
+            else
+            {
+                check_button.Enabled = false;
+                fold_button.Enabled = false;
+                call_button.Enabled = false;
+                raise_button.Enabled = false;
+                Gioco();
+            }
+            Thread th = new Thread(Gioco);
+            th.Start();
         }
     }
 }

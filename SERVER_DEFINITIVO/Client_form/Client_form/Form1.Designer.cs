@@ -119,9 +119,9 @@
             // 
             // c1_g1
             // 
-            c1_g1.Location = new Point(674, 327);
+            c1_g1.Location = new Point(708, 363);
             c1_g1.Name = "c1_g1";
-            c1_g1.Size = new Size(200, 300);
+            c1_g1.Size = new Size(170, 250);
             c1_g1.SizeMode = PictureBoxSizeMode.Zoom;
             c1_g1.TabIndex = 5;
             c1_g1.TabStop = false;
@@ -129,9 +129,9 @@
             // 
             // c2_g1
             // 
-            c2_g1.Location = new Point(903, 327);
+            c2_g1.Location = new Point(897, 363);
             c2_g1.Name = "c2_g1";
-            c2_g1.Size = new Size(200, 300);
+            c2_g1.Size = new Size(170, 250);
             c2_g1.SizeMode = PictureBoxSizeMode.Zoom;
             c2_g1.TabIndex = 6;
             c2_g1.TabStop = false;
@@ -139,9 +139,9 @@
             // 
             // c1_g2
             // 
-            c1_g2.Location = new Point(29, 327);
+            c1_g2.Location = new Point(94, 363);
             c1_g2.Name = "c1_g2";
-            c1_g2.Size = new Size(200, 300);
+            c1_g2.Size = new Size(170, 250);
             c1_g2.SizeMode = PictureBoxSizeMode.Zoom;
             c1_g2.TabIndex = 7;
             c1_g2.TabStop = false;
@@ -149,9 +149,9 @@
             // 
             // c2_g2
             // 
-            c2_g2.Location = new Point(274, 327);
+            c2_g2.Location = new Point(274, 363);
             c2_g2.Name = "c2_g2";
-            c2_g2.Size = new Size(200, 300);
+            c2_g2.Size = new Size(170, 250);
             c2_g2.SizeMode = PictureBoxSizeMode.Zoom;
             c2_g2.TabIndex = 8;
             c2_g2.TabStop = false;
@@ -159,9 +159,9 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.Location = new Point(120, 27);
+            pictureBox5.Location = new Point(222, 27);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(175, 250);
+            pictureBox5.Size = new Size(125, 180);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 9;
             pictureBox5.TabStop = false;
@@ -169,9 +169,9 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.Location = new Point(312, 27);
+            pictureBox6.Location = new Point(362, 27);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(175, 250);
+            pictureBox6.Size = new Size(125, 180);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox6.TabIndex = 10;
             pictureBox6.TabStop = false;
@@ -181,7 +181,7 @@
             // 
             pictureBox7.Location = new Point(504, 27);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(175, 250);
+            pictureBox7.Size = new Size(125, 180);
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox7.TabIndex = 11;
             pictureBox7.TabStop = false;
@@ -189,9 +189,9 @@
             // 
             // pictureBox8
             // 
-            pictureBox8.Location = new Point(695, 27);
+            pictureBox8.Location = new Point(645, 27);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(175, 250);
+            pictureBox8.Size = new Size(125, 180);
             pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox8.TabIndex = 12;
             pictureBox8.TabStop = false;
@@ -199,9 +199,9 @@
             // 
             // pictureBox9
             // 
-            pictureBox9.Location = new Point(886, 27);
+            pictureBox9.Location = new Point(786, 27);
             pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(175, 250);
+            pictureBox9.Size = new Size(125, 180);
             pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox9.TabIndex = 13;
             pictureBox9.TabStop = false;
@@ -247,9 +247,10 @@
             call_button.Name = "call_button";
             call_button.Size = new Size(135, 33);
             call_button.TabIndex = 17;
-            call_button.Text = "Call (VUOTO)";
+            call_button.Text = "Call";
             call_button.UseVisualStyleBackColor = true;
             call_button.Visible = false;
+            call_button.Click += call_button_Click;
             // 
             // raise_button
             // 
@@ -258,7 +259,7 @@
             raise_button.Name = "raise_button";
             raise_button.Size = new Size(135, 33);
             raise_button.TabIndex = 18;
-            raise_button.Text = "Raise (VUOTO)";
+            raise_button.Text = "Raise";
             raise_button.UseVisualStyleBackColor = true;
             raise_button.Visible = false;
             raise_button.Click += button6_Click;

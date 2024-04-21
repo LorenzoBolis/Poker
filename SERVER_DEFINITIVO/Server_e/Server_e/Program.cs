@@ -125,6 +125,15 @@ class Program  // SERVER - 192.168.0.5
                     Invia_Giocata_altro(g, "RAISE|" + rilancio.ToString());
                     Gioco_Raise(rilancio);
                 }
+                else if (messaggio.Contains("CALL"))  // CALL
+                {
+                    int called = int.Parse(messaggio.Split("|")[1]);
+                    g.Check = true;
+                    pot += called;
+                    g.Fiches -= called;
+                    Invia_Giocata_altro(g, "CALL");
+                    Gioco_Check();
+                }
                 else if (messaggio == "FOLD")  // FOLD
                 {
                     if (g.Nome == "Client1")
