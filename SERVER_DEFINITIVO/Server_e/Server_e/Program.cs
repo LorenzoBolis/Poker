@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 class Program  // SERVER - 192.168.0.5
@@ -13,7 +14,6 @@ class Program  // SERVER - 192.168.0.5
     private static List<Carta> carte_tavolo = new List<Carta>();
     private static Stati stato_di_gioco;  // preflop  -->  flop(3) -->  turn(1)  -->  river(1)
     private static int pot;
-    private static Giocatore vincitore;
     private static Mazzo mazzo;
 
     private enum Stati  // possibili stati di gioco
@@ -64,7 +64,7 @@ class Program  // SERVER - 192.168.0.5
                 // Crea un thread separato per gestire la connessione
                 Thread clientThread = new Thread(() =>
                 {
-                    HandleClient(g);
+                    GestisciClient(g);
                 });
                 clientThread.Start();
             }
@@ -77,7 +77,7 @@ class Program  // SERVER - 192.168.0.5
         }
     }
 
-    static void HandleClient(Giocatore g)
+    private static void GestisciClient(Giocatore g)
     {
         string name = g.Nome;
         try
@@ -101,6 +101,11 @@ class Program  // SERVER - 192.168.0.5
                     g.Fiches -= int.Parse(parti[1]);
                     pot += int.Parse(parti[1]);
                     Invia_Start();
+                    if (giocatori[0].Fiches < 0 || giocatori[1].Fiches < 0)
+                    {
+                        Console.WriteLine("Chiusura gioco. Uno dei giocatori ha finito le fiches");
+                        break;
+                    }
                 }
                 else if (messaggio == "CHECK")   // CHECK
                 {
@@ -123,7 +128,6 @@ class Program  // SERVER - 192.168.0.5
                     pot += rilancio;
                     g.Fiches -= rilancio;
                     Invia_Giocata_altro(g, "RAISE|" + rilancio.ToString());
-                    Gioco_Raise(rilancio);
                 }
                 else if (messaggio.Contains("CALL"))  // CALL
                 {
@@ -165,7 +169,7 @@ class Program  // SERVER - 192.168.0.5
             Console.WriteLine("Errore nella gestione del client: " + ex.Message);
         }
     }
-    static void Invia_Start()
+    private static void Invia_Start()
     {
         if (giocatori.Count != 2)
         {
@@ -176,41 +180,22 @@ class Program  // SERVER - 192.168.0.5
         {
             try
             {
-                giocatori[0].Send($"game_started|Client1|{giocatori[0].Fiches}");
-                giocatori[1].Send($"game_started|Client2|{giocatori[1].Fiches}");
+                giocatori[0].Send($"game_started|Client1|{giocatori[0].Fiches}|{giocatori[1].Fiches}");
+                giocatori[1].Send($"game_started|Client2|{giocatori[1].Fiches}|{giocatori[0].Fiches}");
+                if (giocatori[0].Fiches < 0 || giocatori[1].Fiches < 0)
+                {
+                    giocatori[0].Sk.Close();
+                    giocatori[1].Sk.Close();
+                    Console.ReadKey();
+                    return;
+                }
                 Carte_Gioco();
-                //return;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Client non connesso o irraggiungibile");
             }
         }
-    }
-    static void Gioco_Check()
-    {
-            // TODO somma delle puntate giocatori
-        if (stato_di_gioco == Stati.Preflop)
-        {
-            Invia_Flop();
-        }
-        else if (stato_di_gioco == Stati.Flop)
-        {
-            Invia_Turn();
-        }
-        else if (stato_di_gioco == Stati.Turn)
-        {
-            Invia_River();
-        }
-        else if (stato_di_gioco == Stati.River)
-        {
-            Fine_Partita();
-        }
-    }
-
-    private static void Gioco_Raise(int raise)
-    {
-        
     }
 
     private static void Fine_Partita()
@@ -331,65 +316,60 @@ class Program  // SERVER - 192.168.0.5
             giocatori[0].Send("OTHER_" + giocata);
         }
     }
-
-    private static void Invia_Flop()
+    private static void Gioco_Check()
     {
-        string messaggio = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
         if (giocatori[0].Check && giocatori[1].Check)
         {
-            try
+            if (stato_di_gioco == Stati.Preflop)
             {
-                giocatori[1].Send(messaggio);
-                giocatori[0].Send(messaggio);
-                stato_di_gioco = Stati.Flop;
-                giocatori[0].Check = false;
-                giocatori[1].Check = false;
-
+                string messaggio = "CHECKED" + "|" + carte_tavolo[0].ToString() + "|" + carte_tavolo[1].ToString() + "|" + carte_tavolo[2].ToString();
+                try
+                {
+                    Invia_Carte(messaggio);
+                    stato_di_gioco = Stati.Flop;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
             }
-            catch (Exception ex)
+            else if (stato_di_gioco == Stati.Flop)
             {
-                Console.WriteLine("Client non connesso o irraggiungibile");
+                string messaggio = "CHECKED" + "|" + carte_tavolo[3].ToString();
+                try
+                {
+                    Invia_Carte(messaggio);
+                    stato_di_gioco = Stati.Turn;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
+            }
+            else if (stato_di_gioco == Stati.Turn)
+            {
+                string messaggio = "CHECKED" + "|" + carte_tavolo[4].ToString();
+                try
+                {
+                    Invia_Carte(messaggio);
+                    stato_di_gioco = Stati.River;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Client non connesso o irraggiungibile");
+                }
+            }
+            else if (stato_di_gioco == Stati.River)
+            {
+                Fine_Partita();
             }
         }
     }
-
-    private static void Invia_Turn()
+    private static void Invia_Carte(string messaggio)  // Invia_carte
     {
-        string messaggio = "CHECKED" + "|" + carte_tavolo[3].ToString();
-        if (giocatori[0].Check && giocatori[1].Check)
-        {
-            try
-            {
-                giocatori[1].Send(messaggio);
-                giocatori[0].Send(messaggio);
-                stato_di_gioco = Stati.Turn;
-                giocatori[0].Check = false;
-                giocatori[1].Check = false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Client non connesso o irraggiungibile");
-            }
-        }
-    }
-
-    private static void Invia_River()
-    {
-        string messaggio = "CHECKED" + "|" + carte_tavolo[4].ToString();
-        if (giocatori[0].Check && giocatori[1].Check)
-        {
-            try
-            {
-                giocatori[1].Send(messaggio);
-                giocatori[0].Send(messaggio);
-                stato_di_gioco = Stati.River;
-                giocatori[0].Check = false;
-                giocatori[1].Check = false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Client non connesso o irraggiungibile");
-            }
-        }
+        giocatori[1].Send(messaggio);
+        giocatori[0].Send(messaggio);
+        giocatori[0].Check = false;
+        giocatori[1].Check = false;          
     }
 }

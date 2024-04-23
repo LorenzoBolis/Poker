@@ -87,7 +87,7 @@
             // button2
             // 
             button2.Enabled = false;
-            button2.Location = new Point(630, 327);
+            button2.Location = new Point(533, 311);
             button2.Name = "button2";
             button2.Size = new Size(112, 55);
             button2.TabIndex = 2;
@@ -199,12 +199,12 @@
             // 
             check_button.BackColor = Color.LimeGreen;
             check_button.Enabled = false;
-            check_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            check_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             check_button.Location = new Point(607, 648);
             check_button.Name = "check_button";
             check_button.Size = new Size(135, 33);
             check_button.TabIndex = 14;
-            check_button.Text = "Check";
+            check_button.Text = "CHECK";
             check_button.UseVisualStyleBackColor = false;
             check_button.Visible = false;
             check_button.Click += button3_Click;
@@ -213,12 +213,12 @@
             // 
             fold_button.BackColor = Color.IndianRed;
             fold_button.Enabled = false;
-            fold_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            fold_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             fold_button.Location = new Point(445, 648);
             fold_button.Name = "fold_button";
             fold_button.Size = new Size(135, 33);
             fold_button.TabIndex = 16;
-            fold_button.Text = "Fold";
+            fold_button.Text = "FOLD";
             fold_button.UseVisualStyleBackColor = false;
             fold_button.Visible = false;
             fold_button.Click += button4_Click;
@@ -227,12 +227,12 @@
             // 
             call_button.BackColor = Color.DarkTurquoise;
             call_button.Enabled = false;
-            call_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            call_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             call_button.Location = new Point(767, 648);
             call_button.Name = "call_button";
             call_button.Size = new Size(135, 33);
             call_button.TabIndex = 17;
-            call_button.Text = "Call";
+            call_button.Text = "CALL";
             call_button.UseVisualStyleBackColor = false;
             call_button.Visible = false;
             call_button.Click += call_button_Click;
@@ -241,12 +241,12 @@
             // 
             raise_button.BackColor = Color.MediumVioletRed;
             raise_button.Enabled = false;
-            raise_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            raise_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             raise_button.Location = new Point(932, 648);
             raise_button.Name = "raise_button";
             raise_button.Size = new Size(135, 33);
             raise_button.TabIndex = 18;
-            raise_button.Text = "Raise";
+            raise_button.Text = "RAISE";
             raise_button.UseVisualStyleBackColor = false;
             raise_button.Visible = false;
             raise_button.Click += button6_Click;
@@ -273,9 +273,10 @@
             // label7
             // 
             label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
             label7.Location = new Point(514, 78);
             label7.Name = "label7";
-            label7.Size = new Size(131, 20);
+            label7.Size = new Size(157, 25);
             label7.TabIndex = 24;
             label7.Text = "Inserisci Nickname";
             // 
@@ -293,7 +294,6 @@
             trackBar1.LargeChange = 100;
             trackBar1.Location = new Point(1011, 512);
             trackBar1.Maximum = 1000;
-            trackBar1.Minimum = 100;
             trackBar1.Name = "trackBar1";
             trackBar1.Orientation = Orientation.Vertical;
             trackBar1.Size = new Size(56, 130);
@@ -352,7 +352,6 @@
             Controls.Add(pictureBox9);
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)c1_g1).EndInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).EndInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).EndInit();

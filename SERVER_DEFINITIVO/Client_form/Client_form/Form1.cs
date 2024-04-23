@@ -1,6 +1,7 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.Security.Policy;
 
 namespace Client_form
 {
@@ -13,9 +14,10 @@ namespace Client_form
         }
         private static Stati stato_di_gioco;
         private string mio_nome = "";
-        private int mie_fiches;
+        private int mie_fiches = 1000, other_fiches = 1000;
         private bool in_attesa;
-        private int to_call;
+        private int to_call;  // fiches rilanciate dall'altro giocatore
+        private int rilancio; // rilancio mio
         private enum Stati  // possibili stati di gioco
         {
             Preflop,
@@ -27,7 +29,7 @@ namespace Client_form
         {
             stato_di_gioco = Stati.Preflop;
             string cards = Program.Ricevi();
-            string[] parti = cards.Split("|"); // 0-1 giocatore 2-6  tavolo
+            string[] parti = cards.Split("|"); // 0-1 carte giocatore
 
             pictureBox1.Image = null;
             
@@ -35,7 +37,6 @@ namespace Client_form
             fold_button.Visible = true;
             call_button.Visible = true;
             raise_button.Visible = true;
-
 
             c1_g1.Visible = true;
             c2_g1.Visible = true;
@@ -73,11 +74,6 @@ namespace Client_form
                 Thread th = new Thread(Gioco);
                 th.Start();
             }
-            /*pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
-            pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
-            pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[4].ToLower() + ".jpg");
-            pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[5].ToLower() + ".jpg");
-            pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[6].ToLower() + ".jpg");*/
 
         }
         private void ripristina()
@@ -105,10 +101,6 @@ namespace Client_form
             pictureBox9.Image = null;
             pictureBox1.Visible = false;
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -124,10 +116,17 @@ namespace Client_form
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textBox1.Visible = false;
-            label7.Visible = false;
-            button2.Enabled = false;
-            New_mano();
+            if (button2.Text=="Avvia Gioco")
+            {
+                textBox1.Visible = false;
+                label7.Visible = false;
+                button2.Enabled = false;
+                New_mano();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void New_mano()
@@ -141,10 +140,46 @@ namespace Client_form
             string[] parti = response.Split('|');
             mio_nome = parti[1];
             mie_fiches = int.Parse(parti[2]);
+            other_fiches = int.Parse(parti[3]);
+            if (other_fiches < 0) // altro giocatore ha finito le fiches
+            {
+                ripristina();
+                fold_button.Visible = false;
+                check_button.Visible = false;
+                call_button.Visible = false;
+                raise_button.Visible = false;
+                button2.Text = "Chiudi";
+                button2.Visible = true;
+                button2.Enabled = true;
+                label7.Visible = true;
+                label7.Font = new Font(label7.Font, FontStyle.Bold);
+                label7.Text = "You WIN - other player has 0 $\nYou now have 2000 $";
+                label7.Location = new Point(480, 200);
+                label_fiches.Visible = false;
+                return;
+            }
+            if (mie_fiches < 0)
+            {
+                ripristina();
+                label7.Visible = true;
+                label7.Font = new Font(label7.Font, FontStyle.Bold);
+                label7.Text = "You LOST - you have 0 $";
+                label7.Location = new Point(480, 200);
+                label_fiches.Visible = false;
+                fold_button.Visible = false;
+                check_button.Visible = false;
+                call_button.Visible = false;
+                raise_button.Visible = false;
+                button2.Text = "Chiudi";
+                button2.Visible = true;
+                button2.BackColor = Color.Transparent;
+                return;
+            }
             if (parti[0] == "game_started")
             {
                 button1.Visible = false;
                 button2.Visible = false;
+                button2.Enabled = true;
                 label1.Visible = false;
                 this.BackColor = Color.DarkGreen;
                 back_table.Visible = true;
@@ -176,24 +211,24 @@ namespace Client_form
                     messaggio = Program.Ricevi();
                     in_attesa = false;
                 }
-                
             }
             if (messaggio == "OTHER_FOLD")
             {
                 ripristina();
                 New_mano();
             }
-
             if (messaggio.Contains("OTHER_RAISE"))
             {
                 to_call = int.Parse(messaggio.Split("|")[1]);
+                other_fiches -= to_call;
                 call_button.Enabled = true;
                 fold_button.Enabled = true;
-                call_button.Text = "Call  $ " + to_call.ToString();
+                call_button.Text = "CALL  $ " + to_call.ToString();
                 aggiornabuttons();
             }
             if (messaggio == "OTHER_CALL")
             {
+                other_fiches -= rilancio;
                 if (mio_nome == "Client2")
                 {
                     check_button.Enabled = false;
@@ -211,13 +246,12 @@ namespace Client_form
                     aggiornabuttons();
                     messaggio = Program.Ricevi();
                 }
-
-                
             }
+
             string[] parti = messaggio.Split("|");
-            if (stato_di_gioco == Stati.Preflop)
+            if (parti[0] == "CHECKED")
             {
-                if (parti[0] == "CHECKED")
+                if (stato_di_gioco == Stati.Preflop)
                 {
                     pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
@@ -227,39 +261,31 @@ namespace Client_form
                     pictureBox7.BringToFront();
                     stato_di_gioco = Stati.Flop;
                 }
-            }
-            else if (stato_di_gioco == Stati.Flop)
-            {
-                if (parti[0] == "CHECKED")
+                else if (stato_di_gioco == Stati.Flop)
                 {
                     pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     pictureBox8.BringToFront();
                     stato_di_gioco = Stati.Turn;
                 }
-            }
-            else if (stato_di_gioco == Stati.Turn)
-            {
-                if (parti[0] == "CHECKED")
+                else if (stato_di_gioco == Stati.Turn)
                 {
                     pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
                     pictureBox9.BringToFront();
                     stato_di_gioco = Stati.River;
                 }
             }
-            else if (stato_di_gioco == Stati.River)
+            if (parti[0] == "FINE_MANO" && stato_di_gioco==Stati.River)
             {
-                if (parti[0] == "FINE_MANO")
-                {
-                    if (parti[1] == "VINTO") mie_fiches += int.Parse(parti[2]);
-                    MessageBox.Show(parti[1] + parti[2]);
-                    ripristina();
-                    New_mano();
-                }
+                if (parti[1] == "VINTO") mie_fiches += int.Parse(parti[2]);
+                MessageBox.Show(parti[1] + parti[2]);
+                ripristina();
+                New_mano();
             }
         }
 
         private void button3_Click(object sender, EventArgs e) // check
         {
+            controlla_trackbar();
             check_button.Enabled = false;
             fold_button.Enabled = false;
             call_button.Enabled = false;
@@ -272,13 +298,13 @@ namespace Client_form
 
         private void button4_Click(object sender, EventArgs e)  // fold
         {
+            controlla_trackbar();
             Program.Invia("FOLD");
             if (in_attesa == false)
             {
                 ripristina();
                 New_mano();
             }
-
         }
 
         private void button6_Click(object sender, EventArgs e)  // raise
@@ -287,6 +313,19 @@ namespace Client_form
             {
                 // Mostra la TrackBar
                 trackBar1.Visible = true;
+                if (mie_fiches < other_fiches) trackBar1.Maximum = mie_fiches;
+                else trackBar1.Maximum = other_fiches;
+                if (mie_fiches<100 || other_fiches < 100)
+                {
+                    trackBar1.Visible = false;
+                    raise_button.Enabled = false;
+                    aggiornabuttons();
+                    return;
+                }
+                else
+                {
+                    trackBar1.Minimum = 100;
+                }
                 trackBar1.Value = 100;
                 trackBar1.BringToFront();
                 raise_button.Text = "Select amount $";
@@ -294,14 +333,14 @@ namespace Client_form
             else
             {
                 // Ottieni l'importo della puntata dal valore della TrackBar
-                int rilancio = trackBar1.Value / 100 * 100;
+                rilancio = trackBar1.Value / 100 * 100;
                 mie_fiches -= rilancio;
                 label_fiches.Text = mie_fiches.ToString();
 
                 // Ripristina la TrackBar per un'altra puntata
                 trackBar1.Visible = false;
                 trackBar1.Value = 100;
-                raise_button.Text = "Raise";
+                raise_button.Text = "RAISE";
 
                 Program.Invia($"RAISE|{rilancio}");
                 check_button.Enabled = false;
@@ -326,12 +365,13 @@ namespace Client_form
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            raise_button.Text = "Raise  $ " + (trackBar1.Value / 100 * 100).ToString();
+            raise_button.Text = "RAISE  $ " + (trackBar1.Value / 100 * 100).ToString();
         }
 
         private void call_button_Click(object sender, EventArgs e) // call
         {
-            call_button.Text = "Call";
+            controlla_trackbar();
+            call_button.Text = "CALL";
             Program.Invia("CALL|" + to_call);
             mie_fiches -= to_call;
             label_fiches.Text = mie_fiches.ToString();
@@ -362,6 +402,7 @@ namespace Client_form
             {
                 if (control is Button button)
                 {
+                    if (button.Name == "raise_button" && mie_fiches < 100) button.Enabled = false;
                     if (button.Enabled)
                     {
                         button.Font = new Font(button.Font, FontStyle.Bold);
@@ -372,6 +413,13 @@ namespace Client_form
                     }
                 }
             }
+        }
+
+        private void controlla_trackbar()
+        {
+            trackBar1.Visible = false;
+            trackBar1.Value = 100;
+            raise_button.Text = "RAISE";
         }
     }
 }

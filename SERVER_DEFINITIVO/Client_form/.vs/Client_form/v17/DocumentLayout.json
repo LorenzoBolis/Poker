@@ -22,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
+              "RelativeDocumentMoniker": "Client_form\\Program.cs",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
+              "RelativeToolTip": "Client_form\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-06T15:41:01.728Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,7 +45,7 @@
               "RelativeDocumentMoniker": "Client_form\\Form1.cs",
               "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeToolTip": "Client_form\\Form1.cs",
-              "ViewState": "AQIAAJsAAAAAAAAAAAAAwKMAAAAmAAAA",
+              "ViewState": "AQIAABkBAAAAAAAAAAAwwB8BAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-06T15:40:49.23Z",
               "EditorCaption": ""
@@ -48,18 +61,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-09T13:58:59.657Z",
               "EditorCaption": " [Progettazione]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
-              "RelativeDocumentMoniker": "Client_form\\Program.cs",
-              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
-              "RelativeToolTip": "Client_form\\Program.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAYwEIAAAAYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-06T15:41:01.728Z"
             }
           ]
         }

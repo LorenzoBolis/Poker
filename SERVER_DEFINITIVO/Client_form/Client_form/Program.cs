@@ -12,7 +12,7 @@ namespace Client_form
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
-        static Socket client;
+        private static Socket client;
         
         public static string Connetti()
         {
@@ -31,8 +31,6 @@ namespace Client_form
                 return "Connessione non riuscita";
             }
             
-
-            // riceve conferma connessione
             byte[] buffer = new byte[1024];
             int received = client.Receive(buffer);
             string response = Encoding.UTF8.GetString(buffer, 0, received);
@@ -44,18 +42,6 @@ namespace Client_form
             {
                 return "Connesisone non riuscita";
             }
-
-            /*Thread thinvia = new Thread(() =>
-            {
-                Invia(client);
-            });
-            thinvia.Start();*/
-
-            /*Thread thricevi = new Thread(() =>
-            {
-                Ricevi(client);
-            });
-            thricevi.Start();*/
             return "Connesso al server";
         }
         public static void Invia(string messaggio)
