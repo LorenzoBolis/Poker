@@ -12,19 +12,19 @@ namespace Client_form
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
-        private static Socket client;
+        private static Socket server;
         
         public static string Connetti()
         {
             try
             {
                 // Initialize socket
-                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPAddress ip = IPAddress.Parse("192.168.0.5");
                 IPEndPoint ipEnd = new IPEndPoint(ip, 51000);
 
                 // Connect to server
-                client.Connect(ipEnd);
+                server.Connect(ipEnd);
             }
             catch(Exception ex)
             {
@@ -32,11 +32,11 @@ namespace Client_form
             }
             
             byte[] buffer = new byte[1024];
-            int received = client.Receive(buffer);
+            int received = server.Receive(buffer);
             string response = Encoding.UTF8.GetString(buffer, 0, received);
             if (response == "CONNECTED")
             {
-                client.Send(Encoding.UTF8.GetBytes("ACK"));
+                server.Send(Encoding.UTF8.GetBytes("ACK"));
             }
             if (response == "NOT_CONN")
             {
@@ -47,15 +47,15 @@ namespace Client_form
         public static void Invia(string messaggio)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(messaggio);
-            client.Send(messageBytes);
-            if (messaggio == "exit") client.Shutdown(SocketShutdown.Both);
+            server.Send(messageBytes);
+            if (messaggio == "exit") server.Shutdown(SocketShutdown.Both);
         }
         public static string Ricevi()
         {
             do
             {
                 byte[] buffer = new byte[1024];
-                int received = client.Receive(buffer);
+                int received = server.Receive(buffer);
                 string response = Encoding.UTF8.GetString(buffer, 0, received);
                 return response;
             }

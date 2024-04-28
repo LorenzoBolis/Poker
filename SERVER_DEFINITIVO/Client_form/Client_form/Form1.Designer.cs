@@ -51,6 +51,7 @@
             trackBar1 = new TrackBar();
             label_fiches = new Label();
             back_table = new PictureBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -322,11 +323,20 @@
             back_table.TabStop = false;
             back_table.Visible = false;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(860, 615);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 20);
+            label2.TabIndex = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
+            Controls.Add(label2);
             Controls.Add(label_fiches);
             Controls.Add(trackBar1);
             Controls.Add(label5);
@@ -352,6 +362,7 @@
             Controls.Add(pictureBox9);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)c1_g1).EndInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).EndInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).EndInit();
@@ -393,5 +404,6 @@
         private TrackBar trackBar1;
         private Label label_fiches;
         private PictureBox back_table;
+        private Label label2;
     }
 }

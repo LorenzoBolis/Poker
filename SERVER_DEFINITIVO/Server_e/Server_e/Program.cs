@@ -98,6 +98,7 @@ class Program  // SERVER - 192.168.0.5
                 else if (parti[0] == "GAME")  // inizio gioco
                 {
                     g.Gioco_avviato = true;
+                    g.Nome_inserito = parti[2];
                     g.Fiches -= int.Parse(parti[1]);
                     pot += int.Parse(parti[1]);
                     Invia_Start();
@@ -180,8 +181,8 @@ class Program  // SERVER - 192.168.0.5
         {
             try
             {
-                giocatori[0].Send($"game_started|Client1|{giocatori[0].Fiches}|{giocatori[1].Fiches}");
-                giocatori[1].Send($"game_started|Client2|{giocatori[1].Fiches}|{giocatori[0].Fiches}");
+                giocatori[0].Send($"game_started|Client1|{giocatori[0].Fiches}|{giocatori[1].Fiches}|{giocatori[1].Nome_inserito}");
+                giocatori[1].Send($"game_started|Client2|{giocatori[1].Fiches}|{giocatori[0].Fiches}|{giocatori[0].Nome_inserito}");
                 if (giocatori[0].Fiches < 0 || giocatori[1].Fiches < 0)
                 {
                     giocatori[0].Sk.Close();

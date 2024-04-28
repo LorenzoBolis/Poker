@@ -12,6 +12,7 @@ namespace Server_e
     public class Giocatore
     {
         private string nome;
+        private string nome_inserito;
         private List<Carta> mano = new List<Carta>();
         private Socket sk;
         private int fiches;
@@ -27,6 +28,11 @@ namespace Server_e
         {
             get { return nome; }
             set { nome = value; }
+        }
+        public string Nome_inserito
+        {
+            get { return nome_inserito; }
+            set { nome_inserito = value; }
         }
 
         public List<Carta> Mano

@@ -10,9 +10,11 @@ namespace Client_form
         public Form1()
         {
             InitializeComponent();
-
         }
+
+
         private static Stati stato_di_gioco;
+        private string mio_nome_inserito, other_nome_inserito; // nomi inseriti sulla schermata iniziale
         private string mio_nome = "";
         private int mie_fiches = 1000, other_fiches = 1000;
         private bool in_attesa;
@@ -32,7 +34,7 @@ namespace Client_form
             string[] parti = cards.Split("|"); // 0-1 carte giocatore
 
             pictureBox1.Image = null;
-            
+
             check_button.Visible = true;
             fold_button.Visible = true;
             call_button.Visible = true;
@@ -50,12 +52,14 @@ namespace Client_form
             pictureBox1.Visible = false;
             label_fiches.Text = mie_fiches.ToString();
             label5.Visible = true;
+            label2.Text = other_nome_inserito;
             if (mio_nome == "Client1")
             {
                 c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
+                label2.Location = new Point(250, 615);
                 check_button.Enabled = true;
                 fold_button.Enabled = true;
                 raise_button.Enabled = true;
@@ -102,21 +106,22 @@ namespace Client_form
             pictureBox1.Visible = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)  // button connetti a server
         {
             string res = Program.Connetti();
             label1.Text = res;
             button1.Enabled = false;
-            label5.Text = textBox1.Text;
+            mio_nome_inserito = textBox1.Text;
+            label5.Text = mio_nome_inserito;
             if (res == "Connesso al server")
             {
                 button2.Enabled = true;
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // button avvia gioco
         {
-            if (button2.Text=="Avvia Gioco")
+            if (button2.Text == "Avvia Gioco")
             {
                 textBox1.Visible = false;
                 label7.Visible = false;
@@ -131,7 +136,7 @@ namespace Client_form
 
         private void New_mano()
         {
-            Program.Invia("GAME|100");
+            Program.Invia($"GAME|100|{mio_nome_inserito}");
             string response = Program.Ricevi();
             if (response == "OTHER_FOLD") // soluzione a un problema nella fold (quando il client2 fa la fold al turn river)
             {
@@ -141,6 +146,7 @@ namespace Client_form
             mio_nome = parti[1];
             mie_fiches = int.Parse(parti[2]);
             other_fiches = int.Parse(parti[3]);
+            other_nome_inserito = parti[4];
             if (other_fiches < 0) // altro giocatore ha finito le fiches
             {
                 ripristina();
@@ -274,7 +280,7 @@ namespace Client_form
                     stato_di_gioco = Stati.River;
                 }
             }
-            if (parti[0] == "FINE_MANO" && stato_di_gioco==Stati.River)
+            if (parti[0] == "FINE_MANO" && stato_di_gioco == Stati.River)
             {
                 if (parti[1] == "VINTO") mie_fiches += int.Parse(parti[2]);
                 MessageBox.Show(parti[1] + parti[2]);
@@ -315,7 +321,7 @@ namespace Client_form
                 trackBar1.Visible = true;
                 if (mie_fiches < other_fiches) trackBar1.Maximum = mie_fiches;
                 else trackBar1.Maximum = other_fiches;
-                if (mie_fiches<100 || other_fiches < 100)
+                if (mie_fiches < 100 || other_fiches < 100)
                 {
                     trackBar1.Visible = false;
                     raise_button.Enabled = false;
@@ -420,6 +426,12 @@ namespace Client_form
             trackBar1.Visible = false;
             trackBar1.Value = 100;
             raise_button.Text = "RAISE";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            label5.Font = new Font("Arial", 13);
+            label_fiches.Font = new Font("Arial", 14);
         }
     }
 }
