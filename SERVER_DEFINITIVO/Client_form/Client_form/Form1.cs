@@ -108,7 +108,13 @@ namespace Client_form
 
         private void button1_Click(object sender, EventArgs e)  // button connetti a server
         {
-            string res = Program.Connetti();
+            if (textBox2.Text.Length == 0)
+            {
+                MessageBox.Show("Inserisci prima l'ip del server", "Attenzione", MessageBoxButtons.OK);
+                button1.Enabled = false;
+                return;
+            }
+            string res = Program.Connetti(textBox2.Text);
             label1.Text = res;
             button1.Enabled = false;
             mio_nome_inserito = textBox1.Text;
@@ -116,6 +122,7 @@ namespace Client_form
             if (res == "Connesso al server")
             {
                 button2.Enabled = true;
+                textBox2.Enabled = false;
             }
         }
 
@@ -183,6 +190,7 @@ namespace Client_form
             }
             if (parti[0] == "game_started")
             {
+                textBox2.Visible = false;
                 button1.Visible = false;
                 button2.Visible = false;
                 button2.Enabled = true;
@@ -432,6 +440,12 @@ namespace Client_form
         {
             label5.Font = new Font("Arial", 13);
             label_fiches.Font = new Font("Arial", 14);
+            textBox2.Text = "192.168.0.5";
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
         }
     }
 }

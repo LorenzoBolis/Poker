@@ -7,7 +7,7 @@ using System.Threading;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
-class Program  // SERVER - 192.168.0.5
+class Program
 {
     
     private static List<Giocatore> giocatori = new List<Giocatore>();// nome - socket - mano - gioco_avviato
@@ -25,14 +25,13 @@ class Program  // SERVER - 192.168.0.5
     }
 
     [STAThread]
-    static void Main()
+    private static void Main()
     {
         int contatore = 0;
         Crea_Mazzo();
 
-        // Initialize socket
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Parse("192.168.0.5"), 51000);
+        IPEndPoint ipEndPoint = new IPEndPoint(Trova_ip(), 51000);
 
         // Bind socket to IP and port
         listener.Bind(ipEndPoint);
@@ -61,7 +60,7 @@ class Program  // SERVER - 192.168.0.5
                 giocatori.Add(g);
                 Console.WriteLine($"Nuova connessione da {g.Sk.RemoteEndPoint} - {g.Nome}");
 
-                // Crea un thread separato per gestire la connessione
+                // Crea un thread per gestire la connessione e il gioco
                 Thread clientThread = new Thread(() =>
                 {
                     GestisciClient(g);
@@ -372,5 +371,20 @@ class Program  // SERVER - 192.168.0.5
         giocatori[0].Send(messaggio);
         giocatori[0].Check = false;
         giocatori[1].Check = false;          
+    }
+
+    private static IPAddress Trova_ip()
+    {
+        string hostName = Dns.GetHostName();
+        IPAddress[] localIPs = Dns.GetHostAddresses(hostName);
+        IPAddress ipserver = IPAddress.Any;
+        foreach (IPAddress ipAddress in localIPs)
+        {
+            if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            {
+                ipserver = ipAddress;
+            }
+        }
+        return ipserver;
     }
 }

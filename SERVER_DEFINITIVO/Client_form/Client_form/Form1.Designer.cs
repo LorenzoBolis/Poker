@@ -52,6 +52,7 @@
             label_fiches = new Label();
             back_table = new PictureBox();
             label2 = new Label();
+            textBox2 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -68,6 +69,7 @@
             // 
             // button1
             // 
+            button1.Enabled = false;
             button1.Location = new Point(274, 78);
             button1.Name = "button1";
             button1.Size = new Size(138, 99);
@@ -315,7 +317,7 @@
             // back_table
             // 
             back_table.Image = Properties.Resources.table;
-            back_table.Location = new Point(-57, -56);
+            back_table.Location = new Point(-64, -70);
             back_table.Name = "back_table";
             back_table.Size = new Size(1297, 819);
             back_table.SizeMode = PictureBoxSizeMode.Zoom;
@@ -331,11 +333,21 @@
             label2.Size = new Size(0, 20);
             label2.TabIndex = 30;
             // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(263, 45);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(170, 27);
+            textBox2.TabIndex = 31;
+            textBox2.Text = "Inserisci ip server x.x.x.x";
+            textBox2.TextChanged += textBox2_TextChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
+            Controls.Add(textBox2);
             Controls.Add(label2);
             Controls.Add(label_fiches);
             Controls.Add(trackBar1);
@@ -405,5 +417,6 @@
         private Label label_fiches;
         private PictureBox back_table;
         private Label label2;
+        private TextBox textBox2;
     }
 }
