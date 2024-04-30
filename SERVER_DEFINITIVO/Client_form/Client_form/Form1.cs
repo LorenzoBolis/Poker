@@ -16,7 +16,7 @@ namespace Client_form
         private static Stati stato_di_gioco;
         private string mio_nome_inserito, other_nome_inserito; // nomi inseriti sulla schermata iniziale
         private string mio_nome = "";
-        private int mie_fiches = 1000, other_fiches = 1000;
+        private int mie_fiches = 1000, other_fiches = 1000, pot=0;
         private bool in_attesa;
         private int to_call;  // fiches rilanciate dall'altro giocatore
         private int rilancio; // rilancio mio
@@ -52,17 +52,17 @@ namespace Client_form
             pictureBox1.Visible = false;
             label_fiches.Text = mie_fiches.ToString();
             label5.Visible = true;
-            label2.Text = other_nome_inserito;
+            label_other_fiches.Text = other_nome_inserito+"  "+other_fiches;
             if (mio_nome == "Client1")
             {
                 c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
                 c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
-                label2.Location = new Point(250, 615);
                 check_button.Enabled = true;
                 fold_button.Enabled = true;
                 raise_button.Enabled = true;
+                label_other_fiches.Location = new Point(245, 622);
                 aggiornabuttons();
             }
             else if (mio_nome == "Client2")
@@ -74,6 +74,7 @@ namespace Client_form
                 check_button.Enabled = false;
                 fold_button.Enabled = false;
                 raise_button.Enabled = false;
+                label_other_fiches.Location = new Point(868, 622);
                 aggiornabuttons();
                 Thread th = new Thread(Gioco);
                 th.Start();
@@ -82,6 +83,7 @@ namespace Client_form
         }
         private void ripristina()
         {
+            label_fiches.Text = "";
             stato_di_gioco = Stati.Preflop;
             call_button.Enabled = false;
             aggiornabuttons();
@@ -117,8 +119,6 @@ namespace Client_form
             string res = Program.Connetti(textBox2.Text);
             label1.Text = res;
             button1.Enabled = false;
-            mio_nome_inserito = textBox1.Text;
-            label5.Text = mio_nome_inserito;
             if (res == "Connesso al server")
             {
                 button2.Enabled = true;
@@ -133,6 +133,8 @@ namespace Client_form
                 textBox1.Visible = false;
                 label7.Visible = false;
                 button2.Enabled = false;
+                mio_nome_inserito = textBox1.Text;
+                label5.Text = mio_nome_inserito;
                 New_mano();
             }
             else
@@ -154,9 +156,14 @@ namespace Client_form
             mie_fiches = int.Parse(parti[2]);
             other_fiches = int.Parse(parti[3]);
             other_nome_inserito = parti[4];
+            label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
+            pot = 200;
+            label_pot.Text = "$ " + pot;
             if (other_fiches < 0) // altro giocatore ha finito le fiches
             {
                 ripristina();
+                label_other_fiches.Visible = false;
+                label_pot.Visible = false;
                 fold_button.Visible = false;
                 check_button.Visible = false;
                 call_button.Visible = false;
@@ -174,6 +181,8 @@ namespace Client_form
             if (mie_fiches < 0)
             {
                 ripristina();
+                label_other_fiches.Visible = false;
+                label_pot.Visible = false;
                 label7.Visible = true;
                 label7.Font = new Font(label7.Font, FontStyle.Bold);
                 label7.Text = "You LOST - you have 0 $";
@@ -235,6 +244,9 @@ namespace Client_form
             {
                 to_call = int.Parse(messaggio.Split("|")[1]);
                 other_fiches -= to_call;
+                pot += to_call;
+                label_pot.Text = "$ " + pot;
+                label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
                 call_button.Enabled = true;
                 fold_button.Enabled = true;
                 call_button.Text = "CALL  $ " + to_call.ToString();
@@ -243,6 +255,9 @@ namespace Client_form
             if (messaggio == "OTHER_CALL")
             {
                 other_fiches -= rilancio;
+                pot += rilancio;
+                label_pot.Text = "$ " + pot;
+                label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
                 if (mio_nome == "Client2")
                 {
                     check_button.Enabled = false;
@@ -349,6 +364,8 @@ namespace Client_form
                 // Ottieni l'importo della puntata dal valore della TrackBar
                 rilancio = trackBar1.Value / 100 * 100;
                 mie_fiches -= rilancio;
+                pot += rilancio;
+                label_pot.Text = "$ " + pot;
                 label_fiches.Text = mie_fiches.ToString();
 
                 // Ripristina la TrackBar per un'altra puntata
@@ -388,6 +405,8 @@ namespace Client_form
             call_button.Text = "CALL";
             Program.Invia("CALL|" + to_call);
             mie_fiches -= to_call;
+            pot += to_call;
+            label_pot.Text = "$ " + pot;
             label_fiches.Text = mie_fiches.ToString();
             if (mio_nome == "Client1")
             {
@@ -438,11 +457,15 @@ namespace Client_form
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            label5.Font = new Font("Arial", 13);
-            label_fiches.Font = new Font("Arial", 14);
-            textBox2.Text = "192.168.0.5";
+            back_table.Location = new Point(-63, -70);
+            label5.Font = new Font("Arial", 12);
+            label_fiches.Font = new Font("Arial", 13);
+            label_pot.Font = new Font("Arial", 13);
+            label_pot.BackColor = Color.Green;
+            label_other_fiches.Font = new Font("Arial", 11);
+            textBox2.Text = Program.Trova_ip();
         }
-
+        
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             button1.Enabled = true;

@@ -61,6 +61,19 @@ namespace Client_form
             }
             while (true);
         }
-
+        public static string Trova_ip()
+        {
+            string hostName = Dns.GetHostName();
+            IPAddress[] localIPs = Dns.GetHostAddresses(hostName);
+            IPAddress mio_ip = IPAddress.Any;
+            foreach (IPAddress ipAddress in localIPs)
+            {
+                if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    mio_ip = ipAddress;
+                }
+            }
+            return mio_ip.ToString();
+        }
     }
 }

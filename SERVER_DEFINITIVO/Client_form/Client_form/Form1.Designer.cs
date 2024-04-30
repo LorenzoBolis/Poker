@@ -51,8 +51,9 @@
             trackBar1 = new TrackBar();
             label_fiches = new Label();
             back_table = new PictureBox();
-            label2 = new Label();
             textBox2 = new TextBox();
+            label_other_fiches = new Label();
+            label_pot = new Label();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -267,7 +268,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1101, 654);
+            label5.Location = new Point(1087, 654);
             label5.Name = "label5";
             label5.Size = new Size(0, 20);
             label5.TabIndex = 22;
@@ -317,21 +318,13 @@
             // back_table
             // 
             back_table.Image = Properties.Resources.table;
-            back_table.Location = new Point(-64, -70);
+            back_table.Location = new Point(-386, 687);
             back_table.Name = "back_table";
             back_table.Size = new Size(1297, 819);
             back_table.SizeMode = PictureBoxSizeMode.Zoom;
             back_table.TabIndex = 29;
             back_table.TabStop = false;
             back_table.Visible = false;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(860, 615);
-            label2.Name = "label2";
-            label2.Size = new Size(0, 20);
-            label2.TabIndex = 30;
             // 
             // textBox2
             // 
@@ -342,13 +335,30 @@
             textBox2.Text = "Inserisci ip server x.x.x.x";
             textBox2.TextChanged += textBox2_TextChanged;
             // 
+            // label_other_fiches
+            // 
+            label_other_fiches.AutoSize = true;
+            label_other_fiches.Location = new Point(243, 622);
+            label_other_fiches.Name = "label_other_fiches";
+            label_other_fiches.Size = new Size(0, 20);
+            label_other_fiches.TabIndex = 32;
+            // 
+            // label_pot
+            // 
+            label_pot.AutoSize = true;
+            label_pot.Location = new Point(543, 226);
+            label_pot.Name = "label_pot";
+            label_pot.Size = new Size(0, 20);
+            label_pot.TabIndex = 33;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 703);
+            Controls.Add(label_pot);
+            Controls.Add(label_other_fiches);
             Controls.Add(textBox2);
-            Controls.Add(label2);
             Controls.Add(label_fiches);
             Controls.Add(trackBar1);
             Controls.Add(label5);
@@ -416,7 +426,8 @@
         private TrackBar trackBar1;
         private Label label_fiches;
         private PictureBox back_table;
-        private Label label2;
         private TextBox textBox2;
+        private Label label_other_fiches;
+        private Label label_pot;
     }
 }
