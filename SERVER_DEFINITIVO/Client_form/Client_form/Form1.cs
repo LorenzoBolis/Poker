@@ -305,8 +305,21 @@ namespace Client_form
             }
             if (parti[0] == "FINE_MANO" && stato_di_gioco == Stati.River)
             {
-                if (parti[1] == "VINTO") mie_fiches += int.Parse(parti[2]);
-                MessageBox.Show(parti[1] + parti[2]);
+                string combinazione = parti[3];
+                if (parti[1] == "VINTO")
+                {
+                    mie_fiches += int.Parse(parti[2]);
+                    label_pot.Text = $"Hai Vinto con {combinazione}";
+                }
+                else if (parti[1] == "PERSO")
+                {
+                    label_pot.Text = $"Hai Perso. {other_nome_inserito} aveva {combinazione}";
+                }
+                else if (parti[1] == "PAREGGIO")
+                {
+                    label_pot.Text = $"Pareggio - Entrambi con {combinazione}";
+                }
+                Thread.Sleep(3000);
                 ripristina();
                 New_mano();
             }

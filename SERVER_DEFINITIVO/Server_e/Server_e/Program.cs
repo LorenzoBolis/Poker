@@ -211,15 +211,15 @@ class Program
             if ((int)combinazione1 > (int)combinazione2)
             {
                 Console.WriteLine("Vince G1");
-                testo0 = $"VINTO|{pot}";
-                testo1 = $"PERSO|{pot}";
+                testo0 = $"VINTO|{pot}|{combinazione1}";
+                testo1 = $"PERSO|{pot}|{combinazione1}";
                 giocatori[0].Fiches += pot;
             }
             else if ((int)combinazione1 < (int)combinazione2)
             {
                 Console.WriteLine("Vince G2");
-                testo0 = $"PERSO|{pot}";
-                testo1 = $"VINTO|{pot}";
+                testo0 = $"PERSO|{pot}|{combinazione2}";
+                testo1 = $"VINTO|{pot}|{combinazione2}";
                 giocatori[1].Fiches += pot;
             }
             else
@@ -229,20 +229,21 @@ class Program
                 if (list0.Max() > list1.Max()) // in caso di pareggio valuta chi ha carta alta
                 {
                     Console.WriteLine("Vince G1");
-                    testo0 = $"VINTO|{pot}";
-                    testo1 = $"PERSO|{pot}";
+                    testo0 = $"VINTO|{pot}|{combinazione1}";
+                    testo1 = $"PERSO|{pot}|{combinazione1}";
                     giocatori[0].Fiches += pot;
                 }
                 else if (list0.Max() < list1.Max())
                 {
-                    testo0 = $"PERSO|{pot}";
-                    testo1 = $"VINTO|{pot}";
+                    Console.WriteLine("Vince G2");
+                    testo0 = $"PERSO|{pot}|{combinazione2}";
+                    testo1 = $"VINTO|{pot}|{combinazione2}";
                     giocatori[1].Fiches += pot;
                 }
                 else
                 {
-                    testo0 = $"PAREGGIO|{pot}";
-                    testo1 = $"PAREGGIO|{pot}";
+                    testo0 = $"PAREGGIO|{pot}|{combinazione1}";
+                    testo1 = $"PAREGGIO|{pot}|{combinazione1}";
                     giocatori[0].Fiches += pot/2;
                     giocatori[1].Fiches += pot/2;
                 }
