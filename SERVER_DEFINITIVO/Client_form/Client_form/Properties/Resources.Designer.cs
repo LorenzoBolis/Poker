@@ -63,6 +63,16 @@ namespace Client_form.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap combinazioni {
+            get {
+                object obj = ResourceManager.GetObject("combinazioni", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pokerimage {
             get {
                 object obj = ResourceManager.GetObject("pokerimage", resourceCulture);

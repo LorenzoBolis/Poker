@@ -54,6 +54,10 @@
             textBox2 = new TextBox();
             label_other_fiches = new Label();
             label_pot = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            button_combinazioni = new Button();
+            pictureBox_comb = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -66,6 +70,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)back_table).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox_comb).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -310,7 +315,7 @@
             // label_fiches
             // 
             label_fiches.AutoSize = true;
-            label_fiches.Location = new Point(334, 654);
+            label_fiches.Location = new Point(347, 655);
             label_fiches.Name = "label_fiches";
             label_fiches.Size = new Size(0, 20);
             label_fiches.TabIndex = 28;
@@ -351,11 +356,58 @@
             label_pot.Size = new Size(0, 20);
             label_pot.TabIndex = 33;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(450, 461);
+            label2.Name = "label2";
+            label2.Size = new Size(0, 23);
+            label2.TabIndex = 34;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Location = new Point(620, 461);
+            label3.Name = "label3";
+            label3.Size = new Size(0, 23);
+            label3.TabIndex = 35;
+            label3.TextAlign = ContentAlignment.TopRight;
+            // 
+            // button_combinazioni
+            // 
+            button_combinazioni.BackColor = SystemColors.MenuHighlight;
+            button_combinazioni.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            button_combinazioni.Location = new Point(37, 639);
+            button_combinazioni.Name = "button_combinazioni";
+            button_combinazioni.Size = new Size(157, 49);
+            button_combinazioni.TabIndex = 36;
+            button_combinazioni.Text = "Combinazioni";
+            button_combinazioni.UseVisualStyleBackColor = false;
+            button_combinazioni.Visible = false;
+            button_combinazioni.Click += button_combinazioni_Click;
+            // 
+            // pictureBox_comb
+            // 
+            pictureBox_comb.Image = Properties.Resources.combinazioni;
+            pictureBox_comb.Location = new Point(37, 132);
+            pictureBox_comb.Name = "pictureBox_comb";
+            pictureBox_comb.Size = new Size(264, 481);
+            pictureBox_comb.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox_comb.TabIndex = 37;
+            pictureBox_comb.TabStop = false;
+            pictureBox_comb.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(192, 255, 192);
             ClientSize = new Size(1182, 703);
+            Controls.Add(button_combinazioni);
+            Controls.Add(label3);
+            Controls.Add(label2);
             Controls.Add(label_pot);
             Controls.Add(label_other_fiches);
             Controls.Add(textBox2);
@@ -382,8 +434,11 @@
             Controls.Add(pictureBox7);
             Controls.Add(pictureBox8);
             Controls.Add(pictureBox9);
+            Controls.Add(pictureBox_comb);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Form1";
-            Text = "Form1";
+            Text = "Poker";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)c1_g1).EndInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).EndInit();
@@ -397,6 +452,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)back_table).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox_comb).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -429,5 +485,9 @@
         private TextBox textBox2;
         private Label label_other_fiches;
         private Label label_pot;
+        private Label label2;
+        private Label label3;
+        private Button button_combinazioni;
+        private PictureBox pictureBox_comb;
     }
 }

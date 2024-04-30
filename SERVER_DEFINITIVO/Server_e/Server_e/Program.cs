@@ -203,23 +203,23 @@ class Program
         //valutazione carte
         if (giocatori[0].Check && giocatori[1].Check)
         {
-            var combinazione1 = Combinazioni.ValutaMano(giocatori[0].Mano, carte_tavolo);
-            var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo);
+            var combinazione1 = Combinazioni.ValutaMano(giocatori[0].Mano, carte_tavolo); //g1
+            var combinazione2 = Combinazioni.ValutaMano(giocatori[1].Mano, carte_tavolo); //g2
             Console.WriteLine("Giocatore 1  :  " + combinazione1);
             Console.WriteLine("Giocatore 2  :  " + combinazione2);
             string testo0, testo1;
             if ((int)combinazione1 > (int)combinazione2)
             {
                 Console.WriteLine("Vince G1");
-                testo0 = $"VINTO|{pot}|{combinazione1}";
-                testo1 = $"PERSO|{pot}|{combinazione1}";
+                testo0 = $"VINTO|{pot}";
+                testo1 = $"PERSO|{pot}";
                 giocatori[0].Fiches += pot;
             }
             else if ((int)combinazione1 < (int)combinazione2)
             {
                 Console.WriteLine("Vince G2");
-                testo0 = $"PERSO|{pot}|{combinazione2}";
-                testo1 = $"VINTO|{pot}|{combinazione2}";
+                testo0 = $"PERSO|{pot}";
+                testo1 = $"VINTO|{pot}";
                 giocatori[1].Fiches += pot;
             }
             else
@@ -229,27 +229,27 @@ class Program
                 if (list0.Max() > list1.Max()) // in caso di pareggio valuta chi ha carta alta
                 {
                     Console.WriteLine("Vince G1");
-                    testo0 = $"VINTO|{pot}|{combinazione1}";
-                    testo1 = $"PERSO|{pot}|{combinazione1}";
+                    testo0 = $"VINTO|{pot}";
+                    testo1 = $"PERSO|{pot}";
                     giocatori[0].Fiches += pot;
                 }
                 else if (list0.Max() < list1.Max())
                 {
                     Console.WriteLine("Vince G2");
-                    testo0 = $"PERSO|{pot}|{combinazione2}";
-                    testo1 = $"VINTO|{pot}|{combinazione2}";
+                    testo0 = $"PERSO|{pot}";
+                    testo1 = $"VINTO|{pot}";
                     giocatori[1].Fiches += pot;
                 }
                 else
                 {
-                    testo0 = $"PAREGGIO|{pot}|{combinazione1}";
-                    testo1 = $"PAREGGIO|{pot}|{combinazione1}";
+                    testo0 = $"PAREGGIO|{pot}";
+                    testo1 = $"PAREGGIO|{pot}";
                     giocatori[0].Fiches += pot/2;
                     giocatori[1].Fiches += pot/2;
                 }
             }
-            string mess0 = "FINE_MANO|" + testo0;
-            string mess1 = "FINE_MANO|" + testo1;
+            string mess0 = "FINE_MANO|" + testo0+$"|{combinazione1}|{combinazione2}";
+            string mess1 = "FINE_MANO|" + testo1+$"|{combinazione2}|{combinazione1}";
             try
             {
                 giocatori[0].Send(mess0);

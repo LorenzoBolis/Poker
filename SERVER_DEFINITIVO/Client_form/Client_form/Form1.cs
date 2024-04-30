@@ -16,7 +16,7 @@ namespace Client_form
         private static Stati stato_di_gioco;
         private string mio_nome_inserito, other_nome_inserito; // nomi inseriti sulla schermata iniziale
         private string mio_nome = "";
-        private int mie_fiches = 1000, other_fiches = 1000, pot=0;
+        private int mie_fiches = 1000, other_fiches = 1000, pot = 0;
         private bool in_attesa;
         private int to_call;  // fiches rilanciate dall'altro giocatore
         private int rilancio; // rilancio mio
@@ -52,11 +52,11 @@ namespace Client_form
             pictureBox1.Visible = false;
             label_fiches.Text = mie_fiches.ToString();
             label5.Visible = true;
-            label_other_fiches.Text = other_nome_inserito+"  "+other_fiches;
+            label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
             if (mio_nome == "Client1")
             {
-                c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
-                c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
+                c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".png"); //c1 giocatore
+                c2_g1.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".png"); // c2 giocatore
                 c1_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g2.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
                 check_button.Enabled = true;
@@ -67,8 +67,8 @@ namespace Client_form
             }
             else if (mio_nome == "Client2")
             {
-                c1_g2.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".jpg"); //c1 giocatore
-                c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg"); // c2 giocatore
+                c1_g2.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".png"); //c1 giocatore
+                c2_g2.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".png"); // c2 giocatore
                 c1_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c1 avversario
                 c2_g1.Image = Image.FromFile("../../../mazzo/dorso.jpg");  // c2 avversario
                 check_button.Enabled = false;
@@ -83,6 +83,8 @@ namespace Client_form
         }
         private void ripristina()
         {
+            label2.Text = "";
+            label3.Text = "";
             label_fiches.Text = "";
             stato_di_gioco = Stati.Preflop;
             call_button.Enabled = false;
@@ -159,42 +161,17 @@ namespace Client_form
             label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
             pot = 200;
             label_pot.Text = "$ " + pot;
+            button_combinazioni.Visible = true;
             if (other_fiches < 0) // altro giocatore ha finito le fiches
             {
-                ripristina();
-                label_other_fiches.Visible = false;
-                label_pot.Visible = false;
-                fold_button.Visible = false;
-                check_button.Visible = false;
-                call_button.Visible = false;
-                raise_button.Visible = false;
-                button2.Text = "Chiudi";
-                button2.Visible = true;
-                button2.Enabled = true;
-                label7.Visible = true;
-                label7.Font = new Font(label7.Font, FontStyle.Bold);
-                label7.Text = "You WIN - other player has 0 $\nYou now have 2000 $";
-                label7.Location = new Point(480, 200);
-                label_fiches.Visible = false;
+                Togli_tutto();
+                label7.Text = $"Hai Vinto - {other_nome_inserito} has 0 $\nOra hai 2000 $";
                 return;
             }
             if (mie_fiches < 0)
             {
-                ripristina();
-                label_other_fiches.Visible = false;
-                label_pot.Visible = false;
-                label7.Visible = true;
-                label7.Font = new Font(label7.Font, FontStyle.Bold);
-                label7.Text = "You LOST - you have 0 $";
-                label7.Location = new Point(480, 200);
-                label_fiches.Visible = false;
-                fold_button.Visible = false;
-                check_button.Visible = false;
-                call_button.Visible = false;
-                raise_button.Visible = false;
-                button2.Text = "Chiudi";
-                button2.Visible = true;
-                button2.BackColor = Color.Transparent;
+                Togli_tutto();
+                label7.Text = "Hai perso - Ora hai 0 $";
                 return;
             }
             if (parti[0] == "game_started")
@@ -282,9 +259,9 @@ namespace Client_form
             {
                 if (stato_di_gioco == Stati.Preflop)
                 {
-                    pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
-                    pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".jpg");
-                    pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".jpg");
+                    pictureBox5.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".png");
+                    pictureBox6.Image = Image.FromFile("../../../mazzo/" + parti[2].ToLower() + ".png");
+                    pictureBox7.Image = Image.FromFile("../../../mazzo/" + parti[3].ToLower() + ".png");
                     pictureBox5.BringToFront();
                     pictureBox6.BringToFront();
                     pictureBox7.BringToFront();
@@ -292,32 +269,44 @@ namespace Client_form
                 }
                 else if (stato_di_gioco == Stati.Flop)
                 {
-                    pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+                    pictureBox8.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".png");
                     pictureBox8.BringToFront();
                     stato_di_gioco = Stati.Turn;
                 }
                 else if (stato_di_gioco == Stati.Turn)
                 {
-                    pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".jpg");
+                    pictureBox9.Image = Image.FromFile("../../../mazzo/" + parti[1].ToLower() + ".png");
                     pictureBox9.BringToFront();
                     stato_di_gioco = Stati.River;
                 }
             }
             if (parti[0] == "FINE_MANO" && stato_di_gioco == Stati.River)
             {
-                string combinazione = parti[3];
+                string mia_combinazione = parti[3];
+                string other_combinaizone = parti[4];
+                if (mio_nome == "Client1")
+                {
+                    label2.Text = other_combinaizone;
+                    label3.Text = mia_combinazione;
+                }
+                else if (mio_nome == "Client2")
+                {
+                    label2.Text = mia_combinazione;
+                    label3.Text = other_combinaizone;
+                }
+                Thread.Sleep(1000);
                 if (parti[1] == "VINTO")
                 {
                     mie_fiches += int.Parse(parti[2]);
-                    label_pot.Text = $"Hai Vinto con {combinazione}";
+                    label_pot.Text = "Hai Vinto";
                 }
                 else if (parti[1] == "PERSO")
                 {
-                    label_pot.Text = $"Hai Perso. {other_nome_inserito} aveva {combinazione}";
+                    label_pot.Text = "Hai Perso";
                 }
                 else if (parti[1] == "PAREGGIO")
                 {
-                    label_pot.Text = $"Pareggio - Entrambi con {combinazione}";
+                    label_pot.Text = "Pareggio";
                 }
                 Thread.Sleep(3000);
                 ripristina();
@@ -459,6 +448,7 @@ namespace Client_form
                     }
                 }
             }
+            pictureBox_comb.Visible = false;
         }
 
         private void controlla_trackbar()
@@ -478,10 +468,39 @@ namespace Client_form
             label_other_fiches.Font = new Font("Arial", 11);
             textBox2.Text = Program.Trova_ip();
         }
-        
+
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             button1.Enabled = true;
+        }
+
+        private void button_combinazioni_Click(object sender, EventArgs e)
+        {
+            if (pictureBox_comb.Visible == false)
+            {
+                pictureBox_comb.Visible = true;
+                pictureBox_comb.BringToFront();
+            }
+            else pictureBox_comb.Visible = false;
+        }
+        
+        private void Togli_tutto()
+        {
+            ripristina();
+            button_combinazioni.Visible = false;
+            label_other_fiches.Visible = false;
+            label_pot.Visible = false;
+            fold_button.Visible = false;
+            check_button.Visible = false;
+            call_button.Visible = false;
+            raise_button.Visible = false;
+            button2.Text = "Chiudi";
+            button2.Visible = true;
+            button2.Enabled = true;
+            label7.Visible = true;
+            label7.Font = new Font(label7.Font, FontStyle.Bold);
+            label7.Location = new Point(480, 200);
+            label_fiches.Visible = false;
         }
     }
 }
