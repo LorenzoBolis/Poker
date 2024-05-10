@@ -16,7 +16,7 @@ class Program
     private static int pot;
     private static Mazzo mazzo;
 
-    private enum Stati  // possibili stati di gioco
+    private enum Stati  // stati di gioco
     {
         Preflop,
         Flop,

@@ -15,9 +15,9 @@ namespace Client_form
 
         private static Stati stato_di_gioco;
         private string mio_nome_inserito, other_nome_inserito; // nomi inseriti sulla schermata iniziale
-        private string mio_nome = "";
+        private string mio_nome = "";  // nome utilizzato dal programma
         private int mie_fiches = 1000, other_fiches = 1000, pot = 0;
-        private bool in_attesa;
+        private bool in_attesa; // indica se sta aspettando un messaggio dal server
         private int to_call;  // fiches rilanciate dall'altro giocatore
         private int rilancio; // rilancio mio
         private enum Stati  // possibili stati di gioco
@@ -27,13 +27,12 @@ namespace Client_form
             Turn,
             River
         }
-        private void ricezione_gioco()  // riceve carte 
+        private void ricezione_gioco()  // riceve e mostra carte
         {
             stato_di_gioco = Stati.Preflop;
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 carte giocatore
 
-            pictureBox1.Image = null;
 
             check_button.Visible = true;
             fold_button.Visible = true;
@@ -49,7 +48,6 @@ namespace Client_form
             pictureBox7.Visible = true;
             pictureBox8.Visible = true;
             pictureBox9.Visible = true;
-            pictureBox1.Visible = false;
             label_fiches.Text = mie_fiches.ToString();
             label5.Visible = true;
             label_other_fiches.Text = other_nome_inserito + "  " + other_fiches;
@@ -81,7 +79,7 @@ namespace Client_form
             }
 
         }
-        private void ripristina()
+        private void ripristina()  // pulizia schermata
         {
             label2.Text = "";
             label3.Text = "";
@@ -107,7 +105,6 @@ namespace Client_form
             pictureBox7.Image = null;
             pictureBox8.Image = null;
             pictureBox9.Image = null;
-            pictureBox1.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)  // button connetti a server
@@ -165,7 +162,7 @@ namespace Client_form
             if (other_fiches < 0) // altro giocatore ha finito le fiches
             {
                 Togli_tutto();
-                label7.Text = $"Hai Vinto - {other_nome_inserito} has 0 $\nOra hai 2000 $";
+                label7.Text = $"Hai Vinto - {other_nome_inserito} ha 0 $\nOra hai 2000 $";
                 return;
             }
             if (mie_fiches < 0)
@@ -174,13 +171,14 @@ namespace Client_form
                 label7.Text = "Hai perso - Ora hai 0 $";
                 return;
             }
-            if (parti[0] == "game_started")
+            if (parti[0] == "game_started")  // quando entrambi richiedono una nuova partita
             {
                 textBox2.Visible = false;
                 button1.Visible = false;
                 button2.Visible = false;
                 button2.Enabled = true;
                 label1.Visible = false;
+                label_titolo.Visible = false;
                 this.BackColor = Color.DarkGreen;
                 back_table.Visible = true;
                 ricezione_gioco();
@@ -437,7 +435,7 @@ namespace Client_form
             {
                 if (control is Button button)
                 {
-                    if (button.Name == "raise_button" && mie_fiches < 100) button.Enabled = false;
+                    if (button.Name == "raise_button" && (mie_fiches < 100 || other_fiches<100)) button.Enabled = false;
                     if (button.Enabled)
                     {
                         button.Font = new Font(button.Font, FontStyle.Bold);
@@ -454,7 +452,7 @@ namespace Client_form
         private void controlla_trackbar()
         {
             trackBar1.Visible = false;
-            trackBar1.Value = 100;
+            if (mie_fiches >= 100 && other_fiches >= 100) trackBar1.Value = 100;
             raise_button.Text = "RAISE";
         }
 
@@ -483,8 +481,8 @@ namespace Client_form
             }
             else pictureBox_comb.Visible = false;
         }
-        
-        private void Togli_tutto()
+
+        private void Togli_tutto()  // toglie tutti i controlli dalla form per la fine del gioco
         {
             ripristina();
             button_combinazioni.Visible = false;
@@ -501,6 +499,10 @@ namespace Client_form
             label7.Font = new Font(label7.Font, FontStyle.Bold);
             label7.Location = new Point(480, 200);
             label_fiches.Visible = false;
+        }
+        private void back_table_Click(object sender, EventArgs e)
+        {
+            pictureBox_comb.Visible = false;
         }
     }
 }

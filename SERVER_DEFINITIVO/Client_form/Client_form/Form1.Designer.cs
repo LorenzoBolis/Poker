@@ -44,7 +44,6 @@
             fold_button = new Button();
             call_button = new Button();
             raise_button = new Button();
-            pictureBox1 = new PictureBox();
             label5 = new Label();
             label7 = new Label();
             textBox1 = new TextBox();
@@ -58,6 +57,7 @@
             label3 = new Label();
             button_combinazioni = new Button();
             pictureBox_comb = new PictureBox();
+            label_titolo = new Label();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -67,7 +67,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)back_table).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox_comb).BeginInit();
@@ -76,9 +75,9 @@
             // button1
             // 
             button1.Enabled = false;
-            button1.Location = new Point(274, 78);
+            button1.Location = new Point(374, 231);
             button1.Name = "button1";
-            button1.Size = new Size(138, 99);
+            button1.Size = new Size(138, 71);
             button1.TabIndex = 0;
             button1.Text = "Connettiti al server";
             button1.UseVisualStyleBackColor = true;
@@ -87,18 +86,18 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(263, 212);
+            label1.Location = new Point(362, 314);
             label1.Name = "label1";
-            label1.Size = new Size(50, 20);
+            label1.Size = new Size(13, 20);
             label1.TabIndex = 1;
-            label1.Text = "label1";
+            label1.Text = " ";
             // 
             // button2
             // 
             button2.Enabled = false;
-            button2.Location = new Point(533, 311);
+            button2.Location = new Point(504, 363);
             button2.Name = "button2";
-            button2.Size = new Size(112, 55);
+            button2.Size = new Size(169, 55);
             button2.TabIndex = 2;
             button2.Text = "Avvia Gioco";
             button2.UseVisualStyleBackColor = true;
@@ -106,7 +105,7 @@
             // 
             // c1_g1
             // 
-            c1_g1.BackColor = SystemColors.Control;
+            c1_g1.BackColor = Color.FromArgb(192, 255, 192);
             c1_g1.BorderStyle = BorderStyle.FixedSingle;
             c1_g1.Location = new Point(708, 363);
             c1_g1.Name = "c1_g1";
@@ -260,16 +259,6 @@
             raise_button.Visible = false;
             raise_button.Click += button6_Click;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.pokerimage;
-            pictureBox1.Location = new Point(834, 27);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(317, 275);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 21;
-            pictureBox1.TabStop = false;
-            // 
             // label5
             // 
             label5.AutoSize = true;
@@ -283,7 +272,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(514, 78);
+            label7.Location = new Point(620, 221);
             label7.Name = "label7";
             label7.Size = new Size(157, 25);
             label7.TabIndex = 24;
@@ -291,7 +280,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(514, 114);
+            textBox1.Location = new Point(635, 253);
             textBox1.MaxLength = 10;
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(125, 27);
@@ -330,10 +319,11 @@
             back_table.TabIndex = 29;
             back_table.TabStop = false;
             back_table.Visible = false;
+            back_table.Click += back_table_Click;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(263, 45);
+            textBox2.Location = new Point(362, 198);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(170, 27);
             textBox2.TabIndex = 31;
@@ -399,12 +389,23 @@
             pictureBox_comb.TabStop = false;
             pictureBox_comb.Visible = false;
             // 
+            // label_titolo
+            // 
+            label_titolo.AutoSize = true;
+            label_titolo.Font = new Font("JQKAs Wild", 40.2F, FontStyle.Regular, GraphicsUnit.Point);
+            label_titolo.Location = new Point(316, 48);
+            label_titolo.Name = "label_titolo";
+            label_titolo.Size = new Size(595, 70);
+            label_titolo.TabIndex = 38;
+            label_titolo.Text = "POKER Texas Hold'em";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 192);
             ClientSize = new Size(1182, 703);
+            Controls.Add(label_titolo);
             Controls.Add(button_combinazioni);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -427,7 +428,6 @@
             Controls.Add(button1);
             Controls.Add(textBox1);
             Controls.Add(label7);
-            Controls.Add(pictureBox1);
             Controls.Add(back_table);
             Controls.Add(pictureBox5);
             Controls.Add(pictureBox6);
@@ -449,7 +449,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)back_table).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox_comb).EndInit();
@@ -475,7 +474,6 @@
         private Button fold_button;
         private Button call_button;
         private Button raise_button;
-        private PictureBox pictureBox1;
         private Label label5;
         private Label label7;
         private TextBox textBox1;
@@ -489,5 +487,6 @@
         private Label label3;
         private Button button_combinazioni;
         private PictureBox pictureBox_comb;
+        private Label label_titolo;
     }
 }
