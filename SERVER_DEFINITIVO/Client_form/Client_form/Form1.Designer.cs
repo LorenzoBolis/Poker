@@ -58,6 +58,7 @@
             button_combinazioni = new Button();
             pictureBox_comb = new PictureBox();
             label_titolo = new Label();
+            button_chat = new Button();
             ((System.ComponentModel.ISupportInitialize)c1_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c2_g1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)c1_g2).BeginInit();
@@ -207,6 +208,7 @@
             // 
             check_button.BackColor = Color.LimeGreen;
             check_button.Enabled = false;
+            check_button.FlatStyle = FlatStyle.Flat;
             check_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             check_button.Location = new Point(607, 648);
             check_button.Name = "check_button";
@@ -221,6 +223,8 @@
             // 
             fold_button.BackColor = Color.IndianRed;
             fold_button.Enabled = false;
+            fold_button.FlatAppearance.BorderColor = Color.Black;
+            fold_button.FlatStyle = FlatStyle.Flat;
             fold_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             fold_button.Location = new Point(445, 648);
             fold_button.Name = "fold_button";
@@ -235,6 +239,7 @@
             // 
             call_button.BackColor = Color.DarkTurquoise;
             call_button.Enabled = false;
+            call_button.FlatStyle = FlatStyle.Flat;
             call_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             call_button.Location = new Point(767, 648);
             call_button.Name = "call_button";
@@ -249,6 +254,7 @@
             // 
             raise_button.BackColor = Color.MediumVioletRed;
             raise_button.Enabled = false;
+            raise_button.FlatStyle = FlatStyle.Flat;
             raise_button.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
             raise_button.Location = new Point(932, 648);
             raise_button.Name = "raise_button";
@@ -262,7 +268,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1087, 654);
+            label5.Location = new Point(1073, 654);
             label5.Name = "label5";
             label5.Size = new Size(0, 20);
             label5.TabIndex = 22;
@@ -399,12 +405,27 @@
             label_titolo.TabIndex = 38;
             label_titolo.Text = "POKER Texas Hold'em";
             // 
+            // button_chat
+            // 
+            button_chat.BackColor = Color.FromArgb(255, 255, 192);
+            button_chat.FlatStyle = FlatStyle.Flat;
+            button_chat.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            button_chat.Location = new Point(12, 12);
+            button_chat.Name = "button_chat";
+            button_chat.Size = new Size(98, 42);
+            button_chat.TabIndex = 39;
+            button_chat.Text = "CHAT";
+            button_chat.UseVisualStyleBackColor = false;
+            button_chat.Visible = false;
+            button_chat.Click += button_chat_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 192);
             ClientSize = new Size(1182, 703);
+            Controls.Add(button_chat);
             Controls.Add(label_titolo);
             Controls.Add(button_combinazioni);
             Controls.Add(label3);
@@ -488,5 +509,6 @@
         private Button button_combinazioni;
         private PictureBox pictureBox_comb;
         private Label label_titolo;
+        private Button button_chat;
     }
 }

@@ -15,6 +15,7 @@ namespace Server_e
         private string nome_inserito;
         private List<Carta> mano = new List<Carta>();
         private Socket sk;
+        private Socket chat;
         private int fiches;
         private bool gioco_avviato;
         private bool check;
@@ -46,6 +47,11 @@ namespace Server_e
             get { return sk; }
             set { sk = value; }
         }
+        public Socket Chat
+        {
+            get { return chat; }
+            set { chat = value; }
+        }
 
         public int Fiches
         {
@@ -75,11 +81,21 @@ namespace Server_e
         {
             Sk.Send(Encoding.UTF8.GetBytes(messaggio));
         }
+        public void Invia_Chat(string messaggio)
+        {
+            Chat.Send(Encoding.UTF8.GetBytes(messaggio));
+        }
 
         public string Receive()
         {
             byte[] received = new byte[1024];
             int receivedBytes = Sk.Receive(received);
+            return Encoding.UTF8.GetString(received, 0, receivedBytes);
+        }
+        public string Ricevi_Chat()
+        {
+            byte[] received = new byte[1024];
+            int receivedBytes = Chat.Receive(received);
             return Encoding.UTF8.GetString(received, 0, receivedBytes);
         }
     }

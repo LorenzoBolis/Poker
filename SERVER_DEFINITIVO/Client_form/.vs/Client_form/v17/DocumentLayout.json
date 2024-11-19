@@ -11,6 +11,18 @@
       "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\form2.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form2.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\client_form\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F42B261E-5BB4-4A41-9276-BE5B59639EE1}|Client_form\\Client_form.csproj|solutionrelative:client_form\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -32,10 +44,46 @@
               "RelativeDocumentMoniker": "Client_form\\Form1.cs",
               "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeToolTip": "Client_form\\Form1.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAA3AAAA",
+              "ViewState": "AQIAAEYBAAAAAAAAAAAcwEYBAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-06T15:40:49.23Z",
+              "IsPinned": true,
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form2.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.Designer.cs",
+              "RelativeDocumentMoniker": "Client_form\\Form2.Designer.cs",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.Designer.cs",
+              "RelativeToolTip": "Client_form\\Form2.Designer.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAywFcAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T21:21:57.859Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form2.cs",
+              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.cs",
+              "RelativeDocumentMoniker": "Client_form\\Form2.cs",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.cs",
+              "RelativeToolTip": "Client_form\\Form2.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAwwCQAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T17:12:34.233Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form2.cs [Progettazione]",
+              "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.cs",
+              "RelativeDocumentMoniker": "Client_form\\Form2.cs",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.cs [Progettazione]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form2.cs [Progettazione]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T17:10:54.311Z"
             },
             {
               "$type": "Document",
@@ -43,20 +91,20 @@
               "Title": "Form1.cs [Progettazione]",
               "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs",
               "RelativeDocumentMoniker": "Client_form\\Form1.cs",
-              "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs [Progettazione]",
-              "RelativeToolTip": "Client_form\\Form1.cs [Progettazione]",
+              "ToolTip": "C:\\Users\\utente\\Desktop\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs [Progettazione]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Form1.cs [Progettazione]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-09T13:58:59.657Z"
+              "WhenOpened": "2024-10-15T17:09:09.532Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
               "RelativeDocumentMoniker": "Client_form\\Program.cs",
               "ToolTip": "C:\\Users\\utente\\Desktop\\LORENZO\\ITIS Marconi\\4\\Informatica\\Progetto_Poker\\Poker\\SERVER_DEFINITIVO\\Client_form\\Client_form\\Program.cs",
               "RelativeToolTip": "Client_form\\Program.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAAABQAAAAkAAAA",
+              "ViewState": "AQIAAEIAAAAAAAAAAADwv1QAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-06T15:41:01.728Z"
             }

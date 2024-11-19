@@ -143,3 +143,17 @@ C:\Users\Utente\Desktop\poker\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debu
 C:\Users\Utente\Desktop\poker\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.pdb
 C:\Users\Utente\Desktop\poker\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.genruntimeconfig.cache
 C:\Users\Utente\Desktop\poker\Poker\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\ref\Server_e.dll
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.exe
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.deps.json
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.runtimeconfig.json
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.dll
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\bin\Debug\net7.0\Server_e.pdb
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.AssemblyInfoInputs.cache
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.AssemblyInfo.cs
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.csproj.CoreCompileInputs.cache
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.dll
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\refint\Server_e.dll
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.pdb
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\Server_e.genruntimeconfig.cache
+C:\Users\utente\Desktop\SERVER_DEFINITIVO\Server_e\Server_e\obj\Debug\net7.0\ref\Server_e.dll

@@ -33,16 +33,24 @@ class Program
         Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         IPEndPoint ipEndPoint = new IPEndPoint(Trova_ip(), 51000);
 
-        // Bind socket to IP and port
         listener.Bind(ipEndPoint);
         listener.Listen(4);
 
+
+        Socket chatserver = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        IPEndPoint ipEndChat = new IPEndPoint(Trova_ip(), 51001);
+        chatserver.Bind(ipEndChat);
+        chatserver.Listen(4);
+
+
         Console.WriteLine("Server in ascolto su {0}", ipEndPoint);
+        Console.WriteLine("Chat aperta su " + ipEndChat);
 
         while (contatore <= 1)
         {
             // Accetta connessioni in arrivo
             Socket client = listener.Accept();
+            
 
             // Invia messaggio di connessione
             string message = "CONNECTED";
@@ -65,7 +73,17 @@ class Program
                 {
                     GestisciClient(g);
                 });
+
                 clientThread.Start();
+
+                Socket chat = chatserver.Accept();
+                g.Chat = chat;
+
+                Thread chatt = new Thread(() =>
+                {
+                    GestisciChat(g);
+                });
+                chatt.Start();
             }
         }
         while (true)
@@ -76,7 +94,48 @@ class Program
         }
     }
 
-    private static void GestisciClient(Giocatore g)
+    private static void GestisciChat(Giocatore g)
+    {
+        try
+        {
+            string messaggio = "";
+            do
+            {
+                messaggio = g.Ricevi_Chat();
+                Console.WriteLine("CHAT ricevuta : " + messaggio);
+                string[] parti = messaggio.Split("|");
+
+                if (parti[0] == "*CHAT*")
+                {
+                    if (giocatori[0] == g)
+                    {
+                        giocatori[1].Invia_Chat(messaggio);
+                    }
+                    else if (giocatori[1] == g)
+                    {
+                        giocatori[0].Invia_Chat(messaggio);
+                    }
+                }
+            }
+            while (true);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Errore CHAT : " + ex.Message);
+        }
+        
+    }
+
+    private static async Task AttendiGiocatori()
+    {
+        Console.WriteLine("In attesa di giocatori...");
+        while (giocatori.Count < 2)
+        {
+            await Task.Delay(100);  // Attende 100 ms prima di verificare di nuovo il conteggio dei giocatori
+        }
+    }
+
+    private static async Task GestisciClient(Giocatore g)
     {
         string name = g.Nome;
         try
@@ -100,6 +159,7 @@ class Program
                     g.Nome_inserito = parti[2];
                     g.Fiches -= int.Parse(parti[1]);
                     pot += int.Parse(parti[1]);
+                    await AttendiGiocatori(); // attende che ci siano 2 giocatori connessi
                     Invia_Start();
                     if (giocatori[0].Fiches < 0 || giocatori[1].Fiches < 0)
                     {
@@ -248,8 +308,8 @@ class Program
                     giocatori[1].Fiches += pot/2;
                 }
             }
-            string mess0 = "FINE_MANO|" + testo0+$"|{combinazione1}|{combinazione2}";
-            string mess1 = "FINE_MANO|" + testo1+$"|{combinazione2}|{combinazione1}";
+            string mess0 = "FINE_MANO|" + testo0 + $"|{combinazione1}|{combinazione2}|{giocatori[1].Mano[0]}|{giocatori[1].Mano[1]}";
+            string mess1 = "FINE_MANO|" + testo1+$"|{combinazione2}|{combinazione1}|{giocatori[0].Mano[0]}|{giocatori[0].Mano[1]}";
             try
             {
                 giocatori[0].Send(mess0);

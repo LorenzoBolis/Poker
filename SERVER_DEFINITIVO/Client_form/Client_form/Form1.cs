@@ -2,6 +2,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Security.Policy;
+using System.Windows.Forms;
 
 namespace Client_form
 {
@@ -20,6 +21,21 @@ namespace Client_form
         private bool in_attesa; // indica se sta aspettando un messaggio dal server
         private int to_call;  // fiches rilanciate dall'altro giocatore
         private int rilancio; // rilancio mio
+        private Form2 f2 = null;
+        private static List<string> messages_chat = new List<string>();
+        private void aggiungi_mess(string s)
+        {
+            messages_chat.Add(s);
+            Invia_messaggi_form2();
+        }
+        public static void aggiungi_messaggio(string s)
+        {
+            messages_chat.Add(s);
+        }
+        private void Invia_messaggi_form2()
+        {
+            Form2.ricevi_mess_f1(messages_chat);
+        }
         private enum Stati  // possibili stati di gioco
         {
             Preflop,
@@ -27,13 +43,16 @@ namespace Client_form
             Turn,
             River
         }
+        
+        
+
         private void ricezione_gioco()  // riceve e mostra carte
         {
             stato_di_gioco = Stati.Preflop;
             string cards = Program.Ricevi();
             string[] parti = cards.Split("|"); // 0-1 carte giocatore
 
-
+            button_chat.Visible = true;
             check_button.Visible = true;
             fold_button.Visible = true;
             call_button.Visible = true;
@@ -123,7 +142,31 @@ namespace Client_form
                 button2.Enabled = true;
                 textBox2.Enabled = false;
             }
+
+            string i = Program.ConnettiCHAT(textBox2.Text);
+            
+
+            if (i=="CHAT connessa")
+            {
+                Thread recieve = new Thread(ricevi_Chat);
+                recieve.Start();
+                
+            }
+            
+            
         }
+        private void ricevi_Chat()  // prende i messaggi chat
+        {
+            while (true)
+            {
+                string messaggio = Program.RiceviCHAT();
+                string[] parti = messaggio.Split("|");
+                aggiungi_mess(parti[1] + " : " + parti[2]);
+
+            }
+        }
+
+    
 
         private void button2_Click(object sender, EventArgs e) // button avvia gioco
         {
@@ -134,6 +177,8 @@ namespace Client_form
                 button2.Enabled = false;
                 mio_nome_inserito = textBox1.Text;
                 label5.Text = mio_nome_inserito;
+
+                f2 = new Form2(mio_nome_inserito, messages_chat);
                 New_mano();
             }
             else
@@ -142,10 +187,13 @@ namespace Client_form
             }
         }
 
-        private void New_mano()
+        
+
+        private async Task New_mano()
         {
+
             Program.Invia($"GAME|100|{mio_nome_inserito}");
-            string response = Program.Ricevi();
+            string response = await Program.RiceviAsync();
             if (response == "OTHER_FOLD") // soluzione a un problema nella fold (quando il client2 fa la fold al turn river)
             {
                 response = Program.Ricevi();
@@ -282,6 +330,22 @@ namespace Client_form
             {
                 string mia_combinazione = parti[3];
                 string other_combinaizone = parti[4];
+                string carta1_avv = parti[5];
+                string carta2_avv = parti[6];
+                    //c1_g1.Image = Image.FromFile("../../../mazzo/" + parti[0].ToLower() + ".png"); //c1 giocatore
+
+                if (mio_nome == "Client1")
+                {
+                    c1_g2.Image = Image.FromFile("../../../mazzo/" + carta1_avv.ToLower() + ".png");  // c1 avversario
+                    c2_g2.Image = Image.FromFile("../../../mazzo/" + carta2_avv.ToLower() + ".png");  // c2 avversario
+
+                }
+                else if (mio_nome == "Client2")
+                {
+                    c1_g1.Image = Image.FromFile("../../../mazzo/" + carta1_avv.ToLower() + ".png");  // c1 avversario
+                    c2_g1.Image = Image.FromFile("../../../mazzo/" + carta2_avv.ToLower() + ".png");  // c2 avversario
+                }
+
                 if (mio_nome == "Client1")
                 {
                     label2.Text = other_combinaizone;
@@ -435,7 +499,7 @@ namespace Client_form
             {
                 if (control is Button button)
                 {
-                    if (button.Name == "raise_button" && (mie_fiches < 100 || other_fiches<100)) button.Enabled = false;
+                    if (button.Name == "raise_button" && (mie_fiches < 100 || other_fiches < 100)) button.Enabled = false;
                     if (button.Enabled)
                     {
                         button.Font = new Font(button.Font, FontStyle.Bold);
@@ -503,6 +567,12 @@ namespace Client_form
         private void back_table_Click(object sender, EventArgs e)
         {
             pictureBox_comb.Visible = false;
+        }
+
+        private void button_chat_Click(object sender, EventArgs e)
+        {
+            f2 = new Form2(mio_nome_inserito, messages_chat);
+            f2.Show();
         }
     }
 }
